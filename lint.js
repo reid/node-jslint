@@ -1,35 +1,44 @@
+// jslint wrapper for nodejs
 // Adapted from rhino.js. Copyright 2002 Douglas Crockford
- 
-/*global JSLINT */
+
+/*global JSLINT, process, require */
 /*jslint rhino: true, strict: false */
- 
-(function (a) {
-    var e, i, input;
-    if (!a[0]) {
-        print("Usage: jslint.js file.js");
-        quit(1);
+
+(function (file) {
+    var e,
+        i,
+        input,
+        sys = require("sys"),
+        posix = require("posix");
+
+    if (!file) {
+        sys.puts("Usage: jslint.js file.js");
+        process.exit(1);
     }
-    input = readFile(a[0]);
+
+    eval(posix.cat("./jslint.com-mirror/www.jslint.com/fulljslint.js").wait());
+
+    input = posix.cat(file).wait();
     if (!input) {
-        print("jslint: Couldn't open file '" + a[0] + "'.");
-        quit(1);
+        sys.puts("jslint: Couldn't open file '" + file + "'.");
+        process.exit(1);
     }
+
     if (!JSLINT(input, {bitwise: true, eqeqeq: true, immed: true,
             newcap: true, nomen: true, onevar: true, plusplus: true,
             regexp: true, rhino: true, undef: true, white: true})) {
         for (i = 0; i < JSLINT.errors.length; i += 1) {
             e = JSLINT.errors[i];
             if (e) {
-                print('Lint at line ' + e.line + ' character ' +
+                sys.puts('Lint at line ' + e.line + ' character ' +
                         e.character + ': ' + e.reason);
-                print((e.evidence || '').
+                sys.puts((e.evidence || '').
                         replace(/^\s*(\S*(\s+\S+)*)\s*$/, "$1"));
-                print('');
+                sys.puts('');
             }
         }
-        quit(2);
-    } else {
-        print("jslint: No problems found in " + a[0]);
-        quit();
+        process.exit(2);
     }
-}(arguments));
+
+    sys.puts("jslint: No problems found in " + file);
+}(process.ARGV[2]));
