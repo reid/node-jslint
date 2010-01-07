@@ -12,7 +12,7 @@
         posix = require("posix");
 
     if (!file) {
-        sys.puts("Usage: jslint.js file.js");
+        sys.puts("Usage: node jslint.js file.js");
         process.exit(1);
     }
 
