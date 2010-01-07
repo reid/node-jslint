@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // jslint wrapper for nodejs
 // Adapted from rhino.js. Copyright 2002 Douglas Crockford
 
@@ -12,7 +14,7 @@
         posix = require("posix");
 
     if (!file) {
-        sys.puts("Usage: node jslint.js file.js");
+        sys.puts("Usage: jslint file.js");
         process.exit(1);
     }
 
