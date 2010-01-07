@@ -2,7 +2,7 @@
 // Adapted from rhino.js. Copyright 2002 Douglas Crockford
 
 /*global JSLINT, process, require */
-/*jslint rhino: true, strict: false */
+/*jslint evil: true */
 
 (function (file) {
     var e,
