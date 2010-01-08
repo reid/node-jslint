@@ -17,7 +17,7 @@ Then install node-jslint to /usr/local with the handy installer:
 
 	node http://github.com/reid/node-jslint/raw/master/install.js
 	
-*WARNING*: You're running script straight from the internet. Only tested on OS X.
+**WARNING**: You're running script straight from the internet. Only tested on OS X.
 
 Known issue
 -----------
@@ -28,7 +28,7 @@ License
 -------
 
 You can modify, copy and redistribute this software under the WTFPL, Version 2.
-See http://sam.zoy.org/wtfpl/COPYING for details.
+See <http://sam.zoy.org/wtfpl/COPYING> for details.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
