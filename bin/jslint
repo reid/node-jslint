@@ -10,6 +10,7 @@
     var e,
         i,
         input,
+        path = __filename.split("/").slice(0, -2).join("/"),
         sys = require("sys"),
         posix = require("posix");
 
@@ -18,7 +19,8 @@
         process.exit(1);
     }
 
-    eval(posix.cat("./jslint.com-mirror/www.jslint.com/fulljslint.js").wait());
+    // doesn't like relative paths
+    eval(posix.cat(path + "/lib/jslint/jslint.com-mirror/www.jslint.com/fulljslint.js").wait());
 
     input = posix.cat(file).wait();
     if (!input) {
