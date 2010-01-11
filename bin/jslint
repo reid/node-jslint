@@ -3,8 +3,13 @@
 // jslint wrapper for nodejs
 // Adapted from rhino.js. Copyright 2002 Douglas Crockford
 
-/*global JSLINT, process, require */
-/*jslint evil: true */
+// Warning: jslint considers this file insecure and evil.
+// JSLINT itself is provided by eval
+// Shebang removal regex uses insecure "."
+/*jslint evil: true, regexp: false */
+
+// JSLINT is provided by fulljslint.js, loaded by eval
+/*global JSLINT */
 
 (function (file) {
     var e,
@@ -28,13 +33,25 @@
         process.exit(1);
     }
 
+    // remove shebang (lifted from node.js)
+    input = input.replace(/^\#\!.*/, "");
+
     if (!JSLINT(input, {
             bitwise : true,
             eqeqeq : true,
             immed : true,
             newcap : true,
-            nomen : true,
+            nomen : false, // because of __filename
             plusplus : true,
+            predef : [
+                "exports", // CommonJS Modules 1.1
+                // NodeJS globals:
+                "GLOBAL",
+                "process",
+                "require",
+                "__filename",
+                "module"
+            ],
             regexp : true,
             undef : true
     })) {

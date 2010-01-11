@@ -5,6 +5,8 @@ Easily use [jslint][] from the command line. Pass it the JS file you'd like to l
 
     jslint foo.js
 
+It assumes [nodejs][] globals and tolerates shebangs.
+
 Installation
 ------------
 
@@ -18,11 +20,6 @@ Then install node-jslint to /usr/local with the handy installer:
 	node http://github.com/reid/node-jslint/raw/master/install.js
 	
 **WARNING**: You're running script straight from the internet. Only tested on OS X.
-
-Known issue
------------
-
-node-jslint doesn't self-lint because it uses a shebang, which [jslint][] takes issue with.
 
 License
 -------
