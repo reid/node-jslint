@@ -28,9 +28,16 @@
         process.exit(1);
     }
 
-    if (!JSLINT(input, {bitwise: true, eqeqeq: true, immed: true,
-            newcap: true, nomen: true, onevar: true, plusplus: true,
-            regexp: true, rhino: true, undef: true, white: true})) {
+    if (!JSLINT(input, {
+            bitwise : true,
+            eqeqeq : true,
+            immed : true,
+            newcap : true,
+            nomen : true,
+            plusplus : true,
+            regexp : true,
+            undef : true
+    })) {
         for (i = 0; i < JSLINT.errors.length; i += 1) {
             e = JSLINT.errors[i];
             if (e) {
