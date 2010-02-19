@@ -17,7 +17,7 @@
         input,
         path = __filename.split("/").slice(0, -2).join("/"),
         sys = require("sys"),
-        posix = require("posix");
+        fs = require("fs");
 
     if (!file) {
         sys.puts("Usage: jslint file.js");
@@ -25,9 +25,9 @@
     }
 
     // doesn't like relative paths
-    eval(posix.cat(path + "/lib/jslint/jslint.com-mirror/www.jslint.com/fulljslint.js").wait());
+    eval(fs.readFile(path + "/lib/jslint/jslint.com-mirror/www.jslint.com/fulljslint.js").wait());
 
-    input = posix.cat(file).wait();
+    input = fs.readFile(file).wait();
     if (!input) {
         sys.puts("jslint: Couldn't open file '" + file + "'.");
         process.exit(1);
