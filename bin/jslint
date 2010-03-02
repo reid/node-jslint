@@ -1,20 +1,12 @@
 #!/usr/bin/env node
-
 // jslint wrapper for nodejs
 // Adapted from rhino.js. Copyright 2002 Douglas Crockford
-
-// Warning: jslint considers this file insecure and evil.
-// JSLINT itself is provided by eval
 // Shebang removal regex uses insecure "."
-/*jslint evil: true, regexp: false */
-
-// JSLINT is provided by fulljslint.js, loaded by eval
+// JSLINT is provided by fulljslint.js modified to export the global
 /*global JSLINT */
 
 (function (file) {
-    var e,
-        i,
-        input,
+    var e, i, input, len, success, pad,
         path = __filename.split("/").slice(0, -2).join("/"),
         sys = require("sys"),
         fs = require("fs");
@@ -24,49 +16,49 @@
         process.exit(1);
     }
 
-    // doesn't like relative paths
-    eval(fs.readFile(path + "/lib/jslint/jslint.com-mirror/www.jslint.com/fulljslint.js").wait());
-
     input = fs.readFile(file).wait();
     if (!input) {
         sys.puts("jslint: Couldn't open file '" + file + "'.");
         process.exit(1);
     }
 
+    process.mixin(GLOBAL, require(path + '/lib/fulljslint_export'));
+
     // remove shebang (lifted from node.js)
     input = input.replace(/^\#\!.*/, "");
 
-    if (!JSLINT(input, {
-            bitwise : true,
-            eqeqeq : true,
-            immed : true,
-            newcap : true,
-            nomen : false, // because of __filename
-            plusplus : true,
-            predef : [
-                "exports", // CommonJS Modules 1.1
-                // NodeJS globals:
-                "GLOBAL",
-                "process",
-                "require",
-                "__filename",
-                "module"
-            ],
-            regexp : true,
-            undef : true
-    })) {
-        for (i = 0; i < JSLINT.errors.length; i += 1) {
-            e = JSLINT.errors[i];
-            if (e) {
-                sys.puts('Lint at line ' + e.line + ' character ' +
-                        e.character + ': ' + e.reason);
-                sys.puts((e.evidence || '').
-                        replace(/^\s*(\S*(\s+\S+)*)\s*$/, "$1"));
-                sys.puts('');
+    success = JSLINT(input, {
+        predef:   [ // CommonJS
+                    "exports", 
+                    // YUI
+                    "YUI",
+                    "YAHOO",
+                    "YAHOO_config",
+                    "YUI_config",
+                    "Y",
+                    // NodeJS
+                    "GLOBAL",
+                    "process",
+                    "require",
+                    "__filename",
+                    "module"       ]
+    });
+
+    if (!success) {
+        i = 0;
+        len = JSLINT.errors.length;
+        for (i=0; i<len; i++) {
+            pad = '' + (i + 1);
+            while (pad.length < 3) {
+                pad = ' ' + pad;
             }
+            e = JSLINT.errors[i];
+            sys.puts(pad + ' ' + e.line + ',' + e.character + ': ' + e.reason);
+            sys.puts( '    ' + (e.evidence || '').replace(/^\s+|\s+$/, ""));
         }
         process.exit(2);
     }
 
-    sys.puts("jslint: No problems found in " + file);
+    sys.puts("OK");
+
 }(process.ARGV[2]));

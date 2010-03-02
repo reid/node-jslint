@@ -30,14 +30,15 @@ function ex(cmd) {
 
 process.addListener("uncaughtException", cleanAndExit);
 
-dir = sys.exec("mktemp -d /tmp/jslint.XXXX").wait().shift().replace(/\n/, "");
-process.chdir(dir);
-puts("Changed to new working directory " + dir);
+// dir = sys.exec("mktemp -d /tmp/jslint.XXXX").wait().shift().replace(/\n/, "");
+// process.chdir(dir);
+// puts("Changed to new working directory " + dir);
 
-ex("git init");
-ex("git remote add origin git://github.com/reid/node-jslint.git");
-ex("git pull origin master");
-ex("git submodule update --init");
+// ex("git init");
+// ex("git remote add origin git://github.com/apm/node-jslint.git");
+// ex("git pull origin master");
+// ex("git pull");
+// ex("git submodule update --init");
 ex("cp -Rf bin lib /usr/local");
 
 puts("Installed jslint into /usr/local");
