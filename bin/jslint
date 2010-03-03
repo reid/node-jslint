@@ -53,8 +53,10 @@
                 pad = ' ' + pad;
             }
             e = JSLINT.errors[i];
-            sys.puts(pad + ' ' + e.line + ',' + e.character + ': ' + e.reason);
-            sys.puts( '    ' + (e.evidence || '').replace(/^\s+|\s+$/, ""));
+            if (e) {
+                sys.puts(pad + ' ' + e.line + ',' + e.character + ': ' + e.reason);
+                sys.puts( '    ' + (e.evidence || '').replace(/^\s+|\s+$/, ""));
+            }
         }
         process.exit(2);
     }
