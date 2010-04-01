@@ -32,7 +32,7 @@ function execCommands() {
     function run( error, out, err ) {
         if (error) {
             puts("Error: " + err);
-            process.exit();
+            cleanAndExit();
         }
 
         var command = q.shift();
