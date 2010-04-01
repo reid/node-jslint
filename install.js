@@ -30,7 +30,6 @@ function execCommands() {
     var q = [].slice.call(arguments);
 
     function run( error, out, err ) {
-        puts("run()");
         if (error) {
             puts("Error: " + err);
             process.exit();
