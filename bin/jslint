@@ -22,7 +22,7 @@
         process.exit(1);
     }
 
-    process.mixin(GLOBAL, require(path + '/lib/fulljslint_export'));
+    JSLINT = require(path + '/lib/fulljslint_export').JSLINT;
 
     // remove shebang (lifted from node.js)
     input = input.replace(/^\#\!.*/, "");
