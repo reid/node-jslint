@@ -16,7 +16,7 @@
         process.exit(1);
     }
 
-    input = fs.readFile(file).wait();
+    input = fs.readFileSync(file);
     if (!input) {
         sys.puts("jslint: Couldn't open file '" + file + "'.");
         process.exit(1);

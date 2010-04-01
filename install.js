@@ -25,7 +25,7 @@ function cleanAndExit(ex) {
 
 function ex(cmd) {
     puts("Running: " + cmd);
-    sys.exec(cmd).wait();
+    sys.exec(cmd);
 }
 
 process.addListener("uncaughtException", cleanAndExit);
