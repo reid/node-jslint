@@ -20,6 +20,8 @@
     if (!input) {
         sys.puts("jslint: Couldn't open file '" + file + "'.");
         process.exit(1);
+    } else {
+        input = input.toString("utf8");
     }
 
     JSLINT = require(path + '/lib/fulljslint_export').JSLINT;
