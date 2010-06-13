@@ -1,0 +1,13 @@
+{   "name" : "jslint"
+,   "version" : "0.0.1"
+,   "engines" : { "node" : ">=0.1.97" }
+,   "author" : "Douglas Crockford <douglas@crockford.com>"
+,   "contributors" :
+[       "Reid Burke <me@reidburke.com>"
+,       "Mikeal Rogers <mikeal.rogers@gmail.com>"
+,       "Adam Moore"
+,       "Luke Smith <lsmith@yahoo-inc.com>"
+,       "Anders Conbere <aconbere@gmail.com>"
+]
+,   "bin" : { "jslint" : "./bin/jslint" }
+}

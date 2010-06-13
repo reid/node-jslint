@@ -10,16 +10,20 @@ It assumes [nodejs][] globals and tolerates shebangs.
 Installation
 ------------
 
-You'll need [nodejs][], which is easy to install on OS X with [homebrew][]:
+You'll need [nodejs][] and [npm][], which is easy to install on OS X with [homebrew][]:
 
     curl -L http://github.com/mxcl/homebrew/tarball/master | tar xz --strip 1 -C /usr/local
-    brew install node
+    brew install npm
 
-Then install node-jslint to /usr/local with the handy installer:
+Then install:
 
-	node http://github.com/reid/node-jslint/raw/master/install.js
-	
-**WARNING**: You're running script straight from the internet. Only tested on OS X.
+    npm install http://github.com/reid/node-jslint/tarball/master
+
+You may also clone this repository then install in your working copy:
+
+    npm install .
+
+This package isn't yet in the npm registry. I'm working on it.
 
 License
 -------
@@ -38,4 +42,5 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 [jslint]: http://jslint.com/
 [nodejs]: http://nodejs.org/
+[npm]: http://github.com/isaacs/npm
 [homebrew]: http://github.com/mxcl/homebrew
