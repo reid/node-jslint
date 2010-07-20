@@ -24,7 +24,7 @@
         input = input.toString("utf8");
     }
 
-    JSLINT = require("jslint/fulljslint_export").JSLINT;
+    JSLINT = require("../lib/fulljslint_export").JSLINT;
 
     // remove shebang (lifted from node.js)
     input = input.replace(/^\#\!.*/, "");
