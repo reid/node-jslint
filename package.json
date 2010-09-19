@@ -1,5 +1,5 @@
 {   "name" : "jslint"
-,   "version" : "0.0.3"
+,   "version" : "0.0.4"
 ,   "engines" : { "node" : ">=0.1.97" }
 ,   "author" : "Douglas Crockford <douglas@crockford.com>"
 ,   "contributors" :
@@ -8,6 +8,7 @@
 ,       "Adam Moore"
 ,       "Luke Smith <lsmith@yahoo-inc.com>"
 ,       "Anders Conbere <aconbere@gmail.com>"
+,       "Fabricio C Zuardi <fabricio@fabricio.org>"
 ]
 ,   "bin" : { "jslint" : "./bin/jslint.js" }
 }

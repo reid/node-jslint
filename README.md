@@ -5,7 +5,12 @@ Easily use [jslint][] from the command line. Pass it the JS file you'd like to l
 
     jslint foo.js
 
-It assumes [nodejs][] globals and tolerates shebangs.
+Or pass - as the argument to have node-jslint to take the stdin as input. This is useful to concatenate jslint options files with your file and then pipe the result to jslint. For example:
+
+    jslint cat good_parts.js node_globals.js foo.js | jslint -
+
+
+It tolerates shebangs.
 
 Installation
 ------------
@@ -17,7 +22,7 @@ You'll need [nodejs][] and [npm][], which is easy to install on OS X with [homeb
 
 Then install:
 
-    npm install http://github.com/reid/node-jslint/tarball/master
+    npm install http://github.com/fczuardi/node-jslint/tarball/master
 
 You may also clone this repository then install in your working copy:
 
