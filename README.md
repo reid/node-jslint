@@ -7,7 +7,7 @@ Easily use [jslint][] from the command line. Pass it the JS file you'd like to l
 
 Or pass - as the argument to have node-jslint to take the stdin as input. This is useful to concatenate jslint options files with your file and then pipe the result to jslint. For example:
 
-    jslint cat good_parts.js node_globals.js foo.js | jslint -
+    cat good_parts.js node_globals.js foo.js | jslint -
 
 
 It tolerates shebangs.
