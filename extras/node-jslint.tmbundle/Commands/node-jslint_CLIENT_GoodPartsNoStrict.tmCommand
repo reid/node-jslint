@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+#
+# ___________________________________________
+# Textmate "Command" template for node-jslint
+# (http://github.com/fczuardi/node-jslint)
+# ___________________________________________
+#
+# REQUIRES (macOS) :
+# default requires node.js installed with homebrew, and node-jslint installed
+# with npm (/usr/local/share/npm/bin/jslint)
+# If you installed node-jslint another way, check that the path to the lint
+# executable in line "lint = `...`" reflects your installation
+#
+# USAGE :
+#   Directly load the whole node-jslint.tmbundle file in TextMate
+#   or if you prefer, add this command file to some bundle of your choice
+#
+# textmate settings : 
+#    Save : Nothing
+#    Input : Entire Document
+#    Output : Show HTML
+#    Activation : whatever key you like
+#    Scope Selector : source.js, source.prototype.js
+#
+# CREDITS :
+# modified from original (http://wonko.com/post/pretty-jslint-output-for-textmate)
+# by Peter Host http://github.com/peterhost
+#
+# LICENSE : WFTPL (http://sam.zoy.org/wtfpl/COPYING)
+#
+#
+# ___________________________________________
+# node-jslint (CLIENT) Good Parts
+# ___________________________________________
+#
+# uses the 'good parts' options as specified 
+# here : http://www.jslint.com/, leaving out 
+# "use strict"
+
+
+require 'cgi'
+
+lint = `LintOPTION1="/*jslint white: true, onevar: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true, strict: false */"; LintCODE=\`cat $TM_FILEPATH\`;echo -e "\$LintOPTION1\n\$LintCODE" | /usr/local/share/npm/bin/jslint -`
+
+# Regexp magic
+lint.gsub!(/^\s+(\d+)\s+(\d+),(\d+):\s+([^\n]*)\n([^\n]*)/m) do
+  "&lt;p&gt;&lt;strong&gt;#{CGI.escapeHTML($1)} &lt;a href=\"txmt://open?url=file://TM_FILEPATH&amp;line=#{CGI.escapeHTML($2)}\"&gt;&lt;/strong&gt;line #{CGI.escapeHTML($2)}&lt;/a&gt; :#{CGI.escapeHTML($3)} &lt;span&gt;#{CGI.escapeHTML($4)}&lt;/span&gt;" &lt;&lt;
+    ($5 ? "&lt;pre&gt;#{CGI.escapeHTML($5)}&lt;/pre&gt;" : '')
+end
+
+lint.gsub!(/TM_FILEPATH/, ENV['TM_FILEPATH']) 
+
+# Output some formated HTML
+print &lt;&lt;HTML
+&lt;!doctype&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;style type="text/css"&gt;
+		p { margin-bottom: 0; }
+		span { color: salmon;}
+		pre {
+			background: #f5f5f5;
+		     border: 1px solid #cfcfcf;
+		     font-size: 12px;
+		     margin-top: 2px;
+			padding: 2px 4px;
+			/*now, make those PRE elements wrap nicely*/
+		 	white-space: pre-wrap;       /* css-3 */
+			white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+			white-space: -pre-wrap;      /* Opera 4-6 */
+			white-space: -o-pre-wrap;    /* Opera 7 */
+			word-wrap: break-word;       /* Internet Explorer 5.5+ */
+		}
+	  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	#{lint}
+&lt;/body&gt;
+&lt;/html&gt;
+HTML</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@L</string>
+	<key>name</key>
+	<string>node-jslint (CLIENT) Good Parts noStrict</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.js, source.prototype.js</string>
+	<key>uuid</key>
+	<string>492BACA4-B0C4-42FD-BC86-98B1A1D6412F</string>
+</dict>
+</plist>
