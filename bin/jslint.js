@@ -5,20 +5,31 @@
 // JSLINT is provided by fulljslint.js modified to export the global
 /*global JSLINT */
 
-(function (file) {
-    var e, i, input, len, success, pad,
-        path = __filename.split("/").slice(0, -2).join("/"),
-        sys = require("sys"),
-        fs = require("fs");
+var sys = require("sys"),
+fs = require("fs");
 
-    if (!file) {
-        sys.puts("Usage: jslint file.js");
-        process.exit(1);
+var fetch_input = function () {
+    var input,
+    stdin = process.openStdin();
+    if (process.argv[2] === undefined) {
+        stdin.on('data', function(chunk) {
+            input += chunk;
+            process_data(input)
+        });
     }
+    else {
+        input = fs.readFileSync(process.argv[2]);
+        process_data(input);
+    }      
+}
 
-    input = fs.readFileSync(file);
+var process_data = function (input) {
+    var e, i, len, success, pad,
+    path = __filename.split("/").slice(0, -2).join("/");
+
     if (!input) {
-        sys.puts("jslint: Couldn't open file '" + file + "'.");
+        sys.print("jslint: Couldn't read input.\n");
+        sys.print("Usage: jslint file.js\n");
         process.exit(1);
     } else {
         input = input.toString("utf8");
@@ -30,20 +41,22 @@
     input = input.replace(/^\#\!.*/, "");
 
     success = JSLINT(input, {
-        predef:   [ // CommonJS
-                    "exports", 
-                    // YUI
-                    "YUI",
-                    "YAHOO",
-                    "YAHOO_config",
-                    "YUI_config",
-                    "Y",
-                    // NodeJS
-                    "GLOBAL",
-                    "process",
-                    "require",
-                    "__filename",
-                    "module"       ]
+        predef:   [ 
+            // CommonJS
+            "exports", 
+            // YUI
+            "YUI",
+            "YAHOO",
+            "YAHOO_config",
+            "YUI_config",
+            "Y",
+            // NodeJS
+            "GLOBAL",
+            "process",
+            "require",
+            "__filename",
+            "module",
+        ]
     });
 
     if (!success) {
@@ -65,4 +78,6 @@
 
     sys.puts("OK");
 
-}(process.ARGV[2]));
+}
+
+fetch_input();
