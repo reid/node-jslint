@@ -8,6 +8,8 @@
 ,       "Adam Moore"
 ,       "Luke Smith <lsmith@yahoo-inc.com>"
 ,       "Anders Conbere <aconbere@gmail.com>"
+,       "Dan Colish <dcolish@gmail.com>"
 ]
 ,   "bin" : { "jslint" : "./bin/jslint.js" }
+,   "bin" : { "lintserv" : "./bin/lintserv.js" }
 }
