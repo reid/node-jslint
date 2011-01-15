@@ -1,5 +1,5 @@
-{   "name" : "jslint"
-,   "version" : "0.0.3"
+{   "name" : "readyjslint"
+,   "version" : "0.0.4"
 ,   "engines" : { "node" : ">=0.1.97" }
 ,   "author" : "Douglas Crockford <douglas@crockford.com>"
 ,   "contributors" :
@@ -10,4 +10,5 @@
 ,       "Anders Conbere <aconbere@gmail.com>"
 ]
 ,   "bin" : { "jslint" : "./bin/jslint.js" }
+,   "main" : "./lib/fulljslint_export.js"
 }
