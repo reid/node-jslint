@@ -48,6 +48,7 @@
       });
 
       if (!success) {
+          sys.puts('Error in ' + file);
           i = 0;
           len = JSLINT.errors.length;
           for (i=0; i<len; i++) {
