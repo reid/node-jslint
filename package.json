@@ -1,5 +1,5 @@
 {   "name" : "jslint"
-,   "version" : "0.0.3"
+,   "version" : "0.0.4"
 ,   "engines" : { "node" : ">=0.1.97" }
 ,   "author" : "Douglas Crockford <douglas@crockford.com>"
 ,   "contributors" :
