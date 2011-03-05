@@ -5,15 +5,31 @@
 // JSLINT is provided by fulljslint.js modified to export the global
 /*global JSLINT */
 
-(function (file) {
+( function ( file, type, out ) {
+
     var e, i, input, len, success, pad,
         path = __filename.split("/").slice(0, -2).join("/"),
         sys = require("sys"),
-        fs = require("fs");
+        fs = require("fs"), text_out = '';
+    
+	function write ( text ) {
+		if ( out ) {
+			
+			fs.writeFileSync(out, text,'utf8');
+			
+		} else {
+			
+			sys.puts( text );
+			
+		}
+		
+	}
 
     if (!file) {
-        sys.puts("Usage: jslint file.js");
+    	
+        sys.puts("Usage: jslint file.js [data] [output.json]");
         process.exit(1);
+        
     }
 
     input = fs.readFileSync(file);
@@ -45,24 +61,31 @@
                     "__filename",
                     "module"       ]
     });
-
+    if ( type === 'data' ){
+    	
+	    text_out += JSON.stringify( JSLINT.data() );
+	    write( text_out );
+	    process.exit(0);
+	    
+    }
     if (!success) {
         i = 0;
         len = JSLINT.errors.length;
-        for (i=0; i<len; i++) {
-            pad = '' + (i + 1);
-            while (pad.length < 3) {
-                pad = ' ' + pad;
-            }
-            e = JSLINT.errors[i];
-            if (e) {
-                sys.puts(pad + ' ' + e.line + ',' + e.character + ': ' + e.reason);
-                sys.puts( '    ' + (e.evidence || '').replace(/^\s+|\s+$/, ""));
-            }
+    	for (i=0; i<len; i++) {
+    		pad = '' + (i + 1);
+    		while (pad.length < 3) {
+    			pad = ' ' + pad;
+    		}
+    		e = JSLINT.errors[i];
+    		if (e) {
+    			text_out += pad + ' ' + e.line + ',' + e.character + ': ' + e.reason + '\n';
+    			text_out += '    ' + (e.evidence || '').replace(/^\s+|\s+$/, "") + '\n';
+    		}
         }
+        write(text_out || 'SOMETHING WENT WRONG');
         process.exit(2);
     }
+    write(text_out || 'OK');
+    process.exit(0);
 
-    sys.puts("OK");
-
-}(process.ARGV[2]));
+})(process.ARGV[2], process.ARGV[3], process.ARGV[4]);
