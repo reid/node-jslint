@@ -1,6 +1,6 @@
 {   "name" : "jslint"
-,   "version" : "0.0.3"
-,   "engines" : { "node" : ">=0.1.97" }
+,   "version" : "0.1.0pre"
+,   "engines" : { "node" : ">=0.4.0" }
 ,   "author" : "Douglas Crockford <douglas@crockford.com>"
 ,   "contributors" :
 [       "Reid Burke <me@reidburke.com>"
@@ -10,4 +10,6 @@
 ,       "Anders Conbere <aconbere@gmail.com>"
 ]
 ,   "bin" : { "jslint" : "./bin/jslint.js" }
+,   "dependencies" : { "nopt" : "~1.0.0" }
+,   "lib" : "./lib"
 }
