@@ -28,18 +28,25 @@ function commandOptions () {
     return commandOpts;
 }
 
-var parsed = nopt(commandOptions(), {
-    "good" : ["--goodparts"],
-    "gp" : ["--goodparts"]
-});
+var options = commandOptions(),
+    shorthands = {
+        "good" : ["--goodparts"],
+        "gp" : ["--goodparts"]
+    };
+
+var parsed = nopt(options, shorthands);
 
 function die(why) {
     console.warn(why);
+    console.warn("Usage: " + process.argv[1] +
+        " [--" + Object.keys(options).join("] [--") +
+        "] [-" + Object.keys(shorthands).join("] [-") +
+        "] <scriptfile>...");
     process.exit(1);
 }
 
-if (!parsed.argv.remain) {
-    die("No files?");
+if (!parsed.argv.remain.length) {
+    die("No files specified.");
 }
 
 function lintFile(file) {
