@@ -29,18 +29,19 @@ function commandOptions () {
 }
 
 var options = commandOptions(),
-    shorthands = {
+    shorthandOptions = {
         "good" : ["--goodparts"],
         "gp" : ["--goodparts"]
-    };
+    },
+    shorthands = Object.keys(shorthandOptions);
 
-var parsed = nopt(options, shorthands);
+var parsed = nopt(options, shorthandOptions);
 
 function die(why) {
     console.warn(why);
     console.warn("Usage: " + process.argv[1] +
         " [--" + Object.keys(options).join("] [--") +
-        "] [-" + Object.keys(shorthands).join("] [-") +
+        "] [-" + shorthands.join("] [-") +
         "] <scriptfile>...");
     process.exit(1);
 }
