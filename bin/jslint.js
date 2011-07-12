@@ -50,6 +50,25 @@ if (!parsed.argv.remain.length) {
     die("No files specified.");
 }
 
+
+// If there are no more files to be processed, exit with the value 1
+// if any of the files contains any lint.
+var maybeExit = (function() {
+    var filesLeft = parsed.argv.remain.length;
+    var ok = true;
+
+    return function (lint) {
+	filesLeft -= 1;
+	ok = lint.ok && ok;
+	
+	if (filesLeft === 0) {
+	    // This was the last file; return appropriate exit value.
+	    process.exit(ok ? 0 : 1);
+	}
+    };
+}());
+	
+
 function lintFile(file) {
     fs.readFile(file, function (err, data) {
         if (err) {
@@ -57,13 +76,14 @@ function lintFile(file) {
         }
         data = data.toString("utf8");
         var lint = linter.lint(data, parsed);
+
         if (parsed.json) {
             console.log(JSON.stringify([file, lint]));
         } else {
             reporter.report(file, lint);
         }
+	maybeExit(lint);
     });
-    // TODO process.exit with correct return value
 }
 
 parsed.argv.remain.forEach(lintFile);
