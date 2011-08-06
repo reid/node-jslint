@@ -5,21 +5,21 @@ var reporter = require("../lib/reporter");
 var nopt = require("nopt");
 var fs = require("fs");
 
-function commandOptions () {
+function commandOptions() {
+    'use strict';
     var flags = [
-        'adsafe', 'bitwise', 'browser', 'cap', 'continue', 'css',
-        'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
-        'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
-        'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
-        'strict', 'sub', 'white', 'widget', 'goodparts', 'json'
-    ];
-
-    var commandOpts = {
-        'indent' : Number,
-        'maxerr' : Number,
-        'maxlen' : Number,
-        'predef' : [String, null]
-    };
+            'adsafe', 'bitwise', 'browser', 'cap', 'continue', 'css',
+            'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
+            'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
+            'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
+            'strict', 'sub', 'white', 'widget', 'goodparts', 'json'
+        ],
+        commandOpts = {
+            'indent' : Number,
+            'maxerr' : Number,
+            'maxlen' : Number,
+            'predef' : [String, null]
+        };
 
     flags.forEach(function (option) {
         commandOpts[option] = Boolean;
@@ -38,6 +38,7 @@ var options = commandOptions(),
 var parsed = nopt(options, shorthandOptions);
 
 function die(why) {
+    'use strict';
     console.warn(why);
     console.warn("Usage: " + process.argv[1] +
         " [--" + Object.keys(options).join("] [--") +
@@ -53,23 +54,25 @@ if (!parsed.argv.remain.length) {
 
 // If there are no more files to be processed, exit with the value 1
 // if any of the files contains any lint.
-var maybeExit = (function() {
-    var filesLeft = parsed.argv.remain.length;
-    var ok = true;
+var maybeExit = (function () {
+    'use strict';
+    var filesLeft = parsed.argv.remain.length,
+        ok = true;
 
     return function (lint) {
-	filesLeft -= 1;
-	ok = lint.ok && ok;
-	
-	if (filesLeft === 0) {
-	    // This was the last file; return appropriate exit value.
-	    process.exit(ok ? 0 : 1);
-	}
+        filesLeft -= 1;
+        ok = lint.ok && ok;
+        
+        if (filesLeft === 0) {
+            // This was the last file; return appropriate exit value.
+            process.exit(ok ? 0 : 1);
+        }
     };
 }());
 	
 
 function lintFile(file) {
+    'use strict';
     fs.readFile(file, function (err, data) {
         if (err) {
             throw err;
@@ -82,7 +85,7 @@ function lintFile(file) {
         } else {
             reporter.report(file, lint);
         }
-	maybeExit(lint);
+        maybeExit(lint);
     });
 }
 
