@@ -11,7 +11,8 @@ function commandOptions () {
         'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
         'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
         'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
-        'strict', 'sub', 'white', 'widget', 'goodparts', 'json'
+        'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
+        'boring'
     ];
 
     var commandOpts = {
@@ -80,7 +81,7 @@ function lintFile(file) {
         if (parsed.json) {
             console.log(JSON.stringify([file, lint]));
         } else {
-            reporter.report(file, lint);
+            reporter.report(file, lint, parsed);
         }
 	maybeExit(lint);
     });
