@@ -17,6 +17,7 @@
     "bin": {
         "jslint": "./bin/jslint.js"
     },
+    "main": "./lib/jslint.js",
     "dependencies": {
         "nopt": "~1.0.0"
     },
