@@ -60,14 +60,14 @@ var maybeExit = (function() {
     return function (lint) {
 	filesLeft -= 1;
 	ok = lint.ok && ok;
-	
+
 	if (filesLeft === 0) {
 	    // This was the last file; return appropriate exit value.
 	    process.exit(ok ? 0 : 1);
 	}
     };
 }());
-	
+
 
 function lintFile(file) {
     fs.readFile(file, function (err, data) {
