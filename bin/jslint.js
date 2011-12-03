@@ -11,7 +11,8 @@ function commandOptions () {
         'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
         'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
         'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
-        'strict', 'sub', 'white', 'widget', 'goodparts', 'json'
+        'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
+        'boring'
     ];
 
     var commandOpts = {
@@ -74,13 +75,19 @@ function lintFile(file) {
         if (err) {
             throw err;
         }
+		
+		// Fix UTF8 with BOM
+		if (0xEF === data[0] && 0xBB === data[1] && 0xBF === data[2]) {
+			data = data.slice(3);
+		}
+		
         data = data.toString("utf8");
         var lint = linter.lint(data, parsed);
 
         if (parsed.json) {
             console.log(JSON.stringify([file, lint]));
         } else {
-            reporter.report(file, lint);
+            reporter.report(file, lint, parsed);
         }
 	maybeExit(lint);
     });
