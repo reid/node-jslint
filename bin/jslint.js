@@ -5,7 +5,8 @@ var reporter = require("../lib/reporter");
 var nopt = require("nopt");
 var fs = require("fs");
 
-function commandOptions () {
+function commandOptions() {
+    'use strict';
     var flags = [
         'adsafe', 'bitwise', 'browser', 'cap', 'continue', 'css',
         'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
@@ -39,6 +40,7 @@ var options = commandOptions(),
 var parsed = nopt(options, shorthandOptions);
 
 function die(why) {
+    'use strict';
     console.warn(why);
     console.warn("Usage: " + process.argv[1] +
         " [--" + Object.keys(options).join("] [--") +
@@ -54,9 +56,10 @@ if (!parsed.argv.remain.length) {
 
 // If there are no more files to be processed, exit with the value 1
 // if any of the files contains any lint.
-var maybeExit = (function() {
-    var filesLeft = parsed.argv.remain.length;
-    var ok = true;
+var maybeExit = (function () {
+    'use strict';
+    var filesLeft = parsed.argv.remain.length,
+        ok = true;
 
     return function (lint) {
         filesLeft -= 1;
@@ -71,6 +74,7 @@ var maybeExit = (function() {
 
 
 function lintFile(file) {
+    'use strict';
     fs.readFile(file, function (err, data) {
         if (err) {
             throw err;
