@@ -59,13 +59,13 @@ var maybeExit = (function() {
     var ok = true;
 
     return function (lint) {
-	filesLeft -= 1;
-	ok = lint.ok && ok;
+        filesLeft -= 1;
+        ok = lint.ok && ok;
 
-	if (filesLeft === 0) {
-	    // This was the last file; return appropriate exit value.
-	    process.exit(ok ? 0 : 1);
-	}
+        if (filesLeft === 0) {
+            // This was the last file; return appropriate exit value.
+            process.exit(ok ? 0 : 1);
+        }
     };
 }());
 
@@ -75,12 +75,12 @@ function lintFile(file) {
         if (err) {
             throw err;
         }
-		
-		// Fix UTF8 with BOM
-		if (0xEF === data[0] && 0xBB === data[1] && 0xBF === data[2]) {
-			data = data.slice(3);
-		}
-		
+
+        // Fix UTF8 with BOM
+        if (0xEF === data[0] && 0xBB === data[1] && 0xBF === data[2]) {
+            data = data.slice(3);
+        }
+
         data = data.toString("utf8");
         var lint = linter.lint(data, parsed);
 
@@ -89,7 +89,8 @@ function lintFile(file) {
         } else {
             reporter.report(file, lint, parsed);
         }
-	maybeExit(lint);
+
+        maybeExit(lint);
     });
 }
 
