@@ -8,20 +8,19 @@ var fs = require("fs");
 function commandOptions() {
     'use strict';
     var flags = [
-        'adsafe', 'bitwise', 'browser', 'cap', 'continue', 'css',
-        'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
-        'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
-        'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
-        'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
-        'boring'
-    ];
-
-    var commandOpts = {
-        'indent' : Number,
-        'maxerr' : Number,
-        'maxlen' : Number,
-        'predef' : [String, Array]
-    };
+            'adsafe', 'bitwise', 'browser', 'cap', 'continue', 'css',
+            'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
+            'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
+            'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
+            'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
+            'boring'
+        ],
+        commandOpts = {
+            'indent' : Number,
+            'maxerr' : Number,
+            'maxlen' : Number,
+            'predef' : [String, Array]
+        };
 
     flags.forEach(function (option) {
         commandOpts[option] = Boolean;
