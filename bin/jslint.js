@@ -18,7 +18,7 @@ function commandOptions () {
         'indent' : Number,
         'maxerr' : Number,
         'maxlen' : Number,
-        'predef' : [String, null]
+        'predef' : [String, Array]
     };
 
     flags.forEach(function (option) {
