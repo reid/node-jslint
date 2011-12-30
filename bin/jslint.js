@@ -19,7 +19,8 @@ function commandOptions() {
             'indent' : Number,
             'maxerr' : Number,
             'maxlen' : Number,
-            'predef' : [String, Array]
+            'predef' : [String, Array],
+            'output': String
         };
 
     flags.forEach(function (option) {
@@ -90,7 +91,7 @@ function lintFile(file) {
         if (parsed.json) {
             console.log(JSON.stringify([file, lint]));
         } else {
-            reporter.report(file, lint, parsed.color);
+            reporter.report(file, lint, parsed.color, parsed.output);
         }
 
         maybeExit(lint);
