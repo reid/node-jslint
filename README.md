@@ -39,6 +39,8 @@ Options include:
 * `jslintxml` is the same format as used by [jslint4java][] with the
   `--report xml` argument
 
+Note that only `default` will respect the `--color` argument.
+
 ## License
 
 See LICENSE file.
