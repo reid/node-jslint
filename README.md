@@ -36,9 +36,12 @@ Options include:
 * `java` is Java-style reporting for integration with Java tools that
   don't support JUnit. This is a one-line format suitable for Emacs
   Flymake.
+* `jslintxml` is the same format as used by [jslint4java][] with the
+  `--report xml` argument
 
 ## License
 
 See LICENSE file.
 
 [JSLint]: http://jslint.com/
+[jslint4java]: http://code.google.com/p/jslint4java/
