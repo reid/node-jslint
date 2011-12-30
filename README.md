@@ -29,7 +29,8 @@ Example:
 
 Options include:
 
-* `default` is the normal output mode
+* `default` is the normal output mode (omit the `--output` argument to
+  use this also)
 * `simple` is a simple one-line output suitable for integration with Flymake
 * `xml` is JUnit XML-style output suitable for integration with Hudson
   or other CI tools
