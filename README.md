@@ -31,11 +31,11 @@ Options include:
 
 * `default` is the normal output mode (omit the `--output` argument to
   use this also)
-* `simple` is a simple one-line output suitable for integration with Flymake
 * `xml` is JUnit XML-style output suitable for integration with Hudson
   or other CI tools
 * `java` is Java-style reporting for integration with Java tools that
-  don't support JUnit.
+  don't support JUnit. This is a one-line format suitable for Emacs
+  Flymake.
 
 ## License
 
