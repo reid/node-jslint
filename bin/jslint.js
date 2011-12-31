@@ -13,7 +13,7 @@ function commandOptions() {
             'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
             'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
             'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
-            'color'
+            'color', 'exit0'
         ],
         commandOpts = {
             'indent' : Number,
@@ -67,6 +67,9 @@ var maybeExit = (function () {
 
         if (filesLeft === 0) {
             // This was the last file; return appropriate exit value.
+            if (parsed.exit0) {
+                process.exit(0);
+            }
             process.exit(ok ? 0 : 1);
         }
     };
