@@ -13,13 +13,14 @@ function commandOptions() {
             'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
             'plusplus', 'regexp', 'rhino', 'undef', 'safe', 'windows',
             'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
-            'color'
+            'color', 'exit0'
         ],
         commandOpts = {
             'indent' : Number,
             'maxerr' : Number,
             'maxlen' : Number,
-            'predef' : [String, Array]
+            'predef' : [String, Array],
+            'output': String
         };
 
     flags.forEach(function (option) {
@@ -66,6 +67,9 @@ var maybeExit = (function () {
 
         if (filesLeft === 0) {
             // This was the last file; return appropriate exit value.
+            if (parsed.exit0) {
+                process.exit(0);
+            }
             process.exit(ok ? 0 : 1);
         }
     };
@@ -90,7 +94,7 @@ function lintFile(file) {
         if (parsed.json) {
             console.log(JSON.stringify([file, lint.errors]));
         } else {
-            reporter.report(file, lint, parsed.color);
+            reporter.report(file, lint, parsed.color, parsed.output);
         }
 
         maybeExit(lint);
