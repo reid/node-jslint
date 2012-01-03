@@ -88,7 +88,7 @@ function lintFile(file) {
         var lint = linter.lint(data, parsed);
 
         if (parsed.json) {
-            console.log(JSON.stringify([file, lint]));
+            console.log(JSON.stringify([file, lint.errors]));
         } else {
             reporter.report(file, lint, parsed.color);
         }
