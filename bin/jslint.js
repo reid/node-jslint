@@ -65,8 +65,12 @@ var maybeExit = (function () {
         ok = lint.ok && ok;
 
         if (filesLeft === 0) {
-            // This was the last file; return appropriate exit value.
-            process.exit(ok ? 0 : 1);
+            // This was the last file.
+            // Exit with the appropriate code after flushing stdout.
+            process.stdout.destroySoon();
+            process.stdout.once("close", function () {
+                process.exit(ok ? 0 : 1);
+            });
         }
     };
 }());
