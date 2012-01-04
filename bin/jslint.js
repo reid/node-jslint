@@ -8,12 +8,12 @@ var fs = require("fs");
 function commandOptions() {
     'use strict';
     var flags = [
-            'bitwise', 'browser', 'cap', 'continue', 'css',
-            'debug', 'devel', 'es5', 'evil', 'forin', 'fragment',
-            'newcap', 'node', 'nomen', 'on', 'onevar', 'passfail',
-            'plusplus', 'regexp', 'rhino', 'undef', 'windows',
-            'strict', 'sub', 'white', 'widget', 'goodparts', 'json',
-            'color'
+            'bitwise', 'browser', 'cap', 'confusion', 'continue', 'css',
+            'debug', 'devel', 'eqeq', 'es5', 'evil', 'forin', 'fragment',
+            'newcap', 'node', 'nomen', 'on', 'passfail', 'plusplus',
+            'properties', 'regexp', 'rhino', 'undef', 'unparam',
+            'sloppy', 'sub', 'vars', 'white', 'widget', 'windows',
+            'json', 'color'
         ],
         commandOpts = {
             'indent' : Number,
@@ -29,22 +29,16 @@ function commandOptions() {
     return commandOpts;
 }
 
-var options = commandOptions(),
-    shorthandOptions = {
-        "good" : ["--goodparts"],
-        "gp" : ["--goodparts"]
-    },
-    shorthands = Object.keys(shorthandOptions);
+var options = commandOptions();
 
-var parsed = nopt(options, shorthandOptions);
+var parsed = nopt(options);
 
 function die(why) {
     'use strict';
     console.warn(why);
     console.warn("Usage: " + process.argv[1] +
         " [--" + Object.keys(options).join("] [--") +
-        "] [-" + shorthands.join("] [-") +
-        "] <scriptfile>...");
+        "] [--] <scriptfile>...");
     process.exit(1);
 }
 
