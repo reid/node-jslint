@@ -68,17 +68,11 @@ var maybeExit = (function () {
 
 function lintFile(file) {
     'use strict';
-    fs.readFile(file, function (err, data) {
+    fs.readFile(file, 'utf8', function (err, data) {
         if (err) {
             throw err;
         }
 
-        // Fix UTF8 with BOM
-        if (0xEF === data[0] && 0xBB === data[1] && 0xBF === data[2]) {
-            data = data.slice(3);
-        }
-
-        data = data.toString("utf8");
         var lint = linter.lint(data, parsed);
 
         if (parsed.json) {
