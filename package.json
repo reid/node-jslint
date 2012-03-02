@@ -5,7 +5,7 @@
     "keywords": [
         "lint"
     ],
-    "version": "0.1.6",
+    "version": "0.1.7pre",
     "author" : "Reid Burke <me@reidburke.com>",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
