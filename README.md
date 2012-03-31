@@ -19,22 +19,22 @@ Easily use [JSLint][] from the command line.
 * Select Tools | Build System | New Build System...
 * enter the following:
 
-```{
-	"cmd": ["jslint.cmd", "--terse", "$file"],
-	"file_regex": "^([^(]*)[(]([0-9]*)[)]()(.*)$",
-	"selector": "source.js"	
-```}
+    {
+        "cmd": ["jslint.cmd", "--terse", "$file"],
+        "file_regex": "^([^(]*)[(]([0-9]*)[)]()(.*)$",
+        "selector": "source.js"	
+    }
 
 ### For Mac
 
 * Select Tools | Build System | New Build System...
 * enter the following:
 
-```{
-	"cmd": ["jslint", "--terse", "$file"],
-	"file_regex": "^([^(]*)[(]([0-9]*)[)]()(.*)$",
-	"selector": "source.js"	
-```}
+    {
+        "cmd": ["jslint", "--terse", "$file"],
+        "file_regex": "^([^(]*)[(]([0-9]*)[)]()(.*)$",
+        "selector": "source.js"	
+    }
 
 ## Self-Lint
 
