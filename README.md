@@ -16,23 +16,23 @@ Easily use [JSLint][] from the command line.
 
 ## Usage examples
 
-###### Multiple files
+Multiple files
 
     jslint lib/worker.js lib/server.js
 
-###### All JSLint options supported
+All JSLint options supported
 
     jslint --white --vars --regexp app.js
 
-###### Defaults to true, but you can specify false
+Defaults to true, but you can specify false
 
     jslint --bitwise false app.js
 
-###### Pass arrays
+Pass arrays
 
 	jslint --predef $ --predef Backbone app.js
 
-###### JSLint your entire project
+JSLint your entire project
 
 	find . -name "*.js" -print0 | xargs -0 jslint
 
