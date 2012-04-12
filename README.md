@@ -4,6 +4,7 @@ Easily use [JSLint][] from the command line.
 
     jslint app.js
 
+
 ## Install
 
     npm install jslint
