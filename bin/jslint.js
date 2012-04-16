@@ -12,7 +12,7 @@ function commandOptions() {
             'debug', 'devel', 'eqeq', 'es5', 'evil', 'forin', 'fragment',
             'newcap', 'node', 'nomen', 'on', 'passfail', 'plusplus',
             'properties', 'regexp', 'rhino', 'undef', 'unparam',
-            'sloppy', 'sub', 'vars', 'white', 'widget', 'windows',
+            'sloppy', 'stupid', 'sub', 'vars', 'white', 'widget', 'windows',
             'json', 'color'
         ],
         commandOpts = {
