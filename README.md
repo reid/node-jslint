@@ -1,19 +1,16 @@
-# node-jslint
+## node-jslint
 
 Easily use [JSLint][] from the command line.
 
     jslint app.js
 
-
 ## Install
 
     npm install jslint
 
-
 ## Self-Lint
 
     make lint
-
 
 ## Usage examples
 

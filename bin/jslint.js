@@ -13,7 +13,7 @@ function commandOptions() {
             'newcap', 'node', 'nomen', 'on', 'passfail', 'plusplus',
             'properties', 'regexp', 'rhino', 'undef', 'unparam',
             'sloppy', 'stupid', 'sub', 'vars', 'white', 'widget', 'windows',
-            'json', 'color'
+            'json', 'color', 'terse'
         ],
         commandOpts = {
             'indent' : Number,
@@ -84,7 +84,7 @@ function lintFile(file) {
         if (parsed.json) {
             console.log(JSON.stringify([file, lint.errors]));
         } else {
-            reporter.report(file, lint, parsed.color);
+            reporter.report(file, lint, parsed.color, parsed.terse);
         }
 
         maybeExit(lint);
