@@ -70,7 +70,8 @@ function lintFile(file) {
     'use strict';
     fs.readFile(file, function (err, data) {
         if (err) {
-            throw err;
+            maybeExit(lint);
+            //throw err;
         }
 
         // Fix UTF8 with BOM
