@@ -13,7 +13,7 @@ function commandOptions() {
             'newcap', 'node', 'nomen', 'on', 'passfail', 'plusplus',
             'properties', 'regexp', 'rhino', 'undef', 'unparam',
             'sloppy', 'stupid', 'sub', 'vars', 'white', 'widget', 'windows',
-            'json', 'color', 'terse'
+            'json', 'color', 'terse', 'quiet'
         ],
         commandOpts = {
             'indent' : Number,
@@ -30,8 +30,9 @@ function commandOptions() {
 }
 
 var options = commandOptions();
-
 var parsed = nopt(options);
+
+var totalFiles = parsed.argv.remain.length;
 
 function die(why) {
     'use strict';
@@ -42,7 +43,7 @@ function die(why) {
     process.exit(1);
 }
 
-if (!parsed.argv.remain.length) {
+if (!totalFiles) {
     die("No files specified.");
 }
 
@@ -51,7 +52,7 @@ if (!parsed.argv.remain.length) {
 // if any of the files contains any lint.
 var maybeExit = (function () {
     'use strict';
-    var filesLeft = parsed.argv.remain.length,
+    var filesLeft = totalFiles,
         ok = true;
 
     return function (lint) {
@@ -65,26 +66,25 @@ var maybeExit = (function () {
     };
 }());
 
+var tracker = {
+    results: [],
+    total: totalFiles
+};
 
 function lintFile(file) {
     'use strict';
-    fs.readFile(file, function (err, data) {
+
+    fs.readFile(file, 'utf8', function (err, data) {
         if (err) {
             throw err;
         }
 
-        // Fix UTF8 with BOM
-        if (0xEF === data[0] && 0xBB === data[1] && 0xBF === data[2]) {
-            data = data.slice(3);
-        }
-
-        data = data.toString("utf8");
         var lint = linter.lint(data, parsed);
 
         if (parsed.json) {
             console.log(JSON.stringify([file, lint.errors]));
         } else {
-            reporter.report(file, lint, parsed.color, parsed.terse);
+            tracker.results.push(reporter.report(file, lint, parsed.color, parsed.terse, parsed.quiet, tracker));
         }
 
         maybeExit(lint);
