@@ -5,13 +5,14 @@
     "keywords": [
         "lint"
     ],
-    "version": "0.1.5",
-    "author" : "Reid Burke <me@reidburke.com>",
+    "version": "0.1.9",
+    "author" : "Rickey Visinski <rickeyvisinski at gmail.com",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
         "Mikeal Rogers <mikeal.rogers@gmail.com>",
         "Adam Moore",
         "Luke Smith <lsmith@yahoo-inc.com>",
+        "Reid Burke <me@reidburke.com>",
         "Anders Conbere <aconbere@gmail.com>"
     ],
     "bin": {
