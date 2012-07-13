@@ -5,7 +5,7 @@
     "keywords": [
         "lint"
     ],
-    "version": "0.1.9",
+    "version": "0.2.0",
     "author" : "Rickey Visinski <rickeyvisinski at gmail.com",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
