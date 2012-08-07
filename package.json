@@ -17,7 +17,7 @@
     "bin": {
         "jslint": "./bin/jslint.js"
     },
-    "main": "./lib/jslint.js",
+    "main": "./lib/nodelint.js",
     "dependencies": {
         "nopt": "~1.0.0"
     },
