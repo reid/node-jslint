@@ -60,7 +60,9 @@ var maybeExit = (function () {
 
         if (filesLeft === 0) {
             // This was the last file.
-            process.exit(ok ? 0 : 1);
+            process.stdout.on('drain', function () {
+                process.exit(ok ? 0 : 1);
+            });
         }
     };
 }());
