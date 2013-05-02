@@ -33,23 +33,23 @@ address backwards and forwards compatibility.
 
 Multiple files
 
-    jslint lib/worker.js lib/server.js
+    jslint lib/color.js lib/reporter.js
 
 All JSLint options supported
 
-    jslint --white --vars --regexp app.js
+    jslint --white --vars --regexp lib/color.js
 
 Defaults to true, but you can specify false
 
-    jslint --bitwise false app.js
+    jslint --bitwise false lib/color.js
 
 Pass arrays
 
-	jslint --predef $ --predef Backbone app.js
+    jslint --predef $ --predef Backbone lib/color.js
 
 JSLint your entire project
 
-	find . -name "*.js" -print0 | xargs -0 jslint
+    find . -name "*.js" -print0 | xargs -0 jslint
 
 
 ## License
