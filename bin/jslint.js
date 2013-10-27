@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env nodejs
 
 var linter = require("../lib/linter");
 var reporter = require("../lib/reporter");
