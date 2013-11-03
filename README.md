@@ -4,6 +4,23 @@ Easily use [JSLint][] from the command line.
 
     jslint app.js
 
+## What's New
+
+Version 0.2.1 of node-jslint provides multiple editions of jslint to 
+address backwards and forwards compatibility.
+
+### Use the default jslint
+
+    jslint lib/color.js
+
+### Always use the latest jslint
+
+    jslint --edition=latest lib/color.js
+
+### Use a specific edition (e.g., 2013-02-03 which shipped with node-jslint 0.1.9)
+
+    jslint --edition=2013-02-03 lib/color.js
+
 ## Install
 
     npm install jslint -g
