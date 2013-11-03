@@ -2,7 +2,7 @@
 
 Easily use [JSLint][] from the command line.
 
-    jslint app.js
+    jslint bin/jslint.js
 
 ## What's New
 
