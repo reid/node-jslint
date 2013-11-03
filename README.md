@@ -53,6 +53,9 @@ JSLint your entire project
 
     find . -name "*.js" -print0 | xargs -0 jslint
 
+Using JSLint with a config file
+  Start with the included jslintrc.example file and customize your options 
+  per project or copy it to $HOME/.jslintrc to apply your setting globally
 
 ## License
 
