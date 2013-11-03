@@ -21,6 +21,9 @@
     "dependencies": {
         "nopt": "~1.0.0"
     },
+    "devDependencies": {
+        "ronn": "0.4.0"
+    },
     "engines": {
         "node": ">=0.4.12"
     },
