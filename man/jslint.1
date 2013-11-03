@@ -1,0 +1,186 @@
+.TH JSLint 1 "OCTOBER 2013" NPM "User Manual"
+.SH NAME
+JSLint \- a code quality tool
+.SH SYNOPSIS
+jslint [--indent] [--maxerr] [--maxlen] [--predef] [--anon] [--bitwise] [--browser] [--cap] [--continue] [--css] [--debug] [--devel] [--eqeq] [--es5] [--evil] [--forin] [--fragment] [--newcap] [--node] [--nomen] [--on] [--passfail] [--plusplus] [--properties] [--regexp] [--rhino] [--undef] [--unparam] [--sloppy] [--stupid] [--sub] [--vars] [--white] [--widget] [--windows] [--json] [--color] [--terse] [--] <scriptfile>...
+.SH DESCRIPTION
+JSLint is a static analysis tool to locate and correct style problems in
+JavaScript source code.
+.SH OPTIONS
+.I --ass
+.RS 4
+true, if assignment expressions should be allowed
+.RE
+.I --bitwise
+.RS 4
+true, if bitwise operators should be allowed
+.RE
+.I --browser
+.RS 4
+true, if the standard browser globals should be predefined
+.RE
+.I --closure
+.RS 4
+true, if Google Closure idioms should be tolerated
+.RE
+.I --continue
+.RS 4
+true, if the continuation statement should be tolerated
+.RE
+.I --debug
+.RS 4
+true, if debugger statements should be allowed
+.RE
+.I --devel
+.RS 4
+true, if logging should be allowed (console, alert, etc.)
+.RE
+.I --eqeq
+.RS 4
+true, if == should be allowed
+.RE
+.I --es5
+.RS 4
+true, if ES5 syntax should be allowed
+.RE
+.I --evil
+.RS 4
+true, if eval should be allowed
+.RE
+.I --forin
+.RS 4
+true, if for in statements need not filter
+.RE
+.I --indent
+.RS 4
+the indentation factor
+.RE
+.I --maxerr
+.RS 4
+the maximum number of errors to allow
+.RE
+.I --maxlen
+.RS 4
+the maximum length of a source line
+.RE
+.I --newcap
+.RS 4
+true, if constructor names capitalization is ignored
+.RE
+.I --node
+.RS 4
+true, if Node.js globals should be predefined
+.RE
+.I --nomen
+.RS 4
+true, if names may have dangling _
+.RE
+.I --passfail
+.RS 4
+true, if the scan should stop on first error
+.RE
+.I --plusplus
+.RS 4
+true, if increment/decrement should be allowed
+.RE
+.I --properties
+.RS 4
+true, if all property names must be declared with /*properties*/
+.RE
+.I --regexp
+.RS 4
+true, if the . should be allowed in regexp literals
+.RE
+.I --rhino
+.RS 4
+true, if the Rhino environment globals should be predefined
+.RE
+.I --unparam
+.RS 4
+true, if unused parameters should be tolerated
+.RE
+.I --sloppy
+.RS 4
+true, if the 'use strict'; pragma is optional
+.RE
+.I --stupid
+.RS 4
+true, if really stupid practices are tolerated
+.RE
+.I --sub
+.RS 4
+true, if all forms of subscript notation are tolerated
+.RE
+.I --todo
+.RS 4
+true, if TODO comments are tolerated
+.RE
+.I --vars
+.RS 4
+true, if multiple var statements per function should be allowed
+.RE
+.I --white
+.RS 4
+true, if sloppy whitespace is tolerated
+.RE
+.SH EXAMPLES
+.I Multiple files:
+
+.RS
+jslint lib/worker.js lib/server.js
+.RE
+
+.I All JSLint options supported:
+
+.RS
+jslint --white --vars --regexp app.js
+.RE
+
+.I Defaults to true, but you can specify false:
+
+.RS
+jslint --bitwise false app.js
+.RE
+
+.I Pass arrays:
+
+.RS
+jslint --predef $ --predef Backbone app.js
+.RE
+
+.I JSLint your entire project:
+
+.RS
+find . -name "*.js" -print0 | xargs -0 jslint
+.RE
+.SH FILES
+.I
+This script is called when the `jslint` command is run:
+
+.RS
+/usr/lib/node_modules/jslint/bin/jslint.js
+.RE
+
+.I
+These library files provide the backend functionality of jslint:
+
+.RS
+/usr/lib/node_modules/color.js
+
+/usr/lib/node_modules/jslint.js
+
+/usr/lib/node_modules/linter.js
+
+/usr/lib/node_modules/nodelint.js
+
+/usr/lib/node_modules/reporter.js
+.RE
+
+.I
+This man page is located here:
+
+.RS
+/usr/share/man/man1/jslint.1
+.RE
+.SH COPYRIGHT
+Copyright (c) 2002 Douglas Crockford  (www.JSLint.com)

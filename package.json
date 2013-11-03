@@ -25,7 +25,8 @@
         "node": ">=0.4.12"
     },
     "directories": {
-        "lib": "./lib"
+        "lib": "./lib",
+        "man": "./man"
     },
     "repository": {
         "type": "git",
