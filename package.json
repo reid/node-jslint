@@ -5,14 +5,19 @@
     "keywords": [
         "lint"
     ],
-    "version": "0.2.1-pre",
+    "version": "0.2.2-pre",
     "author" : "Reid Burke <me@reidburke.com>",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
         "Mikeal Rogers <mikeal.rogers@gmail.com>",
         "Adam Moore",
         "Luke Smith <lsmith@yahoo-inc.com>",
-        "Anders Conbere <aconbere@gmail.com>"
+        "Anders Conbere <aconbere@gmail.com>",
+        "Ryuichi OKUMURA <okuryu@okuryu.com>",
+        "Sam Mikes <smikes@cubane.com>",
+        "Dylan Lloyd",
+        "Andreas Hindborg",
+        "Andrew Pennebaker"
     ],
     "bin": {
         "jslint": "./bin/jslint.js"
@@ -43,5 +48,8 @@
             "type": "Modified MIT / BSD",
             "url": "https://github.com/reid/node-jslint/blob/master/LICENSE"
         }
-    ]
+    ],
+    "scripts": { 
+        "test": "make test" 
+    }
 }
