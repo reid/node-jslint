@@ -17,7 +17,9 @@ address backwards and forwards compatibility.
 
     jslint --edition=latest lib/color.js
 
-### Use a specific edition (e.g., 2013-02-03 which shipped with node-jslint 0.1.9)
+### Use a specific edition 
+
+For example, edition 2013-02-03 which shipped with node-jslint 0.1.9:
 
     jslint --edition=2013-02-03 lib/color.js
 
