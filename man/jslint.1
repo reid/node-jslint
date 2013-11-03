@@ -1,12 +1,29 @@
-.TH JSLint 1 "OCTOBER 2013" NPM "User Manual"
+.TH JSLint 1 "NOVEMBER 2013" NPM "User Manual"
 .SH NAME
 JSLint \- a code quality tool
 .SH SYNOPSIS
-jslint [--indent] [--maxerr] [--maxlen] [--predef] [--anon] [--bitwise] [--browser] [--cap] [--continue] [--css] [--debug] [--devel] [--eqeq] [--es5] [--evil] [--forin] [--fragment] [--newcap] [--node] [--nomen] [--on] [--passfail] [--plusplus] [--properties] [--regexp] [--rhino] [--undef] [--unparam] [--sloppy] [--stupid] [--sub] [--vars] [--white] [--widget] [--windows] [--json] [--color] [--terse] [--] <scriptfile>...
+jslint [--indent] [--maxerr] [--maxlen] [--predef] [--anon] [--bitwise] [--browser] [--cap] [--continue] [--css] [--debug] [--devel] [--eqeq] [--es5] [--evil] [--forin] [--fragment] [--newcap] [--node] [--nomen] [--on] [--passfail] [--plusplus] [--properties] [--regexp] [--rhino] [--undef] [--unparam] [--sloppy] [--stupid] [--sub] [--vars] [--white] [--widget] [--json] [--color] [--terse] [--edition] [--] <scriptfile>...
 .SH DESCRIPTION
 JSLint is a static analysis tool to locate and correct style problems in
 JavaScript source code.
-.SH OPTIONS
+.SH META OPTIONS
+.I --color
+.RS 4
+write output in color (vt100+)
+.RE
+.I --terse
+.RS 4
+terser output; one line per error with parseable filename/line
+.RE
+.I --json
+.RS 4
+output in json format: [file,[err1,err2...]]
+.RE
+.I --edition
+.RS 4
+specify which edition of jslint to use: --edition=latest for latest
+.RE
+.SH LINTING OPTIONS
 .I --ass
 .RS 4
 true, if assignment expressions should be allowed
@@ -41,7 +58,7 @@ true, if == should be allowed
 .RE
 .I --es5
 .RS 4
-true, if ES5 syntax should be allowed
+true, if ES5 syntax should be allowed [deprecated in editions >=2013-09-22]
 .RE
 .I --evil
 .RS 4
