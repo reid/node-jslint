@@ -61,9 +61,15 @@ var maybeExit = (function () {
 
         if (filesLeft === 0) {
             // This was the last file.
-            process.stdout.on('drain', function () {
+
+            if (process.stdout.isTTY) {
                 process.exit(ok ? 0 : 1);
-            });
+
+            } else {
+                process.stdout.on('drain', function () {
+                    process.exit(ok ? 0 : 1);
+                });
+            }
         }
     };
 }());
