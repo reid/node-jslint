@@ -6,7 +6,7 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
-Version 0.2.1 of node-jslint provides multiple editions of jslint to 
+Version 0.2.5 of node-jslint provides multiple editions of jslint to 
 address backwards and forwards compatibility.
 
 ### Use the default jslint
@@ -54,8 +54,9 @@ JSLint your entire project
     find . -name "*.js" -print0 | xargs -0 jslint
 
 Using JSLint with a config file
-  Start with the included jslintrc.example file and customize your options 
-  per project or copy it to $HOME/.jslintrc to apply your setting globally
+
+    Start with the included jslintrc.example file and customize your options 
+    per project or copy it to $HOME/.jslintrc to apply your setting globally
 
 ## License
 
