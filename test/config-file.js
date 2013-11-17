@@ -1,4 +1,4 @@
-/*jslint */
+/*jslint stupid:true */
 var linter = require('../lib/linter'),
     assert = require('assert');
 
@@ -25,3 +25,33 @@ assert.deepEqual(r, {predef: ['foo', 'bar', 'baz']});
 r = linter.splitPredefs({predef: "foo,bar,baz"});
 r = linter.splitPredefs({predef: "foo,bar,baz"});
 assert.deepEqual(r, {predef: ['foo', 'bar', 'baz']});
+
+/* test: merge where one or more args is undefined */
+r = linter.merge({a: 1}, undefined);
+assert.deepEqual(r, {a: 1});
+
+r = linter.merge(undefined, {a: 1});
+assert.deepEqual(r, {a: 1});
+
+/* test: reading jslintrc file from current dir */
+(function () {
+    'use strict';
+    var oldDir = process.cwd(),
+        fs = require('fs');
+
+    process.chdir('test');
+
+    /* create jslintrc file */
+    fs.writeFileSync('jslintrc', '{"foo": 1}');
+
+    r = linter.loadAndParseConfig('jslintrc');
+    assert.deepEqual(r, {foo: 1});
+
+    /* nonexistent .jslintrc file */
+    r = linter.loadAndParseConfig('.jslintrc');
+    assert.deepEqual(r, undefined);
+
+    /* remove the jslintrc file */
+    fs.unlink('jslintrc');
+    process.chdir(oldDir);
+}());
