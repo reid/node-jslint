@@ -55,8 +55,8 @@ JSLint your entire project
 
 Using JSLint with a config file
 
-    Start with the included jslintrc.example file and customize your options 
-    per project or copy it to $HOME/.jslintrc to apply your setting globally
+Start with the included jslintrc.example file and customize your options 
+per project or copy it to $HOME/.jslintrc to apply your setting globally
 
 ## License
 
