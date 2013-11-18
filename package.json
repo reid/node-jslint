@@ -6,7 +6,7 @@
         "lint"
     ],
     "version": "0.2.5-pre",
-    "author" : "Reid Burke <me@reidburke.com>",
+    "author": "Reid Burke <me@reidburke.com>",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
         "Mikeal Rogers <mikeal.rogers@gmail.com>",
@@ -27,11 +27,22 @@
         "nopt": "~1.0.0"
     },
     "devDependencies": {
-        "ronn": "0.4.0"
+        "ronn": "0.4.0",
+        "istanbul": "~0.1.44",
+        "mocha": "~1.14.0",
+        "fs.extra": "~1.2.1"
     },
     "engines": {
         "node": ">=0.4.12"
     },
+    "files": [
+        "man",
+        "doc",
+        "lib",
+        "bin",
+        "jslintrc.example",
+        "Makefile"
+    ],
     "directories": {
         "lib": "./lib",
         "man": "./man",
@@ -51,8 +62,8 @@
             "url": "https://github.com/reid/node-jslint/blob/master/LICENSE"
         }
     ],
-    "scripts": { 
+    "scripts": {
         "test": "make test",
-        "prepublish": "make lint test doc"
+        "prepublish": "make prepublish"
     }
 }
