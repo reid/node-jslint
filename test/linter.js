@@ -34,6 +34,10 @@ suite('splitPredefs', function () {
         assert.deepEqual({predef: ['foo', 'bar', 'baz']}, 
                          linter.splitPredefs({predef: "foo,bar,baz"}));
     });
+    test('doesnt re-split predefs', function () {
+        assert.deepEqual({predef: ['foo', 'bar', 'baz']}, 
+                         linter.splitPredefs({predef: ['foo', 'bar', 'baz']}));
+    });
 });
 
 
@@ -90,4 +94,66 @@ suite('current dir config file', function () {
         assert.deepEqual({foo: "local"}, linter.loadConfig(undefined));
     });
 
+});
+
+suite('loadJSLint', function() {
+    test('loadJSLint loads something', function () {
+        var options = {edition: 'latest'};
+
+        assert.notEqual(undefined, linter.loadJSLint(options));
+    });
+});
+
+suite('preprocessScript', function () {
+    test('removes leading BOM', function () {
+
+        assert.equal('var x=1;', linter.preprocessScript('var x=1;'));
+
+        assert.equal('var x=1;', linter.preprocessScript('\uFEFFvar x=1;'));
+
+    });
+    test('removes shebang', function () {
+
+        assert.equal('\nvar x=1;', linter.preprocessScript('#!/usr/bin/env node\nvar x=1;'));
+
+    });
+});
+
+suite('lint', function () {
+    var oldHome = process.env.HOME;
+    teardown(function () {
+        process.env.HOME = oldHome;
+    });
+
+    test('basic lint step', function () {
+
+        var script = "// only a comment\n",
+            options = {edition: 'latest'},
+            result;
+
+        // don't let user's config interfere with our test
+        process.env.HOME = '';
+
+        result = linter.lint(script, options);
+        
+        assert.deepEqual({ok: true, errors: [], options: options},
+                         result);
+    });
+
+    test('lint finds error', function () {
+
+        var script = "//TODO: remove this\n",
+            options = {edition: '2013-09-22'},
+            result;
+
+        // don't let user's config interfere with our test
+        process.env.HOME = '';
+
+        result = linter.lint(script, options);
+        
+        assert.strictEqual(1, result.errors.length);
+        assert.strictEqual("Unexpected TODO comment.", 
+                           result.errors[0].raw);
+
+    });
 });
