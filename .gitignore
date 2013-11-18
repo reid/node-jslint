@@ -4,3 +4,5 @@
 node_modules
 doc/jslint.html
 man/jslint.1
+coverage
+**/*~
