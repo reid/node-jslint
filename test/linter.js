@@ -44,14 +44,14 @@ suite('splitPredefs', function () {
 suite('current dir config file', function () {
     var oldDir = process.cwd(),
         fs = require('fs.extra');
-    setup(function (done) {
+    suiteSetup(function (done) {
         fs.mkdir('test_config', function (err) {
             if (err) return done(err);
             process.chdir('test_config');
             done();
         });
     });
-    teardown(function (done) {
+    suiteTeardown(function (done) {
         process.chdir(oldDir);
         fs.rmrf('test_config', function (err) { 
             if (err) return done(err);
@@ -116,6 +116,12 @@ suite('preprocessScript', function () {
 
         assert.equal('\nvar x=1;', linter.preprocessScript('#!/usr/bin/env node\nvar x=1;'));
 
+    });
+});
+
+suite('preprocessOptions', function() {
+    test('accepts falsy options', function () {
+        assert.deepEqual(linter.preprocessOptions(undefined), linter.preprocessOptions({}));
     });
 });
 
