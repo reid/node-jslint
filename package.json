@@ -5,7 +5,7 @@
     "keywords": [
         "lint"
     ],
-    "version": "0.2.5-pre",
+    "version": "0.2.5",
     "author": "Reid Burke <me@reidburke.com>",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
@@ -17,7 +17,8 @@
         "Sam Mikes <smikes@cubane.com>",
         "Dylan Lloyd",
         "Andreas Hindborg",
-        "Andrew Pennebaker"
+        "Andrew Pennebaker",
+        "Bnaya"
     ],
     "bin": {
         "jslint": "./bin/jslint.js"
