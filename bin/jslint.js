@@ -13,7 +13,7 @@ function commandOptions() {
             'newcap', 'node', 'nomen', 'on', 'passfail', 'plusplus',
             'properties', 'regexp', 'rhino', 'undef', 'unparam',
             'sloppy', 'stupid', 'sub', 'vars', 'white', 'widget', 'windows',
-            'json', 'color', 'terse'
+            'json', 'color', 'terse', 'todo'
         ],
         commandOpts = {
             'indent' : Number,
