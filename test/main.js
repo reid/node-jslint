@@ -15,33 +15,38 @@ function mockConsole() {
 }
 
 function mockProcess() {
-    return {
+    var p = {
         argv: ['jslint'],
         exit: function (c) {
             this.exitCode = c;
-            this.onExit.forEach(function (f) {
+            this.events.exit.forEach(function (f) {
                 f();
             });
         },
-        onExit: [],
+        doDrain: function() {
+            this.events.drain.forEach(function (f) {
+                f();
+            });
+        },
+        events: { exit: [],
+                  drain: [] },
         on: function (event,f) {
-            if(event === 'exit') {
-                this.onExit.push(f);
-            }
+            this.events[event].push(f);
         },
         stdout: {
             isTTY: true,
-            on: function (event, fn) { this.callbacks[event].push(fn); },
+
+            /* mock: call callback right away */
+            on: function (event, fn) {
+                fn();
+                p.doDrain()
+            },
             callbacks: {
                 drain: []
             }
-        },
-        doDrain: function () {
-            this.stdout.callbacks.drain.forEach(function (f) {
-                f();
-            });
         }
     };
+    return p;
 }
 
 function mockParsed() {
@@ -63,10 +68,6 @@ suite('jslint main', function () {
 
         main.setConsole(con);
         main.setProcess(pro);
-    });
-
-    test('empty test', function () {
-        pro.stdout.on('drain', function() { console.log('foo'); });
     });
 
     test('main - no args', function () {
@@ -95,7 +96,7 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
-    test('main - one file, not tty, json output', function () {
+    test('main - one file, not tty, json output', function (done) {
         var parsed = mockParsed();
 
         parsed.argv.remain.push('lib/main.js');
@@ -104,17 +105,22 @@ suite('jslint main', function () {
 
         pro.stdout.isTTY = false;
 
+        pro.on('drain', function () {
+            assert.strictEqual(0, pro.exitCode);
+            done();
+        });
+
         main.main(parsed);
 
         assert.ok(main);
 
-        // TODO: testing of async exit needed
         // expect process.exit(0) to be as yet uncalled
         assert.strictEqual(undefined, pro.exitCode);
-
-        pro.doDrain();
-
-//            assert.strictEqual(0, pro.exitCode);
     });
 
+    test('todo in command-line options', function () {
+        var o = main.commandOptions();
+
+        assert.strictEqual(Boolean, o.todo);
+    });
 });
