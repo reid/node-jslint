@@ -6,7 +6,7 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
-Version 0.2.5 of node-jslint provides multiple editions of jslint to 
+Version 0.2.6 of node-jslint provides multiple editions of jslint to 
 address backwards and forwards compatibility.
 
 ### Use the default jslint
