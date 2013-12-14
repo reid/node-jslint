@@ -1,5 +1,5 @@
 BIN=bin/jslint.js
-SOURCES=$(shell find bin lib -name "*.js" ! -name "jslint-*.js" -print)
+SOURCES=$(shell find bin lib -name '*.js' ! -name 'jslint*.js' -print)
 
 install:
 	npm i .
