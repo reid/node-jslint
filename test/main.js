@@ -123,4 +123,48 @@ suite('jslint main', function () {
 
         assert.strictEqual(Boolean, o.todo);
     });
+
+    function isBasicType(type, value) {
+        return type(value).valueOf() === value;
+    }
+
+    test('isBasicType works', function () {
+
+        assert.ok(isBasicType(Boolean, true));
+        assert.ok(isBasicType(Boolean, false));
+        assert.ok(isBasicType(Number, 1));
+
+        assert.ok(!isBasicType(Boolean, 0));
+        assert.ok(!isBasicType(Boolean, 1));
+        assert.ok(!isBasicType(Number, false));
+        assert.ok(!isBasicType(String, 1));
+        assert.ok(!isBasicType(Number, '1'));
+    });
+
+    test('example jslintrc contains only valid options', function (done) {
+
+        var options = main.commandOptions(),
+            fs = require('fs');
+
+        fs.readFile("jslintrc.example", function (err, file) {
+            if (err) {
+                throw err;
+            }
+
+            var example = JSON.parse(file),
+                keys = Object.keys(example);
+
+            keys.forEach(function(opt) {
+                assert.ok(options.hasOwnProperty(opt));
+
+                var type = options[opt],
+                    value = example[opt];
+
+                assert.ok(isBasicType(type, value));
+            });
+
+            done();
+        });
+    });
+
 });
