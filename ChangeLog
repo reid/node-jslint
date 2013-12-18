@@ -1,0 +1,6 @@
+2013-12-18  Sam Mikes  <smikes@cubane.com>
+
+	* Version 0.2.6 - move code from src/jslint.js to lib/main.js
+	Update list of options in jslint.md
+	Remove incorrect options from jslintrc.example (https://github.com/reid/node-jslint/issues/76)
+	Document & enable use of --todo flag (https://github.com/reid/node-jslint/issues/76)
