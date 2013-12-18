@@ -5,14 +5,20 @@
     "keywords": [
         "lint"
     ],
-    "version": "0.1.9",
-    "author" : "Reid Burke <me@reidburke.com>",
+    "version": "0.2.6",
+    "author": "Reid Burke <me@reidburke.com>",
     "contributors": [
         "Douglas Crockford <douglas@crockford.com>",
         "Mikeal Rogers <mikeal.rogers@gmail.com>",
         "Adam Moore",
         "Luke Smith <lsmith@yahoo-inc.com>",
-        "Anders Conbere <aconbere@gmail.com>"
+        "Anders Conbere <aconbere@gmail.com>",
+        "Ryuichi OKUMURA <okuryu@okuryu.com>",
+        "Sam Mikes <smikes@cubane.com>",
+        "Dylan Lloyd",
+        "Andreas Hindborg",
+        "Andrew Pennebaker",
+        "Bnaya"
     ],
     "bin": {
         "jslint": "./bin/jslint.js"
@@ -21,12 +27,29 @@
     "dependencies": {
         "nopt": "~1.0.0"
     },
+    "devDependencies": {
+        "ronn": "0.4.0",
+        "istanbul": "~0.1.44",
+        "mocha": "~1.14.0",
+        "fs.extra": "~1.2.1"
+    },
     "engines": {
         "node": ">=0.4.12"
     },
+    "files": [
+        "man",
+        "doc",
+        "lib",
+        "bin",
+        "jslintrc.example",
+        "Makefile"
+    ],
     "directories": {
-        "lib": "./lib"
+        "lib": "./lib",
+        "man": "./man",
+        "doc": "./doc"
     },
+    "man": "./man/jslint.1",
     "repository": {
         "type": "git",
         "url": "git://github.com/reid/node-jslint.git"
@@ -39,5 +62,9 @@
             "type": "Modified MIT / BSD",
             "url": "https://github.com/reid/node-jslint/blob/master/LICENSE"
         }
-    ]
+    ],
+    "scripts": {
+        "test": "make test",
+        "prepublish": "make prepublish"
+    }
 }
