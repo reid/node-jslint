@@ -31,11 +31,11 @@ suite('addDefaults', function () {
 
 suite('splitPredefs', function () {
     test('can split predefs', function () {
-        assert.deepEqual({predef: ['foo', 'bar', 'baz']}, 
+        assert.deepEqual({predef: ['foo', 'bar', 'baz']},
                          linter.splitPredefs({predef: "foo,bar,baz"}));
     });
     test('doesnt re-split predefs', function () {
-        assert.deepEqual({predef: ['foo', 'bar', 'baz']}, 
+        assert.deepEqual({predef: ['foo', 'bar', 'baz']},
                          linter.splitPredefs({predef: ['foo', 'bar', 'baz']}));
     });
 });
@@ -43,19 +43,35 @@ suite('splitPredefs', function () {
 
 suite('current dir config file', function () {
     var oldDir = process.cwd(),
-        fs = require('fs.extra');
+        fs = require('fs.extra'),
+        con;
+
+    function mockConsole() {
+        return {
+            warnings: [],
+            warn: function(str) {
+                this.warnings.push(str);
+            }
+        };
+    }
+
     suiteSetup(function (done) {
+        // mock console object
+        con = mockConsole();
+        linter.setConsole(con);
+
         fs.mkdir('test_config', function (err) {
             if (err) return done(err);
             process.chdir('test_config');
             done();
         });
     });
+
     suiteTeardown(function (done) {
         process.chdir(oldDir);
-        fs.rmrf('test_config', function (err) { 
+        fs.rmrf('test_config', function (err) {
             if (err) return done(err);
-            done(); 
+            done();
         });
     });
 
@@ -65,6 +81,24 @@ suite('current dir config file', function () {
         assert.deepEqual({foo: 1}, linter.loadAndParseConfig('jslintrc'));
     });
 
+    test('no crash when empty jslintrc', function () {
+        fs.writeFileSync('jslintrc', '');
+
+        assert.deepEqual(undefined, linter.loadAndParseConfig('jslintrc'));
+
+        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
+                           con.warnings[0]);
+    });
+
+    test('no crash when malformed jslintrc', function () {
+        fs.writeFileSync('jslintrc', "{ 'invalid json': true");
+
+        assert.deepEqual(undefined, linter.loadAndParseConfig('jslintrc'));
+
+        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
+                           con.warnings[0]);
+    });
+
     test('nonexistent .jslintrc => undefined', function () {
         assert.deepEqual(undefined, linter.loadAndParseConfig('.jslintrc'));
     });
@@ -72,21 +106,21 @@ suite('current dir config file', function () {
     test('merge global and local config correctly', function () {
         fs.writeFileSync('home', '{"foo": 1}');
         fs.writeFileSync('local', '{"foo": 2}');
-        
+
         // no local = use home
         assert.deepEqual({foo: 1}, linter.mergeConfigs('home'));
 
-        // local overrides home 
+        // local overrides home
         assert.deepEqual({foo: 2}, linter.mergeConfigs('home', 'local'));
 
-        // either branch of local overrides home 
+        // either branch of local overrides home
         assert.deepEqual({foo: 2}, linter.mergeConfigs('home', 'filenotfound', 'local'));
     });
 
     test('load specific-named config files', function () {
         fs.writeFileSync('.jslintrc', '{"foo": "home"}');
         fs.writeFileSync('jslintrc', '{"foo": "local"}');
-        
+
         // pretend current directory is home
         assert.deepEqual({foo: "local"}, linter.loadConfig('.'));
 
@@ -141,7 +175,7 @@ suite('lint', function () {
         process.env.HOME = '';
 
         result = linter.lint(script, options);
-        
+
         assert.deepEqual({ok: true, errors: [], options: options},
                          result);
     });
@@ -156,9 +190,9 @@ suite('lint', function () {
         process.env.HOME = '';
 
         result = linter.lint(script, options);
-        
+
         assert.strictEqual(1, result.errors.length);
-        assert.strictEqual("Unexpected TODO comment.", 
+        assert.strictEqual("Unexpected TODO comment.",
                            result.errors[0].raw);
 
     });

@@ -1,3 +1,9 @@
+2014-01-30  Sam Mikes  <smikes@cubane.com>
+
+	* lib/linter.js: Fix Issue #80 - crash on empty jslintrc
+	Underlying issue was test-then-read rather than just attempting to
+	read and parse config, catching exceptions.
+
 2014-01-27  Sam Mikes  <smikes@cubane.com>
 
 	* Version 0.2.8 - update jslint-latest to upstream edition 2014-01-26
