@@ -167,4 +167,10 @@ suite('jslint main', function () {
         });
     });
 
+    test('edition is a string (not Boolean) option', function () {
+        var options = main.commandOptions();
+
+        assert.equal(String, options.edition);
+    });
+
 });
