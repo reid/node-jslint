@@ -2,16 +2,18 @@ var assert = require('assert'),
     main;
 
 function mockConsole() {
-    return {
+    var c ={
         warnings: [],
         warn: function(str) {
-            this.warnings.push(str);
+            c.warnings.push(str);
         },
         loggings: [],
         log: function(str) {
-            this.loggings.push(str);
+            c.loggings.push(str);
         }
     };
+
+    return c;
 }
 
 function mockProcess() {
@@ -73,7 +75,7 @@ suite('jslint main', function () {
     test('main - no args', function () {
         var parsed = mockParsed();
 
-        main.main(parsed);
+        main.runMain(parsed);
 
         assert.ok(main);
         assert.strictEqual(1, pro.exitCode);
@@ -91,7 +93,7 @@ suite('jslint main', function () {
 
         parsed.terse = true;
 
-        main.main(parsed);
+        main.runMain(parsed);
 
         assert.ok(main);
     });
@@ -99,7 +101,7 @@ suite('jslint main', function () {
     test('main - one file, not tty, json output', function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('lib/main.js');
+        parsed.argv.remain.push('lib/reporter.js');
 
         parsed.json = true;
 
@@ -110,7 +112,7 @@ suite('jslint main', function () {
             done();
         });
 
-        main.main(parsed);
+        main.runMain(parsed);
 
         assert.ok(main);
 
@@ -173,4 +175,25 @@ suite('jslint main', function () {
         assert.equal(String, options.edition);
     });
 
+    test('returns a version', function (done) {
+
+        main.reportVersion(function (version) {
+
+            assert.ok(/^node-jslint version:/.test(version));
+            assert.ok(/  JSLint edition/.test(version));
+            done();
+        }, {} );
+    });
+
+    test('argument parsing: edition is a string', function () {
+        var options = main.parseArgs(['node', 'jslint', '--edition=latest']);
+
+        assert.equal('latest', options.edition);
+    });
+
+    test('main -- report version', function (done) {
+        main.runMain({version: true});
+
+        done();
+    });
 });
