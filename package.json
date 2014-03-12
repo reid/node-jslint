@@ -5,7 +5,7 @@
   "keywords": [
     "lint"
   ],
-  "version": "0.2.11",
+  "version": "0.3.0",
   "author": "Reid Burke <me@reidburke.com>",
   "contributors": [
     "Douglas Crockford <douglas@crockford.com>",
@@ -26,14 +26,16 @@
   },
   "main": "./lib/nodelint.js",
   "dependencies": {
-    "nopt": "~1.0.0",
-    "glob": "~3.2.8"
+    "nopt": "~1.0.0"
   },
   "devDependencies": {
     "ronn": "0.4.0",
     "istanbul": "~0.1.44",
     "mocha": "~1.14.0",
     "fs.extra": "~1.2.1"
+  },
+  "optionalDependencies": {
+    "glob": "~3.2.8"
   },
   "engines": {
     "node": ">=0.4.12"
