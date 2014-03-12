@@ -99,6 +99,13 @@ suite('jslint main', function () {
     });
 
     test('main - glob files', function (done) {
+        // bail if glob not installed
+        if (!main.glob) {
+            assert.ok(true);
+            done();
+            return;
+        }
+
         var parsed = mockParsed();
 
         parsed.argv.remain.push('lib/mai*.js');
