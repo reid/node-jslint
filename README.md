@@ -51,7 +51,7 @@ Pass arrays
 
 JSLint your entire project
 
-    find . -name "*.js" -print0 | xargs -0 jslint
+    jslint '**/*.js'
 
 Using JSLint with a config file
 

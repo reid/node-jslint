@@ -98,6 +98,20 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
+    test('main - glob files', function (done) {
+        var parsed = mockParsed();
+
+        parsed.argv.remain.push('lib/mai*.js');
+
+        pro.on('exit', done);
+
+        parsed.terse = true;
+
+        main.runMain(parsed);
+
+        assert.ok(main);
+    });
+
     test('main - one file, not tty, json output', function (done) {
         var parsed = mockParsed();
 

@@ -18,14 +18,16 @@
     "Dylan Lloyd",
     "Andreas Hindborg",
     "Andrew Pennebaker",
-    "Bnaya"
+    "Bnaya",
+    "Maximilian Antoni <mail@maxantoni.de>"
   ],
   "bin": {
     "jslint": "./bin/jslint.js"
   },
   "main": "./lib/nodelint.js",
   "dependencies": {
-    "nopt": "~1.0.0"
+    "nopt": "~1.0.0",
+    "glob": "~3.2.8"
   },
   "devDependencies": {
     "ronn": "0.4.0",
