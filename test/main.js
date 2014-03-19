@@ -232,4 +232,19 @@ suite('jslint main', function () {
 
         done();
     });
+
+    test('main -- globbing with no globber', function () {
+        var files = main.globFiles(['foo', 'bar'], undefined);
+
+        assert.deepEqual(['foo', 'bar'], files);
+    });
+
+    test('main -- globbing with no globber -- removes node_modules', function () {
+        var files = main.globFiles(['foo', 'node_modules/bletch.js',
+                                    'bar', 'quux/node_modules/blither.js'], undefined);
+
+        assert.deepEqual(['foo', 'bar'], files);
+    });
+
+
 });
