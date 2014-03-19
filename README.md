@@ -6,7 +6,9 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
-Version 0.2.6 of node-jslint provides multiple editions of jslint to 
+Version 0.3.1 of node-jslint supports globbing with * and ** expressions.
+
+Versions 0.2+ of node-jslint provide multiple editions of jslint to 
 address backwards and forwards compatibility.
 
 ### Use the default jslint
