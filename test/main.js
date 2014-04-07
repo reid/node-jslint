@@ -40,8 +40,10 @@ function mockProcess() {
 
             /* mock: call callback right away */
             on: function (event, fn) {
-                fn();
-                p.doDrain()
+                process.nextTick(function () {
+                    fn();
+                    p.doDrain();
+                });
             },
             callbacks: {
                 drain: []
@@ -143,7 +145,7 @@ suite('jslint main', function () {
 
         pro.stdout.isTTY = false;
 
-        pro.on('drain', function () {
+        pro.on('exit', function () {
             assert.strictEqual(0, pro.exitCode);
             done();
         });
