@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-require("../lib/main.js").main();
+var main = require("../lib/main.js");
+
+main.runMain(main.parseArgs());
