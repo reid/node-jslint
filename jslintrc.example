@@ -3,6 +3,5 @@
     "indent":2,
     "vars":true,
     "passfail":false,
-    "plusplus":false,
-    "white":false
+    "plusplus":false
 }
