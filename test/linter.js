@@ -146,6 +146,15 @@ suite('current dir config file', function () {
         assert.deepEqual({foo: "local"}, linter.loadConfig(undefined));
     });
 
+    test('load user-named config files', function () {
+        fs.writeFileSync('user.jslint.conf', '{"bar": "user"}');
+
+        // pretend current directory is home
+        var conf = linter.loadConfig('.', './user.jslint.conf');
+
+        assert.equal("user", conf.bar);
+
+    });
 });
 
 suite('loadJSLint', function() {
