@@ -126,13 +126,13 @@ suite('current dir config file', function () {
         fs.writeFileSync('local', '{"foo": 2}');
 
         // no local = use home
-        assert.deepEqual({foo: 1}, linter.mergeConfigs('home'));
+        assert.deepEqual({foo: 1}, linter.mergeConfigs(['home'], []));
 
         // local overrides home
-        assert.deepEqual({foo: 2}, linter.mergeConfigs('home', 'local'));
+        assert.deepEqual({foo: 2}, linter.mergeConfigs(['home'], ['local']));
 
         // either branch of local overrides home
-        assert.deepEqual({foo: 2}, linter.mergeConfigs('home', 'filenotfound', 'local'));
+        assert.deepEqual({foo: 2}, linter.mergeConfigs(['home'], ['filenotfound', 'local']));
     });
 
     test('load specific-named config files', function () {
