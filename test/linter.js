@@ -15,6 +15,24 @@ suite('merge', function () {
 
         assert.deepEqual({a: 1}, linter.merge(undefined, {a: 1}));
     });
+
+    test('merge where one object has inherited properties', function () {
+        var util = require('util');
+
+        function A() {
+            this.parent = 'overridden';
+        }
+
+        function B() {
+            this.own = 'overridden'
+        }
+        var c = { parent: 'orig', own: 'orig' };
+
+        util.inherits(B, A);
+
+        assert.deepEqual({ parent: 'orig', own: 'overridden' },
+                         linter.merge(new B(), c));
+    });
 });
 
 suite('addDefaults', function () {
