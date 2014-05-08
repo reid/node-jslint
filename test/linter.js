@@ -203,8 +203,8 @@ suite('lint', function () {
 
         result = linter.lint(script, options);
 
-        assert.deepEqual({ok: true, errors: [], options: options},
-                         result);
+        assert.ok(result.ok);
+        assert.deepEqual(result.errors, []);
     });
 
     test('lint finds error', function () {

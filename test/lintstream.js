@@ -30,7 +30,11 @@ suite('lintstream', function () {
 
         l.on('data', function (chunk) {
             assert.equal(chunk.file, 'example.js');
-            assert.deepEqual(chunk.linted, {ok: true, errors: [], options: {}});
+
+            assert.ok(chunk.linted.ok);
+            assert.deepEqual(chunk.linted.errors, []);
+            assert.deepEqual(chunk.linted.options, {});
+
             done();
         });
 
