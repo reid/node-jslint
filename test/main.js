@@ -194,12 +194,12 @@ suite('jslint main', function () {
         assert.ok(!isBasicType(Number, '1'));
     });
 
-    test('example jslintrc contains only valid options', function (done) {
+    test('example jslint.conf contains only valid options', function (done) {
 
         var options = main.commandOptions(),
             fs = require('fs');
 
-        fs.readFile("jslintrc.example", function (err, file) {
+        fs.readFile("jslint.conf.example", function (err, file) {
             if (err) {
                 throw err;
             }
