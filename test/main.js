@@ -97,21 +97,6 @@ suite('jslint main', function () {
         });
     });
 
-    test('main - three files', function (done) {
-        var parsed = mockParsed();
-
-        parsed.argv.remain.push('lib/main.js');
-        parsed.argv.remain.push('lib/main.js');
-        parsed.argv.remain.push('lib/main.js');
-
-        pro.on('exit', done);
-
-        parsed.terse = true;
-
-        main.runMain(parsed);
-
-        assert.ok(main);
-    });
 
     test('main - glob files', function (done) {
         // bail if glob not installed
