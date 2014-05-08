@@ -5,7 +5,7 @@
   "keywords": [
     "lint"
   ],
-  "version": "0.3.4",
+  "version": "0.4.0pre",
   "author": "Reid Burke <me@reidburke.com>",
   "contributors": [
     "Douglas Crockford <douglas@crockford.com>",
@@ -38,7 +38,7 @@
     "glob": "~3.2.8"
   },
   "engines": {
-    "node": ">=0.4.12"
+    "node": ">=0.10.0"
   },
   "files": [
     "man",
