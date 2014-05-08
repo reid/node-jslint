@@ -11,6 +11,13 @@ suite('reportstream', function () {
         assert.ok(r instanceof stream.Transform);
     });
 
+    test('can create object incorrectly', function () {
+        var r = ReportStream();
+
+        assert.ok(r instanceof ReportStream);
+        assert.ok(r instanceof stream.Transform);
+    });
+
     test('can async', function (done) {
         var r = new ReportStream();
 
@@ -74,6 +81,11 @@ suite('reportstream', function () {
 
         r.write({file: 'example.js', linted: {ok: true}});
         r.end();
+    });
+
+    test('incorrectly construct a JSONReportStream', function (done) {
+        var r = JSONReportStream();
+        done();
     });
 
 });

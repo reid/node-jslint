@@ -84,6 +84,19 @@ suite('jslint main', function () {
         assert.strictEqual(2, con.warnings.length);
     });
 
+    test('main - bad lint', function (done) {
+        var parsed = mockParsed();
+
+        parsed.argv.remain.push('test/fixtures/bad.js');
+
+        main.runMain(parsed);
+
+        pro.on('exit', function () {
+            assert.equal(1, pro.exitCode);
+            done();
+        });
+    });
+
     test('main - three files', function (done) {
         var parsed = mockParsed();
 
