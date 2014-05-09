@@ -37,30 +37,30 @@ For example, edition 2013-02-03 which shipped with node-jslint 0.1.9:
 
 As of node-jslint 0.4.0, a streams interface is exposed.  You can use it in client code like this:
 
-   var LintStream = require('jslint').LintStream;
+    var LintStream = require('jslint').LintStream;
 
-   // configuring the linter
-   var l = new LintStream(options);          // can pass jslint options here, including edition
-       fileName = 'lib/main.js',
-       fileContents = ...;
+    // configuring the linter
+    var l = new LintStream(options);          // can pass jslint options here, including edition
+        fileName = 'lib/main.js',
+        fileContents = ...;
 
-   // sending files to the linter:
-   l.write({file: fileName, body: fileContents});
+    // sending files to the linter:
+    l.write({file: fileName, body: fileContents});
 
-   // receiving information from the linter
-   l.on('data', function (chunk, encoding, callback) {
-       // chunk is an object
+    // receiving information from the linter
+    l.on('data', function (chunk, encoding, callback) {
+        // chunk is an object
 
-       // chunk.file is whatever you supplied to write (see above)
-       assert.deepEqual(chunk.file, fileName);
+        // chunk.file is whatever you supplied to write (see above)
+        assert.deepEqual(chunk.file, fileName);
 
-       // chunk.linted is an object holding the result from running JSLint
-       // chunk.linted.ok is the boolean return code from JSLINT()
-       // chunk.linted.errors is the array of errors, etc.
-       // see JSLINT for the complete contents of the object
+        // chunk.linted is an object holding the result from running JSLint
+        // chunk.linted.ok is the boolean return code from JSLINT()
+        // chunk.linted.errors is the array of errors, etc.
+        // see JSLINT for the complete contents of the object
 
-       callback();
-   });
+        callback();
+    });
 
 You can only pass options to the LintStream when creating it.  The `edition` option can be
 used to select different editions of JSLint.
