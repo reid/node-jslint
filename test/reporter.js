@@ -18,20 +18,20 @@ suite('reporter', function () {
             character: c,
             reason: r
         };
-        if(e) { 
-            err.evidence=e; 
+        if(e) {
+            err.evidence=e;
         }
         return err;
     };
 
-    function newLog() { 
+    function newLog() {
         var o = {
             outLines: [],
             errLines: []
         };
 
-        o.log = reporter.generator(o.outLines, 'push');
-        o.err = reporter.generator(o.errLines, 'push');
+        o.log = o.outLines.push.bind(o.outLines);
+        o.err = o.errLines.push.bind(o.errLines);
 
         return o;
     }
