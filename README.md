@@ -92,7 +92,7 @@ The simple interface provides an edition-aware loader.  This can be used as a fr
 node-jslint's collection of editions of the JSLINT code.
 
     var node_jslint = require('jslint'),
-        JSLINT = jslint.load(edition);
+        JSLINT = node_jslint.load(edition);
 
 This exposes the same loading interface used in node-jslint, so it supports the special
 edition names `default` and `latest` as well as date-based edition names such as `2013-08-26`
