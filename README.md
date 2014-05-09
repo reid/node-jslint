@@ -37,17 +37,29 @@ For example, edition 2013-02-03 which shipped with node-jslint 0.1.9:
 
 As of node-jslint 0.4.0, a streams interface is exposed.  You can use it in client code like this:
 
+Install as a dependency:
+
+    $ npm install --save jslint
+
+Pull it into your code with require:
+
     var LintStream = require('jslint').LintStream;
 
-    // configuring the linter
-    var l = new LintStream(options);          // can pass jslint options here, including edition
-        fileName = 'lib/main.js',
-        fileContents = ...;
+Create and configure the stream linter:
 
-    // sending files to the linter:
+    var options = {
+        "edition": latest,
+        "length": 100
+    },
+        l = new LintStream(options);
+
+Send files to the linter:
+
+    var fileName, fileContents;
     l.write({file: fileName, body: fileContents});
 
-    // receiving information from the linter
+Receive lint from the linter:
+
     l.on('data', function (chunk, encoding, callback) {
         // chunk is an object
 
