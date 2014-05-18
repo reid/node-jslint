@@ -7,7 +7,7 @@ suite('jslint loader', function () {
         assert.ok(JSLINT);
     });
 
-    test('load exlicit jslint', function () {
+    test('load explicit jslint', function () {
         var JSLINT = nodelint.load('latest');
         assert.ok(JSLINT);
     });
@@ -29,4 +29,3 @@ suite('jslint loader', function () {
         assert.strictEqual(1, con.warnings.length);
     });
 });
-
