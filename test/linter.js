@@ -1,4 +1,5 @@
 var assert = require('assert'),
+    nodelint = require('../lib/nodelint'),
     linter = require('../lib/linter');
 
 suite('merge', function () {
@@ -60,12 +61,13 @@ suite('lint', function () {
 
         var script = "// only a comment\n",
             options = {edition: 'latest'},
+            JSLINT = nodelint.load(options.edition),
             result;
 
         // don't let user's config interfere with our test
         process.env.HOME = '';
 
-        result = linter.lint(script, options);
+        result = linter.doLint(JSLINT, script, options);
 
         assert.ok(result.ok);
         assert.deepEqual(result.errors, []);
@@ -75,16 +77,18 @@ suite('lint', function () {
 
         var script = "//TODO: remove this\n",
             options = {edition: '2013-09-22'},
+            JSLINT = nodelint.load(options.edition),
             result;
 
         // don't let user's config interfere with our test
         process.env.HOME = '';
 
-        result = linter.lint(script, options);
+        result = linter.doLint(JSLINT, script, options);
 
         assert.strictEqual(1, result.errors.length);
         assert.strictEqual("Unexpected TODO comment.",
                            result.errors[0].raw);
 
     });
+
 });
