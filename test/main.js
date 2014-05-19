@@ -48,6 +48,15 @@ function mockProcess() {
             callbacks: {
                 drain: []
             }
+        },
+        stderrWritings: [],
+        stderr: {
+            isTTY: true,
+
+            /* mock: call callback right away */
+            write: function (string) {
+                p.stderrWritings.push(string);
+            }
         }
     };
     return p;
@@ -246,5 +255,26 @@ suite('jslint main', function () {
         assert.deepEqual(['foo', 'bar'], files);
     });
 
+    test('most data goes to console.log', function (done) {
+        var rep = main.makeReporter({});
+        rep.on('finish', function () {
+            assert.equal(con.loggings.length, 1);
+            assert.equal(con.loggings[0], 'log message');
+            done();
+        });
+        rep.emit('data', 'log message');
+        rep.end();
+    });
+
+    test('dots go to process.stderr', function (done) {
+        var rep = main.makeReporter({});
+        rep.on('finish', function () {
+            assert.equal(pro.stderrWritings.length, 1);
+            assert.equal(pro.stderrWritings[0], '.');
+            done();
+        });
+        rep.emit('data', '.');
+        rep.end();
+    });
 
 });
