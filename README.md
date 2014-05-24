@@ -8,11 +8,18 @@ Easily use [JSLint][] from the command line.
 
 Added latest jslint, 2014-04-21.
 
-Version 0.4.0 of node-jslint exposes a stream interface to jslint.
+Version 0.5.1 fixes a regression which crashes jslint when more than
+maxerr errors are in a single file.  Thanks to Vasil Velichkov
+(@velichkov) for pointing this out.
 
-Version 0.3.4 of node-jslint supports globbing with * and ** expressions.
+Version 0.5.0 reorganizes the loading interface, making it easier for
+other projects to use node-jslint to load a specific jslint edition.
 
-Versions 0.2+ of node-jslint provide multiple editions of jslint to
+Version 0.4.0 exposes a stream interface to jslint.
+
+Version 0.3.4 supports globbing with * and ** expressions.
+
+Versions 0.2+ provide multiple editions of jslint to
 address backwards and forwards compatibility.
 
 ## Use the command-line client
@@ -97,6 +104,10 @@ node-jslint's collection of editions of the JSLINT code.
 This exposes the same loading interface used in node-jslint, so it supports the special
 edition names `default` and `latest` as well as date-based edition names such as `2013-08-26`
 
+As of version 0.5.0, the `load` function also accepts filenames.  To be recognized as a filename,
+the argument to load must contain a path-separator character (`/` or `\`) or end with the extension
+`.js`.
+
 
 ## Usage examples
 
@@ -122,8 +133,8 @@ JSLint your entire project
 
 Using JSLint with a config file
 
-Start with the included jslintrc.example file and customize your options
-per project or copy it to $HOME/.jslintrc to apply your setting globally
+Start with the included jslint.conf.example file and customize your options
+per project or copy it to $HOME/.jslint.conf to apply your setting globally
 
 ## License
 
