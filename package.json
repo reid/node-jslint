@@ -19,7 +19,8 @@
     "Andreas Hindborg",
     "Andrew Pennebaker",
     "Bnaya",
-    "Maximilian Antoni <mail@maxantoni.de>"
+    "Maximilian Antoni <mail@maxantoni.de>",
+    "Vasil Velichkov"
   ],
   "bin": {
     "jslint": "./bin/jslint.js"
