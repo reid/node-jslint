@@ -91,4 +91,19 @@ suite('lint', function () {
 
     });
 
+    test('maxerr causes null error', function () {
+        var JSLINT = nodelint.load('lib/jslint-2013-09-22.js'),
+            script = "var __evil = eval('3')",
+            options = {maxerr: 1},
+            result;
+
+        result = linter.doLint(JSLINT, script, options);
+
+        assert.equal(result.ok, false);
+        assert.equal(result.errors.length, 3);
+        assert.equal(result.errors[2], null);
+
+    });
+
+
 });
