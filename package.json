@@ -5,7 +5,7 @@
   "keywords": [
     "lint"
   ],
-  "version": "0.5.3pre",
+  "version": "0.6.0",
   "author": "Reid Burke <me@reidburke.com>",
   "contributors": [
     "Douglas Crockford <douglas@crockford.com>",
@@ -20,7 +20,8 @@
     "Andrew Pennebaker",
     "Bnaya",
     "Maximilian Antoni <mail@maxantoni.de>",
-    "Vasil Velichkov"
+    "Vasil Velichkov",
+    "Rasmus Paetau"
   ],
   "bin": {
     "jslint": "./bin/jslint.js"
@@ -28,8 +29,7 @@
   "main": "./lib/nodelint.js",
   "dependencies": {
     "exit": "^0.1.2",
-    "nopt": "~1.0.0",
-    "readable-stream": "~1.0.0"
+    "nopt": "~1.0.0"
   },
   "devDependencies": {
     "ronn": "0.4.0",

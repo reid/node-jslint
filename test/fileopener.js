@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    stream = require('readable-stream'),
+    stream = require('stream'),
     FileOpener  = require('../lib/fileopener.js');
 
 suite('fileopener', function () {

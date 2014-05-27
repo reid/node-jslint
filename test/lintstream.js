@@ -7,7 +7,7 @@
 // See LICENSE for details.
 
 var assert = require('assert'),
-    stream = require('readable-stream'),
+    stream = require('stream'),
     LintStream = require('../lib/lintstream.js');
 
 suite('lintstream', function () {

@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    stream = require('readable-stream'),
+    stream = require('stream'),
     ReportStream = require('../lib/reportstream.js'),
     JSONReportStream = require('../lib/jsonreportstream.js');
 
