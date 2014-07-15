@@ -29,19 +29,17 @@
   "main": "./lib/nodelint.js",
   "dependencies": {
     "exit": "^0.1.2",
-    "nopt": "~1.0.0"
+    "glob": "^4.0.4",
+    "nopt": "^3.0.0"
   },
   "devDependencies": {
-    "ronn": "0.4.0",
-    "istanbul": "~0.1.44",
-    "mocha": "~1.14.0",
-    "fs.extra": "~1.2.1"
-  },
-  "optionalDependencies": {
-    "glob": "~3.2.8"
+    "ronn": "^0.4.0",
+    "istanbul": "^0.3.0",
+    "mocha": "^1.20.0",
+    "fs.extra": "^1.2.1"
   },
   "engines": {
-    "node": ">=0.4.0"
+    "node": ">=0.10.0"
   },
   "files": [
     "man",
