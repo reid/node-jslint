@@ -1,3 +1,6 @@
+2014-09-10  Marshall Thompson <marshall.w.thompson.iv@gmail.com>
+	* update jslint-latest to upstream edition 2014-07-08
+
 2104-04-13  Sam Mikes  <smikes@cubane.com>
 
 	* lib/linter.js: Fix issue #88 - support user-specified config file, support

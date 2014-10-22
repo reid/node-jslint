@@ -6,7 +6,7 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
-Added latest jslint, 2014-04-21.
+Added latest jslint, 2014-07-08.
 
 Version 0.5.1 fixes a regression which crashes jslint when more than
 maxerr errors are in a single file.  Thanks to Vasil Velichkov
