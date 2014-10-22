@@ -71,6 +71,6 @@
   ],
   "scripts": {
     "test": "make test",
-    "prepublish": "make prepublish"
+    "mypublish": "make prepublish; npm publish"
   }
 }
