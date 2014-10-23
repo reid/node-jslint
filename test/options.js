@@ -4,6 +4,7 @@
 'use strict';
 
 var assert = require('assert'),
+    async = require('async'),
     options = require('../lib/options');
 
 suite('splitPredefs', function () {
@@ -103,18 +104,33 @@ suite('current dir config file', function () {
         assert.deepEqual({foo: 2}, options.mergeConfigs(['home'], ['filenotfound', 'local']));
     });
 
-    test('load specific-named config files', function () {
-        fs.writeFileSync('.jslintrc', '{"foo": "home"}');
-        fs.writeFileSync('jslintrc', '{"foo": "local"}');
+    test('load specific-named config files', function (done) {
+        fs.writeFile('.jslintrc', '{"foo": "local"}', function () {
 
-        // pretend current directory is home
-        assert.deepEqual({foo: "local"}, options.loadConfig('.'));
+            async.parallel([
 
-        // Windows: process.env.HOME can be unset (undefined)
-        assert.deepEqual({foo: "local"}, options.loadConfig(undefined));
+                function (callback) {
+                    // pretend current directory is home
+                    options.getOptions('.', {}, function (conf) {
+                        assert.deepEqual({foo: "local"}, conf);
+                        callback();
+                    });
+                },
+
+                function (callback) {
+                    // Windows: process.env.HOME can be unset (undefined)
+                    options.getOptions(undefined, {}, function (conf) {
+                        assert.deepEqual({foo: "local"}, conf);
+                        callback();
+                    });
+                }
+
+            ], done);
+
+        });
     });
 
-    test.only('load user-named config files', function (done) {
+    test('load user-named config files', function (done) {
         fs.writeFile('user.jslint.conf', '{"bar": "user"}', function () {
             // pretend current directory is home
             options.getOptions('.', {
