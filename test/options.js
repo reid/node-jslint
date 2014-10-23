@@ -43,7 +43,7 @@ suite('current dir config file', function () {
         con = mockConsole();
         options.setConsole(con);
 
-        fs.mkdir('test_config', function (err) {
+        fs.mkdirp('test_config/1/2/3', function (err) {
             if (err) {
                 return done(err);
             }
@@ -90,18 +90,41 @@ suite('current dir config file', function () {
         assert.deepEqual(undefined, options.loadAndParseConfig('.jslintrc'));
     });
 
-    test('merge global and local config correctly', function () {
-        fs.writeFileSync('home', '{"foo": 1}');
-        fs.writeFileSync('local', '{"foo": 2}');
+    suite('merge global and local config correctly', function () {
 
-        // no local = use home
-        assert.deepEqual({foo: 1}, options.mergeConfigs(['home'], []));
+        suiteSetup(function (done) {
+            fs.writeFile('.jslintrc', '{"foo": 1}', done);
+        });
 
-        // local overrides home
-        assert.deepEqual({foo: 2}, options.mergeConfigs(['home'], ['local']));
+        suiteSetup(function (done) {
+            fs.writeFile('1/2/.jslintrc', '{"foo": 2}', done);
+        });
 
-        // either branch of local overrides home
-        assert.deepEqual({foo: 2}, options.mergeConfigs(['home'], ['filenotfound', 'local']));
+        suiteSetup(function (done) {
+            fs.writeFile('1/2/3/.jslintrc', '{"bar": 3}', done);
+        });
+
+        test('no local = use home', function (done) {
+            options.getOptions('./1', {}, function (conf) {
+                assert.deepEqual({foo: 1}, conf);
+                done();
+            });
+        });
+
+        test('local overrides home', function (done) {
+            options.getOptions('./1/2', {}, function (conf) {
+                assert.deepEqual({foo: 2}, conf);
+                done();
+            });
+        });
+
+        test('configs cascade from lower directories', function (done) {
+            options.getOptions('./1/2/3', {}, function (conf) {
+                assert.deepEqual({foo: 2, bar: 3}, conf);
+                done();
+            });
+        });
+
     });
 
     suite('load specific-named config files', function () {
