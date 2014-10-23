@@ -1,3 +1,8 @@
+/*jslint node: true */
+/*global suite, suiteSetup, suiteTeardown, test */
+
+'use strict';
+
 var assert = require('assert'),
     options = require('../lib/options');
 
@@ -12,7 +17,7 @@ suite('splitPredefs', function () {
     });
 });
 
-suite('preprocessOptions', function() {
+suite('preprocessOptions', function () {
     test('accepts falsy options', function () {
         assert.deepEqual(options.preprocessOptions(undefined), options.preprocessOptions({}));
     });
@@ -26,7 +31,7 @@ suite('current dir config file', function () {
     function mockConsole() {
         return {
             warnings: [],
-            warn: function(str) {
+            warn: function (str) {
                 this.warnings.push(str);
             }
         };
@@ -38,7 +43,9 @@ suite('current dir config file', function () {
         options.setConsole(con);
 
         fs.mkdir('test_config', function (err) {
-            if (err) return done(err);
+            if (err) {
+                return done(err);
+            }
             process.chdir('test_config');
             done();
         });
@@ -47,7 +54,9 @@ suite('current dir config file', function () {
     suiteTeardown(function (done) {
         process.chdir(oldDir);
         fs.rmrf('test_config', function (err) {
-            if (err) return done(err);
+            if (err) {
+                return done(err);
+            }
             done();
         });
     });
