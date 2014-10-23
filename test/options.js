@@ -62,32 +62,26 @@ suite('current dir config file', function () {
         });
     });
 
-    test('read jslintrc when present', function () {
-        fs.writeFileSync('jslintrc', '{"foo": 1}');
+    suite('no crash when malformed jslintrc', function () {
 
-        assert.deepEqual({foo: 1}, options.loadAndParseConfig('jslintrc'));
-    });
+        test('empty file', function (done) {
+            fs.writeFile('.jslintrc', "", function () {
+                options.getOptions('.', {}, function () {
+                    assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                    done();
+                });
+            });
+        });
 
-    test('no crash when empty jslintrc', function () {
-        fs.writeFileSync('jslintrc', '');
+        test('invalid json', function (done) {
+            fs.writeFile('.jslintrc', "{ 'invalid json': true", function () {
+                options.getOptions('.', {}, function () {
+                    assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                    done();
+                });
+            });
+        });
 
-        assert.deepEqual(undefined, options.loadAndParseConfig('jslintrc'));
-
-        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
-                           con.warnings[0]);
-    });
-
-    test('no crash when malformed jslintrc', function () {
-        fs.writeFileSync('jslintrc', "{ 'invalid json': true");
-
-        assert.deepEqual(undefined, options.loadAndParseConfig('jslintrc'));
-
-        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
-                           con.warnings[0]);
-    });
-
-    test('nonexistent .jslintrc => undefined', function () {
-        assert.deepEqual(undefined, options.loadAndParseConfig('.jslintrc'));
     });
 
     suite('merge global and local config correctly', function () {
