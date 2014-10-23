@@ -10,23 +10,9 @@ var assert = require('assert'),
 
 suite('options', function () {
 
-    var oldDir = process.cwd(),
-        con;
-
-    function mockConsole() {
-        return {
-            warnings: [],
-            warn: function (str) {
-                this.warnings.push(str);
-            }
-        };
-    }
+    var oldDir = process.cwd();
 
     suiteSetup(function (done) {
-        // mock console object
-        con = mockConsole();
-        options.setConsole(con);
-
         fs.mkdirp('test_config/1/2/3', function (err) {
             if (err) {
                 return done(err);
@@ -74,10 +60,30 @@ suite('options', function () {
 
         suite('no crash when malformed jslintrc', function () {
 
+            var console;
+
+            function mockConsole() {
+                return {
+                    warnings: [],
+                    warn: function (str) {
+                        this.warnings.push(str);
+                    }
+                };
+            }
+
+            suiteSetup(function () {
+                console = mockConsole();
+                options.setConsole(console);
+            });
+
+            suiteTeardown(function () {
+                options.setConsole(global.console);
+            });
+
             test('empty file', function (done) {
                 fs.writeFile('.jslintrc', "", function () {
                     options.getOptions('.', {}, function () {
-                        assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                        assert(console.warnings[0].indexOf('Error reading config file') > -1);
                         done();
                     });
                 });
@@ -86,7 +92,7 @@ suite('options', function () {
             test('invalid json', function (done) {
                 fs.writeFile('.jslintrc', "{ 'invalid json': true", function () {
                     options.getOptions('.', {}, function () {
-                        assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                        assert(console.warnings[0].indexOf('Error reading config file') > -1);
                         done();
                     });
                 });
