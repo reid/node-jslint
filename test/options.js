@@ -1,18 +1,6 @@
 var assert = require('assert'),
     options = require('../lib/options');
 
-suite('addDefaults', function () {
-    test('set node, es5 if unset', function () {
-        assert.deepEqual({white: false, color: true, node: true, es5: true},
-                         options.addDefaults({white: false, color: true}));
-    });
-
-    test('explicit set prevents override', function () {
-        assert.deepEqual({node: false, es5: false},
-                         options.addDefaults({es5: false, node: false}));
-        });
-});
-
 suite('splitPredefs', function () {
     test('can split predefs', function () {
         assert.deepEqual({predef: ['foo', 'bar', 'baz']},
