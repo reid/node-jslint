@@ -104,35 +104,35 @@ suite('current dir config file', function () {
         assert.deepEqual({foo: 2}, options.mergeConfigs(['home'], ['filenotfound', 'local']));
     });
 
-    test('load specific-named config files', function (done) {
-        fs.writeFile('.jslintrc', '{"foo": "local"}', function () {
+    suite('load specific-named config files', function () {
 
-            async.parallel([
-
-                function (callback) {
-                    // pretend current directory is home
-                    options.getOptions('.', {}, function (conf) {
-                        assert.deepEqual({foo: "local"}, conf);
-                        callback();
-                    });
-                },
-
-                function (callback) {
-                    // Windows: process.env.HOME can be unset (undefined)
-                    options.getOptions(undefined, {}, function (conf) {
-                        assert.deepEqual({foo: "local"}, conf);
-                        callback();
-                    });
-                }
-
-            ], done);
-
+        suiteSetup(function (done) {
+            fs.writeFile('.jslintrc', '{"foo": "local"}', done);
         });
+
+        test('pretend current directory is home', function (done) {
+            options.getOptions('.', {}, function (conf) {
+                assert.deepEqual({foo: "local"}, conf);
+                done();
+            });
+        });
+
+        test('Windows: process.env.HOME can be unset (undefined)', function (done) {
+            options.getOptions(undefined, {}, function (conf) {
+                assert.deepEqual({foo: "local"}, conf);
+                done();
+            });
+        });
+
     });
 
-    test('load user-named config files', function (done) {
-        fs.writeFile('user.jslint.conf', '{"bar": "user"}', function () {
-            // pretend current directory is home
+    suite('load user-named config files', function () {
+
+        suiteSetup(function (done) {
+            fs.writeFile('user.jslint.conf', '{"bar": "user"}', done);
+        });
+
+        test('pretend current directory is home', function (done) {
             options.getOptions('.', {
                 config: './user.jslint.conf'
             }, function (conf) {
@@ -140,5 +140,6 @@ suite('current dir config file', function () {
                 done();
             });
         });
+
     });
 });
