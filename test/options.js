@@ -114,13 +114,15 @@ suite('current dir config file', function () {
         assert.deepEqual({foo: "local"}, options.loadConfig(undefined));
     });
 
-    test('load user-named config files', function () {
-        fs.writeFileSync('user.jslint.conf', '{"bar": "user"}');
-
-        // pretend current directory is home
-        var conf = options.loadConfig('.', './user.jslint.conf');
-
-        assert.equal("user", conf.bar);
-
+    test.only('load user-named config files', function (done) {
+        fs.writeFile('user.jslint.conf', '{"bar": "user"}', function () {
+            // pretend current directory is home
+            options.getOptions('.', {
+                config: './user.jslint.conf'
+            }, function (conf) {
+                assert.equal("user", conf.bar);
+                done();
+            });
+        });
     });
 });
