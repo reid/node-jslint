@@ -1,5 +1,5 @@
 /*jslint node: true */
-/*global suite, suiteSetup, suiteTeardown, test */
+/*global suite, suiteSetup, suiteTeardown, setup, teardown, test */
 
 'use strict';
 
@@ -92,6 +92,8 @@ suite('current dir config file', function () {
 
     suite('merge global and local config correctly', function () {
 
+        var home;
+
         suiteSetup(function (done) {
             fs.writeFile('.jslintrc', '{"foo": 1}', done);
         });
@@ -104,22 +106,33 @@ suite('current dir config file', function () {
             fs.writeFile('1/2/3/.jslintrc', '{"bar": 3}', done);
         });
 
+        setup(function () {
+            home = process.cwd();
+        });
+
+        teardown(function () {
+            process.chdir(home);
+        });
+
         test('no local = use home', function (done) {
-            options.getOptions('./1', {}, function (conf) {
+            process.chdir('1');
+            options.getOptions(home, {}, function (conf) {
                 assert.deepEqual({foo: 1}, conf);
                 done();
             });
         });
 
         test('local overrides home', function (done) {
-            options.getOptions('./1/2', {}, function (conf) {
+            process.chdir('1/2');
+            options.getOptions(home, {}, function (conf) {
                 assert.deepEqual({foo: 2}, conf);
                 done();
             });
         });
 
         test('configs cascade from lower directories', function (done) {
-            options.getOptions('./1/2/3', {}, function (conf) {
+            process.chdir('1/2/3');
+            options.getOptions(home, {}, function (conf) {
                 assert.deepEqual({foo: 2, bar: 3}, conf);
                 done();
             });
