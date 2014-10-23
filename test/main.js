@@ -70,7 +70,7 @@ function mockParsed() {
     };
 }
 
-suite('jslint main', function () {
+suite.only('jslint main', function () {
     var pro, con;
 
     setup(function () {
@@ -83,14 +83,18 @@ suite('jslint main', function () {
         main.setProcess(pro);
     });
 
-    test('main - no args', function () {
+    test('main - no args', function (done) {
         var parsed = mockParsed();
 
         main.runMain(parsed);
 
-        assert.ok(main);
-        assert.strictEqual(1, pro.exitCode);
-        assert.strictEqual(2, con.warnings.length);
+        process.nextTick(function () {
+            assert.ok(main);
+            assert.strictEqual(1, pro.exitCode);
+            assert.strictEqual(2, con.warnings.length);
+            done();
+        });
+
     });
 
     test('main - bad lint', function (done) {
@@ -105,7 +109,6 @@ suite('jslint main', function () {
             done();
         });
     });
-
 
     test('main - glob files', function (done) {
         // bail if glob not installed
@@ -201,7 +204,7 @@ suite('jslint main', function () {
             var example = JSON.parse(file),
                 keys = Object.keys(example);
 
-            keys.forEach(function(opt) {
+            keys.forEach(function (opt) {
                 assert.ok(options.hasOwnProperty(opt));
 
                 var type = options[opt],
@@ -223,11 +226,11 @@ suite('jslint main', function () {
     test('returns a version', function (done) {
 
         main.reportVersion(function (version) {
-
             assert.ok(/^node-jslint version:/.test(version));
             assert.ok(/  JSLint edition/.test(version));
             done();
-        }, {} );
+        });
+
     });
 
     test('argument parsing: edition is a string', function () {
@@ -239,7 +242,7 @@ suite('jslint main', function () {
     test('main -- report version', function (done) {
         main.runMain({version: true});
 
-        done();
+        process.nextTick(done);
     });
 
     test('most data goes to console.log', function (done) {
