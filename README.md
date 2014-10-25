@@ -150,13 +150,13 @@ maintained by Reid Burke, Ryuichi Okumura, and Sam Mikes.
 ## Bugs
 
 There are no known bugs.  Submit bugs
-[here](https://github.com/reid/node-jslint/issues)
+[here](https://github.com/reid/node-jslint/issues).
 
 Note that if you are reporting a problem with the way jslint works rather than
 the way the command-line tools work, we will probably refer you to the
 [JSLint community](https://plus.google.com/communities/104441363299760713736) or
 the issue tracker at
-[douglascrockford/JSLint](https://github.com/douglascrockford/JSLint/issues)
+[douglascrockford/JSLint](https://github.com/douglascrockford/JSLint/issues).
 
 ## License
 

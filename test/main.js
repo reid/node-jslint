@@ -32,8 +32,10 @@ function mockProcess() {
                 f();
             });
         },
-        events: { exit: [],
-                  drain: [] },
+        events: {
+            exit: [],
+            drain: []
+        },
         on: function (event, f) {
             this.events[event].push(f);
         },
@@ -53,8 +55,6 @@ function mockProcess() {
         stderrWritings: [],
         stderr: {
             isTTY: true,
-
-            /* mock: call callback right away */
             write: function (string) {
                 p.stderrWritings.push(string);
             }
@@ -71,7 +71,7 @@ function mockParsed() {
     };
 }
 
-suite('jslint main', function () {
+suite('main', function () {
     var pro, con;
 
     setup(function () {
@@ -84,7 +84,7 @@ suite('jslint main', function () {
         main.setProcess(pro);
     });
 
-    test('main - no args', function (done) {
+    test('no args', function (done) {
         var parsed = mockParsed();
 
         main.runMain(parsed);
@@ -96,7 +96,7 @@ suite('jslint main', function () {
         });
     });
 
-    test('main - bad lint', function (done) {
+    test('bad lint', function (done) {
         var parsed = mockParsed();
 
         parsed.argv.remain.push('test/fixtures/bad.js');
@@ -109,7 +109,7 @@ suite('jslint main', function () {
         });
     });
 
-    test('main - glob files', function (done) {
+    test('glob files', function (done) {
         var parsed = mockParsed();
 
         parsed.argv.remain.push('lib/mai*.js');
@@ -123,7 +123,7 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
-    test('main - glob ignore node_modules', function (done) {
+    test('glob ignore node_modules', function (done) {
         var parsed = mockParsed();
 
         parsed.argv.remain.push('./lib/main.js');
@@ -138,7 +138,7 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
-    test('main - one file, not tty, json output', function (done) {
+    test('one file, not tty, json output', function (done) {
         var parsed = mockParsed();
 
         parsed.argv.remain.push('lib/reporter.js');
@@ -166,55 +166,6 @@ suite('jslint main', function () {
         assert.strictEqual(Boolean, o.todo);
     });
 
-    function isBasicType(type, value) {
-        return type(value).valueOf() === value;
-    }
-
-    test('isBasicType works', function () {
-
-        assert.ok(isBasicType(Boolean, true));
-        assert.ok(isBasicType(Boolean, false));
-        assert.ok(isBasicType(Number, 1));
-
-        assert.ok(!isBasicType(Boolean, 0));
-        assert.ok(!isBasicType(Boolean, 1));
-        assert.ok(!isBasicType(Number, false));
-        assert.ok(!isBasicType(String, 1));
-        assert.ok(!isBasicType(Number, '1'));
-    });
-
-    test('example jslint.conf contains only valid options', function (done) {
-
-        var options = main.commandOptions(),
-            fs = require('fs');
-
-        fs.readFile("jslint.conf.example", function (err, file) {
-            if (err) {
-                throw err;
-            }
-
-            var example = JSON.parse(file),
-                keys = Object.keys(example);
-
-            keys.forEach(function (opt) {
-                assert.ok(options.hasOwnProperty(opt));
-
-                var type = options[opt],
-                    value = example[opt];
-
-                assert.ok(isBasicType(type, value));
-            });
-
-            done();
-        });
-    });
-
-    test('edition is a string (not Boolean) option', function () {
-        var options = main.commandOptions();
-
-        assert.equal(String, options.edition);
-    });
-
     test('returns a version', function (done) {
 
         main.runMain({
@@ -229,10 +180,10 @@ suite('jslint main', function () {
 
     });
 
-    test('argument parsing: edition is a string', function () {
-        var options = main.parseArgs(['node', 'jslint', '--edition=latest']);
+    test('argument parsing: config is a string', function () {
+        var options = main.parseArgs(['node', 'jslint', '--config=jslint.conf']);
 
-        assert.equal('latest', options.edition);
+        assert.equal('jslint.conf', options.config);
     });
 
     test('most data goes to console.log', function (done) {

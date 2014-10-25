@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert'),
-    stream = require('stream'),
     FileOpener  = require('../lib/fileopener.js');
 
 suite('fileopener', function () {
