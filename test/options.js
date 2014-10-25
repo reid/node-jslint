@@ -8,6 +8,15 @@ var assert = require('assert'),
     fs = require('fs.extra'),
     options = require('../lib/options');
 
+function mockConsole() {
+    return {
+        warnings: [],
+        warn: function (str) {
+            this.warnings.push(str);
+        }
+    };
+}
+
 suite('options', function () {
 
     var oldDir = process.cwd();
@@ -56,34 +65,57 @@ suite('options', function () {
 
     });
 
+    suite('access', function () {
+
+        var con;
+
+        suiteSetup(function () {
+            con = mockConsole();
+            options.setConsole(con);
+        });
+
+        suiteTeardown(function () {
+            options.setConsole(console);
+        });
+
+        suiteSetup(function (done) {
+            fs.open('.jslintrc', 'w', function () {
+                fs.chmod('.jslintrc', 0, done);
+            });
+        });
+
+        suiteTeardown(function (done) {
+            fs.unlink('.jslintrc', done);
+        });
+
+        test('unreable file produces output', function (done) {
+            options.getOptions('.', {}, function () {
+                assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                done();
+            });
+        });
+
+    });
+
     suite('current dir config file', function () {
 
         suite('no crash when malformed jslintrc', function () {
 
-            var console;
-
-            function mockConsole() {
-                return {
-                    warnings: [],
-                    warn: function (str) {
-                        this.warnings.push(str);
-                    }
-                };
-            }
+            var con;
 
             suiteSetup(function () {
-                console = mockConsole();
-                options.setConsole(console);
+                con = mockConsole();
+                options.setConsole(con);
             });
 
             suiteTeardown(function () {
-                options.setConsole(global.console);
+                options.setConsole(console);
             });
 
             test('empty file', function (done) {
                 fs.writeFile('.jslintrc', "", function () {
                     options.getOptions('.', {}, function () {
-                        assert(console.warnings[0].indexOf('Error reading config file') > -1);
+                        assert(con.warnings[0].indexOf('Error reading config file') > -1);
                         done();
                     });
                 });
@@ -92,7 +124,7 @@ suite('options', function () {
             test('invalid json', function (done) {
                 fs.writeFile('.jslintrc', "{ 'invalid json': true", function () {
                     options.getOptions('.', {}, function () {
-                        assert(console.warnings[0].indexOf('Error reading config file') > -1);
+                        assert(con.warnings[0].indexOf('Error reading config file') > -1);
                         done();
                     });
                 });
