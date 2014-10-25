@@ -44,7 +44,7 @@ suite('options', function () {
 
         test('can split predefs', function (done) {
             fs.writeFile('.jslintrc', '{"predef": "foo,bar,baz"}', function () {
-                options.getOptions('.', {}, function (conf) {
+                options.getOptions('.', '.', {}, function (conf) {
                     assert.deepEqual(expected, conf);
                     done();
                 });
@@ -53,7 +53,7 @@ suite('options', function () {
 
         test('doesnt re-split predefs', function (done) {
             fs.writeFile('.jslintrc', '{"predef": ["foo", "bar", "baz"]}', function () {
-                options.getOptions('.', {}, function (conf) {
+                options.getOptions('.', '.', {}, function (conf) {
                     assert.deepEqual(expected, conf);
                     done();
                 });
@@ -80,7 +80,7 @@ suite('options', function () {
         });
 
         test('unreable file produces output', function (done) {
-            options.getOptions('.', {}, function () {
+            options.getOptions('.', '.', {}, function () {
                 assert(con.warnings[0].indexOf('Error reading config file') > -1);
                 done();
             });
@@ -105,7 +105,7 @@ suite('options', function () {
 
             test('empty file', function (done) {
                 fs.writeFile('.jslintrc', "", function () {
-                    options.getOptions('.', {}, function () {
+                    options.getOptions('.', '.', {}, function () {
                         assert(con.warnings[0].indexOf('Error reading config file') > -1);
                         done();
                     });
@@ -114,7 +114,7 @@ suite('options', function () {
 
             test('invalid json', function (done) {
                 fs.writeFile('.jslintrc', "{ 'invalid json': true", function () {
-                    options.getOptions('.', {}, function () {
+                    options.getOptions('.', '.', {}, function () {
                         assert(con.warnings[0].indexOf('Error reading config file') > -1);
                         done();
                     });
@@ -149,7 +149,7 @@ suite('options', function () {
 
             test('no local = use home', function (done) {
                 process.chdir('1');
-                options.getOptions(home, {}, function (conf) {
+                options.getOptions(home, '.', {}, function (conf) {
                     assert.deepEqual({foo: 1}, conf);
                     done();
                 });
@@ -157,7 +157,7 @@ suite('options', function () {
 
             test('local overrides home', function (done) {
                 process.chdir('1/2');
-                options.getOptions(home, {}, function (conf) {
+                options.getOptions(home, '.', {}, function (conf) {
                     assert.deepEqual({foo: 2}, conf);
                     done();
                 });
@@ -165,7 +165,7 @@ suite('options', function () {
 
             test('configs cascade from lower directories', function (done) {
                 process.chdir('1/2/3');
-                options.getOptions(home, {}, function (conf) {
+                options.getOptions(home, '.', {}, function (conf) {
                     assert.deepEqual({foo: 2, bar: 3}, conf);
                     done();
                 });
@@ -180,14 +180,14 @@ suite('options', function () {
             });
 
             test('pretend current directory is home', function (done) {
-                options.getOptions('.', {}, function (conf) {
+                options.getOptions('.', '.', {}, function (conf) {
                     assert.deepEqual({foo: "local"}, conf);
                     done();
                 });
             });
 
             test('Windows: process.env.HOME can be unset (undefined)', function (done) {
-                options.getOptions(undefined, {}, function (conf) {
+                options.getOptions(undefined, '.', {}, function (conf) {
                     assert.deepEqual({foo: "local"}, conf);
                     done();
                 });
@@ -202,7 +202,7 @@ suite('options', function () {
             });
 
             test('pretend current directory is home', function (done) {
-                options.getOptions('.', {
+                options.getOptions('.', '.', {
                     config: './user.jslint.conf'
                 }, function (conf) {
                     assert.equal("user", conf.bar);
