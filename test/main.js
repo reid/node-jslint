@@ -1,20 +1,25 @@
+/*global suite, setup, test */
+
+'use strict';
+
 var assert = require('assert'),
     main;
 
 function mockConsole() {
-    var c ={
+    var c = {
         warnings: [],
-        warn: function(str) {
+        warn: function (str) {
             c.warnings.push(str);
         },
         loggings: [],
-        log: function(str) {
+        log: function (str) {
             c.loggings.push(str);
         }
     };
 
     return c;
 }
+
 
 function mockProcess() {
     var p = {
@@ -25,21 +30,20 @@ function mockProcess() {
                 f();
             });
         },
-        doDrain: function() {
+        doDrain: function () {
             this.events.drain.forEach(function (f) {
                 f();
             });
         },
         events: { exit: [],
                   drain: [] },
-        on: function (event,f) {
+        on: function (event, f) {
             this.events[event].push(f);
         },
         stdout: {
             isTTY: true,
-
-            /* mock: call callback right away */
             on: function (event, fn) {
+                /*jslint unparam: true */
                 process.nextTick(function () {
                     fn();
                     p.doDrain();
@@ -70,7 +74,7 @@ function mockParsed() {
     };
 }
 
-suite.only('jslint main', function () {
+suite('jslint main', function () {
     var pro, con;
 
     setup(function () {
@@ -88,13 +92,11 @@ suite.only('jslint main', function () {
 
         main.runMain(parsed);
 
-        process.nextTick(function () {
-            assert.ok(main);
+        pro.on('exit', function () {
             assert.strictEqual(1, pro.exitCode);
             assert.strictEqual(2, con.warnings.length);
             done();
         });
-
     });
 
     test('main - bad lint', function (done) {
@@ -105,7 +107,7 @@ suite.only('jslint main', function () {
         main.runMain(parsed);
 
         pro.on('exit', function () {
-            assert.equal(1, pro.exitCode);
+            assert.strictEqual(1, pro.exitCode);
             done();
         });
     });
@@ -225,9 +227,13 @@ suite.only('jslint main', function () {
 
     test('returns a version', function (done) {
 
-        main.reportVersion(function (version) {
-            assert.ok(/^node-jslint version:/.test(version));
-            assert.ok(/  JSLint edition/.test(version));
+        main.runMain({
+            version: true
+        });
+
+        pro.on('exit', function () {
+            assert.ok(/^node-jslint version:/.test(con.loggings[0]));
+            assert.ok(/ {2}JSLint edition/.test(con.loggings[0]));
             done();
         });
 
@@ -237,12 +243,6 @@ suite.only('jslint main', function () {
         var options = main.parseArgs(['node', 'jslint', '--edition=latest']);
 
         assert.equal('latest', options.edition);
-    });
-
-    test('main -- report version', function (done) {
-        main.runMain({version: true});
-
-        process.nextTick(done);
     });
 
     test('most data goes to console.log', function (done) {
