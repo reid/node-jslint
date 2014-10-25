@@ -2,6 +2,7 @@
 
 Easily use [JSLint][] from the command line.
 
+    npm install -g jslint
     jslint lib/*.js test/*.js
 
 ## Command-line client
@@ -19,6 +20,16 @@ Easily use [JSLint][] from the command line.
     jslint --color --node false lib/color.js
     jslint --predef $ --predef Backbone lib/color.js
 
+All standard JSLint options are supported, and are documented
+[here](http://www.jslint.com/lint.html#options). Boolean options are `true` by
+default. node-jslint provides a few additional options:
+
+`--color` Write output in color.
+
+`--terse` Report 1 error per line with parseable source file/line.
+
+`--json` Output in JSON format.
+
 ## Using node-jslint programmatically
 
 ### Streams interface
@@ -30,7 +41,7 @@ Install as a dependency:
 
     $ npm install --save jslint
 
-Pull it into your code with require:
+Pull it into your code with `require`:
 
     var LintStream = require('jslint').LintStream;
 
@@ -64,8 +75,8 @@ Receive lint from the linter:
 
 You can only pass options to the LintStream when creating it.
 
-The LintStream is in object mode (objectMode: true).  It expects an object with
-two properties: `file` and `body`.  The `file` property can be used to pass
+The LintStream is in object mode (`objectMode: true`).  It expects an object
+with two properties: `file` and `body`.  The `file` property can be used to pass
 metadata along with the file.  The `body` property contains the file to be
 linted; it can be either a string or a Buffer.
 
@@ -117,10 +128,36 @@ in.
 The config is obtained by merging multiple configurations by this order of
 importance:
 
-- CLI args.
+- `/*jslint ... */` directives
+- CLI args
 - Local .jslintrc located in a linted file's directory
 - All .jslintrc files upwards the directory tree
-- .jslintrc file located in user's home folder (~, or an environment variable "HOME")
+- .jslintrc file located in user's home folder (`~`, or an environment variable `HOME`)
+
+## Return values
+
+jslint returns `1` if it found any problems, `0` otherwise.
+
+## Author
+
+jslint is written and maintained by Douglas Crockford
+[https://github.com/douglascrockford/JSLint](https://github.com/douglascrockford/JSLint)
+
+This package is node-jslint, which provides a command-line interface for running
+jslint using the nodejs platform.  node-jslint was written by Reid Burke and is
+maintained by Reid Burke, Ryuichi Okumura, and Sam Mikes.
+
+## Bugs
+
+There are no known bugs.  Submit bugs to
+[https://github.com/reid/node-jslint/issues](https://github.com/reid/node-jslint/issues)
+
+Note that if you are reporting a problem with the way jslint works rather than
+the way the command-line tools work, we will probably refer you to the JSLint
+community
+[https://plus.google.com/communities/104441363299760713736](https://plus.google.com/communities/104441363299760713736)
+or the issue tracker at
+[https://github.com/douglascrockford/JSLint/issues](https://github.com/douglascrockford/JSLint/issues)
 
 ## License
 
