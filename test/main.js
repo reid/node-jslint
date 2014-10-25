@@ -123,21 +123,6 @@ suite('main', function () {
         assert.ok(main);
     });
 
-    test('glob ignore node_modules', function (done) {
-        var parsed = mockParsed();
-
-        parsed.argv.remain.push('./lib/main.js');
-        parsed.argv.remain.push('./node_modules/glob/*');
-
-        pro.on('exit', done);
-
-        parsed.terse = true;
-
-        main.runMain(parsed);
-
-        assert.ok(main);
-    });
-
     test('one file, not tty, json output', function (done) {
         var parsed = mockParsed();
 
