@@ -1,6 +1,3 @@
-/*jslint node: true */
-/*global suite, suiteSetup, suiteTeardown, setup, teardown, test */
-
 'use strict';
 
 var assert = require('assert'),

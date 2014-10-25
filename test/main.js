@@ -1,5 +1,3 @@
-/*global suite, setup, test */
-
 'use strict';
 
 var assert = require('assert'),
@@ -19,7 +17,6 @@ function mockConsole() {
 
     return c;
 }
-
 
 function mockProcess() {
     var p = {

@@ -1,8 +1,22 @@
+'use strict';
+
 var reporter = require('../lib/reporter'),
     assert = require('assert');
 
 suite('reporter', function () {
-    'use strict';
+
+    function err(l, c, r, e) {
+        var error = {
+            line: l,
+            character: c,
+            reason: r
+        };
+        if (e) {
+            error.evidence = e;
+        }
+        return error;
+    }
+
     var log,
         errorLint = {
             ok: false,
@@ -11,18 +25,6 @@ suite('reporter', function () {
                 err(2, 3, "Fake error 2.", "Fake evidence")
             ]
         };
-
-    function err(l, c, r, e) {
-        var err = {
-            line: l,
-            character: c,
-            reason: r
-        };
-        if(e) {
-            err.evidence=e;
-        }
-        return err;
-    };
 
     function newLog() {
         var o = {
@@ -74,7 +76,7 @@ suite('reporter', function () {
             '     // Line 1, Pos 1',
             ' #2 Fake error 2.',
             '    Fake evidence // Line 2, Pos 3'
-            ], log.outLines);
+        ], log.outLines);
 
     });
 
@@ -87,7 +89,7 @@ suite('reporter', function () {
         assert.deepEqual([
             'example.js:1:1: Fake error 1.',
             'example.js:2:3: Fake error 2.'
-            ], log.outLines);
+        ], log.outLines);
 
     });
 

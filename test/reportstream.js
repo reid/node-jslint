@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert'),
     stream = require('../lib/stream'),
     ReportStream = require('../lib/reportstream.js'),
@@ -12,7 +14,9 @@ suite('reportstream', function () {
     });
 
     test('can create object incorrectly', function () {
+        /*jslint newcap: true */
         var r = ReportStream();
+        /*jslint newcap: false */
 
         assert.ok(r instanceof ReportStream);
         assert.ok(r instanceof stream.Transform);
@@ -21,7 +25,7 @@ suite('reportstream', function () {
     test('can async', function (done) {
         var r = new ReportStream();
 
-        r.on('data', function(chunk) {
+        r.on('data', function (chunk) {
             assert.deepEqual(chunk, '\nexample.js is OK.');
             done();
         });
@@ -33,7 +37,7 @@ suite('reportstream', function () {
     test('can make a colorized reporter', function (done) {
         var r = new ReportStream({color: true});
 
-        r.on('data', function(chunk) {
+        r.on('data', function (chunk) {
             assert.deepEqual(chunk, '\n\x1b[1mexample.js\x1b[0m is \x1b[32mOK\x1b[0m.');
             done();
         });
@@ -45,7 +49,7 @@ suite('reportstream', function () {
     test('can make a terse reporter', function (done) {
         var r = new ReportStream({terse: true});
 
-        r.on('data', function(chunk) {
+        r.on('data', function (chunk) {
             assert.deepEqual(chunk, '.');
             done();
         });
@@ -58,7 +62,7 @@ suite('reportstream', function () {
         var r1 = new ReportStream(),
             r2 = new ReportStream({terse: true});
 
-        r1.on('data', function (chunk) {
+        r1.on('data', function () {
             r2.write({file: 'example.js', linted: {ok: true}});
             r2.end();
         });
@@ -84,7 +88,9 @@ suite('reportstream', function () {
     });
 
     test('incorrectly construct a JSONReportStream', function (done) {
-        var r = JSONReportStream();
+        /*jslint newcap: true */
+        assert.ok(JSONReportStream());
+        /*jslint newcap: false */
         done();
     });
 

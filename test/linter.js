@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert'),
     nodelint = require('../lib/nodelint'),
     linter = require('../lib/linter');
@@ -18,16 +20,16 @@ suite('merge', function () {
     });
 
     test('merge where one object has inherited properties', function () {
-        var util = require('util');
+        var util = require('util'),
+            c = { parent: 'orig', own: 'orig' };
 
         function A() {
             this.parent = 'overridden';
         }
 
         function B() {
-            this.own = 'overridden'
+            this.own = 'overridden';
         }
-        var c = { parent: 'orig', own: 'orig' };
 
         util.inherits(B, A);
 

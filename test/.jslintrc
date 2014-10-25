@@ -1,0 +1,10 @@
+{
+  "predef": [
+    "suite",
+    "suiteSetup",
+    "suiteTeardown",
+    "setup",
+    "teardown",
+    "test"
+  ]
+}

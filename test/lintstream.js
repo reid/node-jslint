@@ -6,6 +6,8 @@
 // Released under modified MIT/BSD 3-clause license
 // See LICENSE for details.
 
+'use strict';
+
 var assert = require('assert'),
     stream = require('../lib/stream'),
     LintStream = require('../lib/lintstream.js');
@@ -19,7 +21,9 @@ suite('lintstream', function () {
     });
 
     test('can create object incorrectly', function () {
+        /*jslint newcap: true */
         var l = LintStream();
+        /*jslint newcap: false */
 
         assert.ok(l instanceof LintStream);
         assert.ok(l instanceof stream.Transform);

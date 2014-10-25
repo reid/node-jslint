@@ -1,16 +1,18 @@
+'use strict';
+
 var assert = require('assert'),
     stream = require('stream'),
     FileOpener  = require('../lib/fileopener.js');
 
 suite('fileopener', function () {
     test('can create object', function () {
-        var f = new FileOpener();
+        assert.ok(new FileOpener());
     });
 
     test('can open file', function (done) {
         var f = new FileOpener();
 
-        f.on('data', function(chunk) {
+        f.on('data', function () {
             done();
         });
 
@@ -21,7 +23,7 @@ suite('fileopener', function () {
     test('error on nonexistent file', function (done) {
         var f = new FileOpener();
 
-        f.on('error', function(chunk) {
+        f.on('error', function () {
             done();
         });
 

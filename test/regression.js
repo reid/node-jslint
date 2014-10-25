@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert'),
     nodelint = require('../lib/nodelint'),
     linter = require('../lib/linter');
