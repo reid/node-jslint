@@ -38,30 +38,6 @@ suite('options', function () {
         });
     });
 
-    suite('splitPredefs', function () {
-
-        var expected = {predef: ['foo', 'bar', 'baz']};
-
-        test('can split predefs', function (done) {
-            fs.writeFile('.jslintrc', '{"predef": "foo,bar,baz"}', function () {
-                options.getOptions('.', '.', {}, function (conf) {
-                    assert.deepEqual(expected, conf);
-                    done();
-                });
-            });
-        });
-
-        test('doesnt re-split predefs', function (done) {
-            fs.writeFile('.jslintrc', '{"predef": ["foo", "bar", "baz"]}', function () {
-                options.getOptions('.', '.', {}, function (conf) {
-                    assert.deepEqual(expected, conf);
-                    done();
-                });
-            });
-        });
-
-    });
-
     suite('access', function () {
 
         var con;
@@ -125,18 +101,21 @@ suite('options', function () {
 
         suite('merge global and local config correctly', function () {
 
-            var home;
+            var rc0 = {foo: 0},
+                rc2 = {foo: 2},
+                rc3 = {bar: 3},
+                home;
 
             suiteSetup(function (done) {
-                fs.writeFile('.jslintrc', '{"foo": 1}', done);
+                fs.writeFile('.jslintrc', JSON.stringify(rc0), done);
             });
 
             suiteSetup(function (done) {
-                fs.writeFile('1/2/.jslintrc', '{"foo": 2}', done);
+                fs.writeFile('1/2/.jslintrc', JSON.stringify(rc2), done);
             });
 
             suiteSetup(function (done) {
-                fs.writeFile('1/2/3/.jslintrc', '{"bar": 3}', done);
+                fs.writeFile('1/2/3/.jslintrc', JSON.stringify(rc3), done);
             });
 
             setup(function () {
@@ -150,7 +129,7 @@ suite('options', function () {
             test('no local = use home', function (done) {
                 process.chdir('1');
                 options.getOptions(home, '.', {}, function (conf) {
-                    assert.deepEqual({foo: 1}, conf);
+                    assert.deepEqual(rc0, conf);
                     done();
                 });
             });
@@ -158,7 +137,7 @@ suite('options', function () {
             test('local overrides home', function (done) {
                 process.chdir('1/2');
                 options.getOptions(home, '.', {}, function (conf) {
-                    assert.deepEqual({foo: 2}, conf);
+                    assert.deepEqual(rc2, conf);
                     done();
                 });
             });
