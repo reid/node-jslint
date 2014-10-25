@@ -69,22 +69,16 @@ suite('options', function () {
 
         var con;
 
-        suiteSetup(function () {
+        suiteSetup(function (done) {
             con = mockConsole();
             options.setConsole(con);
-        });
-
-        suiteTeardown(function () {
-            options.setConsole(console);
-        });
-
-        suiteSetup(function (done) {
             fs.open('.jslintrc', 'w', function () {
                 fs.chmod('.jslintrc', 0, done);
             });
         });
 
         suiteTeardown(function (done) {
+            options.setConsole(console);
             fs.unlink('.jslintrc', done);
         });
 
