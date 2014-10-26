@@ -26,6 +26,8 @@ default. node-jslint provides a few additional options:
 
 `--color` Write output in color.
 
+`--edition` Specify the edition of JSLint to use. Defaults to the latest, `'2014-07-08'`.
+
 `--terse` Report 1 error per line with parseable source file/line.
 
 `--json` Output in JSON format.

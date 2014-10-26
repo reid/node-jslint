@@ -3,7 +3,7 @@ jslint(1) -- a code quality tool
 
 ## SYNOPSIS
 
-jslint.js [--ass] [--bitwise] [--browser] [--closure] [--color] [--config] [--continue] [--couch] [--debug] [--devel] [--eqeq] [--evil] [--forin] [--indent] [--json] [--maxerr] [--maxlen] [--newcap] [--node] [--nomen] [--passfail] [--plusplus] [--predef] [--properties] [--regexp] [--rhino] [--sloppy] [--stupid] [--sub] [--terse] [--todo] [--unparam] [--vars] [--version] [--white] [--] <scriptfile>...
+jslint.js [--ass] [--bitwise] [--browser] [--closure] [--color] [--config] [--continue] [--couch] [--debug] [--devel] [--edition] [--eqeq] [--evil] [--forin] [--indent] [--json] [--maxerr] [--maxlen] [--newcap] [--node] [--nomen] [--passfail] [--plusplus] [--predef] [--properties] [--regexp] [--rhino] [--sloppy] [--stupid] [--sub] [--terse] [--todo] [--unparam] [--vars] [--version] [--white] [--] <scriptfile>...
 
 ## DESCRIPTION
 
@@ -12,6 +12,8 @@ JSLint is a static analysis tool to locate and correct style problems in Javascr
 ## META OPTIONS
 
   `--color`     write output in color
+
+  `--edition`   specify the edition of JSLint to use
 
   `--terse`     report one error per line with parseable source file/line
 
