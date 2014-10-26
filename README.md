@@ -140,8 +140,8 @@ jslint returns `1` if it found any problems, `0` otherwise.
 
 ## Author
 
-jslint is written and maintained by Douglas Crockford
-[https://github.com/douglascrockford/JSLint](https://github.com/douglascrockford/JSLint)
+JSLint is written and maintained by Douglas Crockford. See
+[douglascrockford/JSLint](https://github.com/douglascrockford/JSLint).
 
 This package is node-jslint, which provides a command-line interface for running
 jslint using the nodejs platform.  node-jslint was written by Reid Burke and is
