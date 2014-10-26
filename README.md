@@ -3,7 +3,7 @@
 Easily use [JSLint][] from the command line.
 
     npm install -g jslint
-    jslint lib/*.js test/*.js
+    jslint --color bin/*.js lib/*.js test/*.js
 
 ## Command-line client
 
