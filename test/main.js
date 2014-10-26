@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert'),
+    fs = require('fs.extra'),
     main;
 
 function mockConsole() {
@@ -143,6 +144,68 @@ suite('main', function () {
 
         // expect process.exit(0) to be as yet uncalled
         assert.strictEqual(undefined, pro.exitCode);
+    });
+
+    suite('files', function () {
+
+        var oldDir = process.cwd();
+
+        setup(function (done) {
+            fs.mkdirp('test_config/1', function (err) {
+                if (err) {
+                    return done(err);
+                }
+                process.chdir('test_config');
+                done();
+            });
+        });
+
+        setup(function (done) {
+            fs.writeFile('.jslintrc', JSON.stringify({}), done);
+        });
+
+        setup(function (done) {
+            fs.writeFile('1/.jslintrc', JSON.stringify({}), done);
+        });
+
+        setup(function (done) {
+            fs.writeFile('1.js', '', function () {
+                fs.writeFile('1/2.js', '', function () {
+                    fs.writeFile('1/3.js', '', function () {
+                        done();
+                    });
+                });
+            });
+        });
+
+        suiteTeardown(function (done) {
+            process.chdir(oldDir);
+            fs.rmrf('test_config', function (err) {
+                if (err) {
+                    return done(err);
+                }
+                done();
+            });
+        });
+
+        test('reuse cached .jslintrc files without errors', function (done) {
+
+            var parsed = mockParsed();
+            parsed.argv.remain = parsed.argv.remain.concat([
+                '1.js',
+                '1/2.js',
+                '1/3.js'
+            ]);
+
+            main.runMain(parsed);
+
+            pro.on('exit', function () {
+                assert.strictEqual(0, pro.exitCode);
+                done();
+            });
+
+        });
+
     });
 
     test('todo in command-line options', function () {
