@@ -17,16 +17,6 @@ suite('preprocessScript', function () {
 });
 
 suite('lint', function () {
-    var oldHome = process.env.HOME;
-
-    setup(function () {
-        // Don't let user's config interfere with the test.
-        process.env.HOME = '';
-    });
-
-    teardown(function () {
-        process.env.HOME = oldHome;
-    });
 
     test('basic lint step', function () {
         var result = linter.doLint('// only a comment\n');
@@ -48,6 +38,23 @@ suite('lint', function () {
         assert.equal(result.ok, false);
         assert.equal(result.errors.length, 3);
         assert.equal(result.errors[2], null);
+    });
+
+    test('old edition', function () {
+        var script = 'querystring.parse(\'\');',
+            currentResult = linter.doLint(script, {
+                node: true
+            }),
+            oldEditionResult = linter.doLint(script, {
+                node: true,
+                edition: '2014-02-06'
+            });
+
+        // querystring is no longer a global in Node.
+        assert.strictEqual(currentResult.ok, false);
+
+        // But back in early 2014 it was still considered one.
+        assert.strictEqual(oldEditionResult.ok, true);
     });
 
 });
