@@ -30,6 +30,8 @@ default. node-jslint provides a few additional options:
 
 `--json` Output in JSON format.
 
+`--version` Output the version number and exit.
+
 ## Using node-jslint programmatically
 
 ### Streams interface
@@ -144,7 +146,7 @@ JSLint is written and maintained by Douglas Crockford. See
 [douglascrockford/JSLint](https://github.com/douglascrockford/JSLint).
 
 This package is node-jslint, which provides a command-line interface for running
-jslint using the nodejs platform.  node-jslint was written by Reid Burke and is
+jslint using the Node.js platform.  node-jslint was written by Reid Burke and is
 maintained by Reid Burke, Ryuichi Okumura, and Sam Mikes.
 
 ## Bugs
