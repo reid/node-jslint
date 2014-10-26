@@ -2,7 +2,8 @@
 
 var assert = require('assert'),
     fs = require('fs.extra'),
-    main;
+    linter = require('../lib/linter'),
+    main = require('../lib/main');
 
 function mockConsole() {
     var c = {
@@ -76,13 +77,12 @@ suite('main', function () {
     var pro, con;
 
     setup(function () {
-        main = require('../lib/main');
-
         con = mockConsole();
         pro = mockProcess();
 
         main.setConsole(con);
         main.setProcess(pro);
+        linter.setConsole(con);
     });
 
     test('no args', function (done) {
@@ -93,6 +93,22 @@ suite('main', function () {
         pro.on('exit', function () {
             assert.strictEqual(1, pro.exitCode);
             assert.strictEqual(2, con.warnings.length);
+            done();
+        });
+    });
+
+    test('bad edition', function (done) {
+        var parsed = mockParsed();
+
+        parsed.argv.remain.push('test/fixtures/bad.js');
+        parsed.edition = 'abc123';
+
+        main.runMain(parsed);
+
+        pro.on('exit', function () {
+            assert.strictEqual(1, pro.exitCode);
+            assert.strictEqual(2, con.warnings.length);
+            assert.ok(/^"abc123" is not a valid JSLint edition\./.test(con.warnings[0]));
             done();
         });
     });
