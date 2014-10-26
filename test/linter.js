@@ -40,21 +40,49 @@ suite('lint', function () {
         assert.equal(result.errors[2], null);
     });
 
-    test('old edition', function () {
-        var script = 'querystring.parse(\'\');',
-            currentResult = linter.doLint(script, {
-                node: true
-            }),
-            oldEditionResult = linter.doLint(script, {
-                node: true,
-                edition: '2014-02-06'
-            });
+    suite('old edition', function () {
 
-        // querystring is no longer a global in Node.
-        assert.strictEqual(currentResult.ok, false);
+        test('querystring global', function () {
+            var script = 'querystring.parse(\'\');',
+                currentResult = linter.doLint(script, {
+                    node: true,
+                    edition: '2014-07-08'
+                }),
+                oldEditionResult = linter.doLint(script, {
+                    node: true,
+                    edition: '2014-02-06'
+                });
 
-        // But back in early 2014 it was still considered one.
-        assert.strictEqual(oldEditionResult.ok, true);
+            // querystring is no longer a global in Node.
+            assert.strictEqual(currentResult.ok, false);
+
+            // But back in early 2014 it was still considered one.
+            assert.strictEqual(oldEditionResult.ok, true);
+        });
+
+        test('anon', function () {
+            var script = [
+                '(function() {',
+                '    \'use strict\';',
+                '}());'
+            ].join('\n'),
+                currentResult = linter.doLint(script, {
+                    anon: true,
+                    edition: '2014-07-08'
+                }),
+                oldEditionResult = linter.doLint(script, {
+                    anon: true,
+                    edition: '2013-02-03'
+                });
+
+            // anon is no longer an option.
+            assert.strictEqual(currentResult.ok, false);
+
+            // But back in early 2013 you could disable spaces after anonymous
+            // functions. How hideous!
+            assert.strictEqual(oldEditionResult.ok, true);
+        });
+
     });
 
 });
