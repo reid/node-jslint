@@ -190,6 +190,23 @@ suite('options', function () {
             });
 
         });
+
+        suite('what if home dir is not parent of current', function () {
+
+            var conf = {foo: 3};
+
+            suiteSetup(function (done) {
+                fs.writeFile('.jslintrc', JSON.stringify(conf), done);
+            });
+
+            test('home, current disjoint', function (done) {
+                options.getOptions('/home/notme', '.', {}, function (c) {
+                    assert.deepEqual(c, conf);
+                    done();
+                });
+            });
+
+        });
     });
 
 });
