@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert'),
-    nodelint = require('../lib/nodelint'),
     merge = require('../lib/util').merge;
 
 suite('merge', function () {

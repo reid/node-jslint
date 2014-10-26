@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert'),
-    nodelint = require('../lib/nodelint'),
     linter = require('../lib/linter');
 
 suite('case #101', function () {
@@ -9,9 +8,8 @@ suite('case #101', function () {
     test('has warning with default options', function () {
 
         var options = {edition: 'latest'},
-            JSLINT = nodelint.load(options.edition),
             script = "console.log('a');\n",
-            result = linter.doLint(JSLINT, script, options);
+            result = linter.doLint(script, options);
 
         assert.ok(!result.ok);
     });
@@ -19,9 +17,8 @@ suite('case #101', function () {
     test('no warning with node option', function () {
 
         var options = {edition: 'latest', node: true},
-            JSLINT = nodelint.load(options.edition),
             script = "console.log('a');\n",
-            result = linter.doLint(JSLINT, script, options);
+            result = linter.doLint(script, options);
 
         assert.ok(result.ok);
     });

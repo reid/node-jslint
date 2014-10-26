@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert'),
-    nodelint = require('../lib/nodelint'),
     linter = require('../lib/linter');
 
 suite('preprocessScript', function () {
@@ -29,13 +28,12 @@ suite('lint', function () {
 
         var script = "// only a comment\n",
             options = {edition: 'latest'},
-            JSLINT = nodelint.load(options.edition),
             result;
 
         // don't let user's config interfere with our test
         process.env.HOME = '';
 
-        result = linter.doLint(JSLINT, script, options);
+        result = linter.doLint(script, options);
 
         assert.ok(result.ok);
         assert.deepEqual(result.errors, []);
@@ -45,13 +43,12 @@ suite('lint', function () {
 
         var script = "//TODO: remove this\n",
             options = {edition: '2013-09-22'},
-            JSLINT = nodelint.load(options.edition),
             result;
 
         // don't let user's config interfere with our test
         process.env.HOME = '';
 
-        result = linter.doLint(JSLINT, script, options);
+        result = linter.doLint(script, options);
 
         assert.strictEqual(1, result.errors.length);
         assert.strictEqual("Unexpected TODO comment.",
@@ -60,12 +57,11 @@ suite('lint', function () {
     });
 
     test('maxerr causes null error', function () {
-        var JSLINT = nodelint.load('lib/jslint-2013-09-22.js'),
-            script = "var __evil = eval('3')",
+        var script = "var __evil = eval('3')",
             options = {maxerr: 1},
             result;
 
-        result = linter.doLint(JSLINT, script, options);
+        result = linter.doLint(script, options);
 
         assert.equal(result.ok, false);
         assert.equal(result.errors.length, 3);

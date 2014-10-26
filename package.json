@@ -27,9 +27,9 @@
   "bin": {
     "jslint": "./bin/jslint.js"
   },
-  "main": "./lib/nodelint.js",
+  "main": "./lib/jslint.js",
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "~0.9.0",
     "exit": "~0.1.2",
     "glob": "~3.2.11",
     "nopt": "~1.0.0",
@@ -45,12 +45,13 @@
     "node": ">=0.8.0"
   },
   "files": [
-    "lib",
-    "bin",
     "Makefile"
   ],
   "directories": {
-    "lib": "./lib"
+    "bin": "./bin",
+    "doc": "./doc",
+    "lib": "./lib",
+    "man": "./man"
   },
   "repository": {
     "type": "git",
