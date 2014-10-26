@@ -26,7 +26,7 @@ no-dos-endings:
 	file $(SOURCES) | grep -v CRLF >/dev/null
 
 cover: $(SOURCES)
-	./node_modules/.bin/istanbul cover -x "lib/jslint.js" --print=both ./node_modules/mocha/bin/_mocha -- -u tdd
+	./node_modules/.bin/istanbul cover -x "lib/editions/*.js" --print=both ./node_modules/mocha/bin/_mocha -- -u tdd
 
 check-coverage: cover
 	./node_modules/.bin/istanbul check-coverage --statements 90 --branches 90 --functions 90 --lines 90
