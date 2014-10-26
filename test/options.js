@@ -104,7 +104,7 @@ suite('options', function () {
             var rc0 = {foo: 0},
                 rc2 = {foo: 2},
                 rc3 = {bar: 3},
-                home;
+                fakeRoot;
 
             suiteSetup(function (done) {
                 fs.writeFile('.jslintrc', JSON.stringify(rc0), done);
@@ -119,24 +119,24 @@ suite('options', function () {
             });
 
             setup(function () {
-                home = process.cwd();
+                fakeRoot = process.cwd();
             });
 
             teardown(function () {
-                process.chdir(home);
+                process.chdir(fakeRoot);
             });
 
-            test('no local = use home', function (done) {
+            test('no local = use root', function (done) {
                 process.chdir('1');
-                options.getOptions(home, '.', {}, function (conf) {
+                options.getOptions(fakeRoot, '.', {}, function (conf) {
                     assert.deepEqual(rc0, conf);
                     done();
                 });
             });
 
-            test('local overrides home', function (done) {
+            test('local overrides root', function (done) {
                 process.chdir('1/2');
-                options.getOptions(home, '.', {}, function (conf) {
+                options.getOptions(fakeRoot, '.', {}, function (conf) {
                     assert.deepEqual(rc2, conf);
                     done();
                 });
@@ -144,7 +144,7 @@ suite('options', function () {
 
             test('configs cascade from lower directories', function (done) {
                 process.chdir('1/2/3');
-                options.getOptions(home, '.', {}, function (conf) {
+                options.getOptions(fakeRoot, '.', {}, function (conf) {
                     assert.deepEqual({foo: 2, bar: 3}, conf);
                     done();
                 });
@@ -158,15 +158,8 @@ suite('options', function () {
                 fs.writeFile('.jslintrc', '{"foo": "local"}', done);
             });
 
-            test('pretend current directory is home', function (done) {
+            test('pretend current directory is root', function (done) {
                 options.getOptions('.', '.', {}, function (conf) {
-                    assert.deepEqual({foo: "local"}, conf);
-                    done();
-                });
-            });
-
-            test('Windows: process.env.HOME can be unset (undefined)', function (done) {
-                options.getOptions(undefined, '.', {}, function (conf) {
                     assert.deepEqual({foo: "local"}, conf);
                     done();
                 });
@@ -180,7 +173,7 @@ suite('options', function () {
                 fs.writeFile('user.jslint.conf', '{"bar": "user"}', done);
             });
 
-            test('pretend current directory is home', function (done) {
+            test('pretend current directory is root', function (done) {
                 options.getOptions('.', '.', {
                     config: './user.jslint.conf'
                 }, function (conf) {
@@ -191,22 +184,6 @@ suite('options', function () {
 
         });
 
-        suite('what if home dir is not parent of current', function () {
-
-            var conf = {foo: 3};
-
-            suiteSetup(function (done) {
-                fs.writeFile('.jslintrc', JSON.stringify(conf), done);
-            });
-
-            test('home, current disjoint', function (done) {
-                options.getOptions('/home/notme', '.', {}, function (c) {
-                    assert.deepEqual(c, conf);
-                    done();
-                });
-            });
-
-        });
     });
 
 });

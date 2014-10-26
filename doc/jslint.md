@@ -148,7 +148,6 @@ precedence, where options closer to #1 on this list override others.
 1. CLI args
 1. Local .jslintrc located in a linted file's directory
 1. All .jslintrc files upwards the directory tree
-1. .jslintrc file located in user's home folder (`~`, or an environment variable `HOME`)
 
 ## RETURN VALUES
 
