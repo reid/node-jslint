@@ -2,7 +2,6 @@
 
 var assert = require('assert'),
     fs = require('fs.extra'),
-    linter = require('../lib/linter'),
     main = require('../lib/main');
 
 function mockConsole() {
@@ -82,7 +81,6 @@ suite('main', function () {
 
         main.setConsole(con);
         main.setProcess(pro);
-        linter.setConsole(con);
     });
 
     test('no args', function (done) {
