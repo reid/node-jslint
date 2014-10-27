@@ -83,6 +83,60 @@ suite('lint', function () {
             assert.strictEqual(oldEditionResult.ok, true);
         });
 
+        test('widget', function () {
+            var script = 'widget.toString();',
+                currentResult = linter.doLint(script, {
+                    widget: true,
+                    edition: '2014-07-08'
+                }),
+                oldEditionResult = linter.doLint(script, {
+                    widget: true,
+                    edition: '2012-02-03'
+                });
+
+            // widget is no longer an option.
+            assert.strictEqual(currentResult.ok, false);
+
+            // But back in early 2012 you could populate your global namespace
+            // with Yahoo's widget library. Convenient if you were a Yahoo
+            // employee at that time.
+            assert.strictEqual(oldEditionResult.ok, true);
+        });
+
+        test('windows', function () {
+            var script = 'new ActiveXObject().Application.Quit();',
+                currentResult = linter.doLint(script, {
+                    windows: true,
+                    edition: '2014-07-08'
+                }),
+                oldEditionResult = linter.doLint(script, {
+                    windows: true,
+                    edition: '2013-02-03'
+                });
+
+            // windows is no longer an option.
+            assert.strictEqual(currentResult.ok, false);
+
+            // But it used to be.
+            assert.strictEqual(oldEditionResult.ok, true);
+        });
+
+        test('todo', function () {
+            var script = '// TODO: Write better code.',
+                currentResult = linter.doLint(script, {
+                    edition: '2014-07-08'
+                }),
+                oldEditionResult = linter.doLint(script, {
+                    edition: '2012-02-03'
+                });
+
+            // TODOs are actually technical debt.
+            assert.strictEqual(currentResult.ok, false);
+
+            // But back in the good ol' days we didn't care about that.
+            assert.strictEqual(oldEditionResult.ok, true);
+        });
+
     });
 
 });
