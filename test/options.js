@@ -1,56 +1,28 @@
+'use strict';
+
 var assert = require('assert'),
+    async = require('async'),
+    fs = require('fs.extra'),
     options = require('../lib/options');
 
-suite('addDefaults', function () {
-    test('set node, es5 if unset', function () {
-        assert.deepEqual({white: false, color: true, node: true, es5: true},
-                         options.addDefaults({white: false, color: true}));
-    });
+function mockConsole() {
+    return {
+        warnings: [],
+        warn: function (str) {
+            this.warnings.push(str);
+        }
+    };
+}
 
-    test('explicit set prevents override', function () {
-        assert.deepEqual({node: false, es5: false},
-                         options.addDefaults({es5: false, node: false}));
-        });
-});
+suite('options', function () {
 
-suite('splitPredefs', function () {
-    test('can split predefs', function () {
-        assert.deepEqual({predef: ['foo', 'bar', 'baz']},
-                         options.splitPredefs({predef: "foo,bar,baz"}));
-    });
-    test('doesnt re-split predefs', function () {
-        assert.deepEqual({predef: ['foo', 'bar', 'baz']},
-                         options.splitPredefs({predef: ['foo', 'bar', 'baz']}));
-    });
-});
-
-suite('preprocessOptions', function() {
-    test('accepts falsy options', function () {
-        assert.deepEqual(options.preprocessOptions(undefined), options.preprocessOptions({}));
-    });
-});
-
-suite('current dir config file', function () {
-    var oldDir = process.cwd(),
-        fs = require('fs.extra'),
-        con;
-
-    function mockConsole() {
-        return {
-            warnings: [],
-            warn: function(str) {
-                this.warnings.push(str);
-            }
-        };
-    }
+    var oldDir = process.cwd();
 
     suiteSetup(function (done) {
-        // mock console object
-        con = mockConsole();
-        options.setConsole(con);
-
-        fs.mkdir('test_config', function (err) {
-            if (err) return done(err);
+        fs.mkdirp('test_config/1/2/3', function (err) {
+            if (err) {
+                return done(err);
+            }
             process.chdir('test_config');
             done();
         });
@@ -59,71 +31,159 @@ suite('current dir config file', function () {
     suiteTeardown(function (done) {
         process.chdir(oldDir);
         fs.rmrf('test_config', function (err) {
-            if (err) return done(err);
+            if (err) {
+                return done(err);
+            }
             done();
         });
     });
 
-    test('read jslintrc when present', function () {
-        fs.writeFileSync('jslintrc', '{"foo": 1}');
+    suite('access', function () {
 
-        assert.deepEqual({foo: 1}, options.loadAndParseConfig('jslintrc'));
-    });
+        var con;
 
-    test('no crash when empty jslintrc', function () {
-        fs.writeFileSync('jslintrc', '');
+        suiteSetup(function (done) {
+            con = mockConsole();
+            options.setConsole(con);
+            fs.open('.jslintrc', 'w', function () {
+                fs.chmod('.jslintrc', 0, done);
+            });
+        });
 
-        assert.deepEqual(undefined, options.loadAndParseConfig('jslintrc'));
+        suiteTeardown(function (done) {
+            options.setConsole(console);
+            fs.unlink('.jslintrc', done);
+        });
 
-        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
-                           con.warnings[0]);
-    });
-
-    test('no crash when malformed jslintrc', function () {
-        fs.writeFileSync('jslintrc', "{ 'invalid json': true");
-
-        assert.deepEqual(undefined, options.loadAndParseConfig('jslintrc'));
-
-        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
-                           con.warnings[0]);
-    });
-
-    test('nonexistent .jslintrc => undefined', function () {
-        assert.deepEqual(undefined, options.loadAndParseConfig('.jslintrc'));
-    });
-
-    test('merge global and local config correctly', function () {
-        fs.writeFileSync('home', '{"foo": 1}');
-        fs.writeFileSync('local', '{"foo": 2}');
-
-        // no local = use home
-        assert.deepEqual({foo: 1}, options.mergeConfigs(['home'], []));
-
-        // local overrides home
-        assert.deepEqual({foo: 2}, options.mergeConfigs(['home'], ['local']));
-
-        // either branch of local overrides home
-        assert.deepEqual({foo: 2}, options.mergeConfigs(['home'], ['filenotfound', 'local']));
-    });
-
-    test('load specific-named config files', function () {
-        fs.writeFileSync('.jslintrc', '{"foo": "home"}');
-        fs.writeFileSync('jslintrc', '{"foo": "local"}');
-
-        // pretend current directory is home
-        assert.deepEqual({foo: "local"}, options.loadConfig('.'));
-
-        // Windows: process.env.HOME can be unset (undefined)
-        assert.deepEqual({foo: "local"}, options.loadConfig(undefined));
-    });
-
-    test('load user-named config files', function () {
-        fs.writeFileSync('user.jslint.conf', '{"bar": "user"}');
-
-        // pretend current directory is home
-        var conf = options.loadConfig('.', './user.jslint.conf');
-
-        assert.equal("user", conf.bar);
+        test('unreable file produces output', function (done) {
+            options.getOptions('.', '.', {}, function () {
+                assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                done();
+            });
+        });
 
     });
+
+    suite('current dir config file', function () {
+
+        suite('no crash when malformed jslintrc', function () {
+
+            var con;
+
+            suiteSetup(function () {
+                con = mockConsole();
+                options.setConsole(con);
+            });
+
+            suiteTeardown(function () {
+                options.setConsole(console);
+            });
+
+            test('empty file', function (done) {
+                fs.writeFile('.jslintrc', "", function () {
+                    options.getOptions('.', '.', {}, function () {
+                        assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                        done();
+                    });
+                });
+            });
+
+            test('invalid json', function (done) {
+                fs.writeFile('.jslintrc', "{ 'invalid json': true", function () {
+                    options.getOptions('.', '.', {}, function () {
+                        assert(con.warnings[0].indexOf('Error reading config file') > -1);
+                        done();
+                    });
+                });
+            });
+
+        });
+
+        suite('merge global and local config correctly', function () {
+
+            var rc0 = {foo: 0},
+                rc2 = {foo: 2},
+                rc3 = {bar: 3},
+                fakeRoot;
+
+            suiteSetup(function (done) {
+                fs.writeFile('.jslintrc', JSON.stringify(rc0), done);
+            });
+
+            suiteSetup(function (done) {
+                fs.writeFile('1/2/.jslintrc', JSON.stringify(rc2), done);
+            });
+
+            suiteSetup(function (done) {
+                fs.writeFile('1/2/3/.jslintrc', JSON.stringify(rc3), done);
+            });
+
+            setup(function () {
+                fakeRoot = process.cwd();
+            });
+
+            teardown(function () {
+                process.chdir(fakeRoot);
+            });
+
+            test('no local = use root', function (done) {
+                process.chdir('1');
+                options.getOptions(fakeRoot, '.', {}, function (conf) {
+                    assert.deepEqual(rc0, conf);
+                    done();
+                });
+            });
+
+            test('local overrides root', function (done) {
+                process.chdir('1/2');
+                options.getOptions(fakeRoot, '.', {}, function (conf) {
+                    assert.deepEqual(rc2, conf);
+                    done();
+                });
+            });
+
+            test('configs cascade from lower directories', function (done) {
+                process.chdir('1/2/3');
+                options.getOptions(fakeRoot, '.', {}, function (conf) {
+                    assert.deepEqual({foo: 2, bar: 3}, conf);
+                    done();
+                });
+            });
+
+        });
+
+        suite('load specific-named config files', function () {
+
+            suiteSetup(function (done) {
+                fs.writeFile('.jslintrc', '{"foo": "local"}', done);
+            });
+
+            test('pretend current directory is root', function (done) {
+                options.getOptions('.', '.', {}, function (conf) {
+                    assert.deepEqual({foo: "local"}, conf);
+                    done();
+                });
+            });
+
+        });
+
+        suite('load user-named config files', function () {
+
+            suiteSetup(function (done) {
+                fs.writeFile('user.jslint.conf', '{"bar": "user"}', done);
+            });
+
+            test('pretend current directory is root', function (done) {
+                options.getOptions('.', '.', {
+                    config: './user.jslint.conf'
+                }, function (conf) {
+                    assert.equal("user", conf.bar);
+                    done();
+                });
+            });
+
+        });
+
+    });
+
 });

@@ -21,41 +21,38 @@
     "Bnaya",
     "Maximilian Antoni <mail@maxantoni.de>",
     "Vasil Velichkov",
-    "Rasmus Paetau"
+    "Rasmus Paetau",
+    "Jackson Ray Hamilton <jackson@jacksonrayhamilton.com>"
   ],
   "bin": {
     "jslint": "./bin/jslint.js"
   },
-  "main": "./lib/nodelint.js",
+  "main": "./lib/module.js",
   "dependencies": {
+    "async": "~0.9.0",
     "exit": "~0.1.2",
+    "glob": "~3.2.11",
     "nopt": "~1.0.0",
-    "readable-stream": "~1.0.31",
-    "glob": "~3.2.11"
+    "readable-stream": "~1.0.31"
   },
   "devDependencies": {
-    "ronn": "0.4.0",
+    "fs.extra": "~1.2.1",
     "istanbul": "~0.1.44",
     "mocha": "~1.14.0",
-    "fs.extra": "~1.2.1"
+    "ronn": "0.4.0"
   },
   "engines": {
     "node": ">=0.8.0"
   },
   "files": [
-    "man",
-    "doc",
-    "lib",
-    "bin",
-    "jslintrc.example",
     "Makefile"
   ],
   "directories": {
+    "bin": "./bin",
+    "doc": "./doc",
     "lib": "./lib",
-    "man": "./man",
-    "doc": "./doc"
+    "man": "./man"
   },
-  "man": "./man/jslint.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/reid/node-jslint.git"

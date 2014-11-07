@@ -2,139 +2,165 @@
 
 Easily use [JSLint][] from the command line.
 
-    jslint bin/jslint.js
+    npm install -g jslint
+    jslint --color bin/*.js lib/*.js test/*.js
 
-## What's New
+## Command-line client
 
-Added latest jslint, 2014-07-08.
-
-Version 0.5.1 fixes a regression which crashes jslint when more than
-maxerr errors are in a single file.  Thanks to Vasil Velichkov
-(@velichkov) for pointing this out.
-
-Version 0.5.0 reorganizes the loading interface, making it easier for
-other projects to use node-jslint to load a specific jslint edition.
-
-Version 0.4.0 exposes a stream interface to jslint.
-
-Version 0.3.4 supports globbing with * and ** expressions.
-
-Versions 0.2+ provide multiple editions of jslint to
-address backwards and forwards compatibility.
-
-## Use the command-line client
-
-### Use the default jslint
+### Basic
 
     jslint lib/color.js
 
-### Always use the latest jslint
+### Globbing
 
-    jslint --edition=latest lib/color.js
+    jslint 'lib/*.js'
 
-### Use a specific edition
+### Options
 
-For example, edition 2013-02-03 which shipped with node-jslint 0.1.9:
+    jslint --color --node false lib/color.js
+    jslint --predef $ --predef Backbone lib/color.js
 
-    jslint --edition=2013-02-03 lib/color.js
+All standard JSLint options are supported, and are documented
+[here](http://www.jslint.com/lint.html#options). Boolean options are `true` by
+default. node-jslint provides a few additional options:
 
-## Use node-jslint programmatically
+`--color` Write output in color.
+
+`--edition` Specify the edition of JSLint to use. Defaults to the latest, `'2014-07-08'`.
+
+`--terse` Report 1 error per line with parseable source file/line.
+
+`--json` Output in JSON format.
+
+`--version` Output the version number and exit.
+
+## Using node-jslint programmatically
 
 ### Streams interface
 
-As of node-jslint 0.4.0, a streams interface is exposed.  You can use it in client code like this:
+As of node-jslint 0.4.0, a streams interface is exposed.  You can use it in
+client code like this:
 
 Install as a dependency:
 
     $ npm install --save jslint
 
-Pull it into your code with require:
+Pull it into your code with `require`:
 
     var LintStream = require('jslint').LintStream;
 
 Create and configure the stream linter:
 
     var options = {
-        "edition": latest,
-        "length": 100
+        length: 100
     },
-        l = new LintStream(options);
+        lintStream = new LintStream(options);
 
 Send files to the linter:
 
     var fileName, fileContents;
-    l.write({file: fileName, body: fileContents});
+    lintStream.write({file: fileName, body: fileContents});
 
 Receive lint from the linter:
 
-    l.on('data', function (chunk, encoding, callback) {
-        // chunk is an object
+    lintStream.on('data', function (chunk, encoding, callback) {
+        // `chunk` is an object.
 
-        // chunk.file is whatever you supplied to write (see above)
+        // `chunk.file` is whatever you supplied to write (see above).
         assert.deepEqual(chunk.file, fileName);
 
-        // chunk.linted is an object holding the result from running JSLint
-        // chunk.linted.ok is the boolean return code from JSLINT()
-        // chunk.linted.errors is the array of errors, etc.
-        // see JSLINT for the complete contents of the object
+        // `chunk.linted` is an object holding the result from running JSLINT.
+        // `chunk.linted.ok` is the boolean return code from `JSLINT()`.
+        // `chunk.linted.errors` is the array of errors, etc.
+        // See JSLINT for the complete contents of the object.
 
         callback();
     });
 
-You can only pass options to the LintStream when creating it.  The `edition` option can be
-used to select different editions of JSLint.
+You can only pass options to the LintStream when creating it.
 
-The LintStream is in object mode (objectMode: true).  It expects an
-object with two properties: `file` and `body`.  The `file` property
-can be used to pass metadata along with the file.  The `body` property
-contains the file to be linted; it can be either a string or a Buffer.
+The LintStream is in object mode (`objectMode: true`).  It expects an object
+with two properties: `file` and `body`.  The `file` property can be used to pass
+metadata along with the file.  The `body` property contains the file to be
+linted; it can be either a string or a Buffer.
 
 The LintStream emits `'data'` events containing an object with two properties.
 The `file` property is copied from the `file` property that is passed in.  The
 `linted` property contains the results of running JSLINT.
 
-### Simple interface
+## Using JSLint with a config file
 
-The simple interface provides an edition-aware loader.  This can be used as a frontend to
-node-jslint's collection of editions of the JSLINT code.
+node-jslint can be configured using JSON in a .jslintrc file.
 
-    var node_jslint = require('jslint'),
-        JSLINT = node_jslint.load(edition);
+### Example
 
-This exposes the same loading interface used in node-jslint, so it supports the special
-edition names `default` and `latest` as well as date-based edition names such as `2013-08-26`
+`~/.jslintrc`
 
-As of version 0.5.0, the `load` function also accepts filenames.  To be recognized as a filename,
-the argument to load must contain a path-separator character (`/` or `\`) or end with the extension
-`.js`.
+    {
+      "devel": true,
+      "indent": 2
+    }
 
+All projects in the home directory tolerate development globals and my favorite
+indentation style.
 
-## Usage examples
+`~/project/.jslintrc`
 
-Multiple files
+    {
+      "indent": 4,
+      "predef": [
+        "$"
+      ],
+      "node": true
+    }
 
-    jslint lib/color.js lib/reporter.js
+A particular project uses a different indentation style, plus other
+things.  Development globals are still tolerated.
 
-All JSLint options supported
+`~/project/client/.jslintrc`
 
-    jslint --white --vars --regexp lib/color.js
+    {
+      "browser": true,
+      "node": false
+    }
 
-Defaults to true, but you can specify false
+All files in the `client/` directory are assumed to be run in a browser
+environment, but *not* the node environment that the rest of the project runs
+in.
 
-    jslint --bitwise false lib/color.js
+### Placement & Order
 
-Pass arrays
+The config is obtained by merging multiple configurations by this order of
+importance:
 
-    jslint --predef $ --predef Backbone lib/color.js
+- `/*jslint ... */` directives
+- CLI args
+- Local .jslintrc located in a linted file's directory
+- All .jslintrc files upwards the directory tree
 
-JSLint your entire project
+## Return values
 
-    jslint '**/*.js'
+jslint returns `1` if it found any problems, `0` otherwise.
 
-Using JSLint with a config file
+## Author
 
-Start with the included jslint.conf.example file and customize your options
-per project or copy it to $HOME/.jslint.conf to apply your setting globally
+JSLint is written and maintained by Douglas Crockford. See
+[douglascrockford/JSLint](https://github.com/douglascrockford/JSLint).
+
+This package is node-jslint, which provides a command-line interface for running
+jslint using the Node.js platform.  node-jslint was written by Reid Burke and is
+maintained by Reid Burke, Ryuichi Okumura, and Sam Mikes.
+
+## Bugs
+
+There are no known bugs.  Submit bugs
+[here](https://github.com/reid/node-jslint/issues).
+
+Note that if you are reporting a problem with the way jslint works rather than
+the way the command-line tools work, we will probably refer you to the
+[JSLint community](https://plus.google.com/communities/104441363299760713736) or
+the issue tracker at
+[douglascrockford/JSLint](https://github.com/douglascrockford/JSLint/issues).
 
 ## License
 
