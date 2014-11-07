@@ -13,7 +13,7 @@ Easily use [JSLint][] from the command line.
 
 ### Globbing
 
-    jslint lib/*.js
+    jslint 'lib/*.js'
 
 ### Options
 
@@ -54,25 +54,25 @@ Create and configure the stream linter:
     var options = {
         length: 100
     },
-        l = new LintStream(options);
+        lintStream = new LintStream(options);
 
 Send files to the linter:
 
     var fileName, fileContents;
-    l.write({file: fileName, body: fileContents});
+    lintStream.write({file: fileName, body: fileContents});
 
 Receive lint from the linter:
 
-    l.on('data', function (chunk, encoding, callback) {
-        // chunk is an object
+    lintStream.on('data', function (chunk, encoding, callback) {
+        // `chunk` is an object.
 
-        // chunk.file is whatever you supplied to write (see above)
+        // `chunk.file` is whatever you supplied to write (see above).
         assert.deepEqual(chunk.file, fileName);
 
-        // chunk.linted is an object holding the result from running JSLint
-        // chunk.linted.ok is the boolean return code from JSLINT()
-        // chunk.linted.errors is the array of errors, etc.
-        // see JSLINT for the complete contents of the object
+        // `chunk.linted` is an object holding the result from running JSLINT.
+        // `chunk.linted.ok` is the boolean return code from `JSLINT()`.
+        // `chunk.linted.errors` is the array of errors, etc.
+        // See JSLINT for the complete contents of the object.
 
         callback();
     });
@@ -101,7 +101,8 @@ node-jslint can be configured using JSON in a .jslintrc file.
       "indent": 2
     }
 
-All projects tolerate development globals and my favorite indentation style.
+All projects in the home directory tolerate development globals and my favorite
+indentation style.
 
 `~/project/.jslintrc`
 
@@ -116,7 +117,7 @@ All projects tolerate development globals and my favorite indentation style.
 A particular project uses a different indentation style, plus other
 things.  Development globals are still tolerated.
 
-`~/project/client/.jslinrc`
+`~/project/client/.jslintrc`
 
     {
       "browser": true,
