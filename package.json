@@ -27,7 +27,7 @@
   "bin": {
     "jslint": "./bin/jslint.js"
   },
-  "main": "./lib/jslint.js",
+  "main": "./lib/module.js",
   "dependencies": {
     "async": "~0.9.0",
     "exit": "~0.1.2",
