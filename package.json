@@ -5,7 +5,7 @@
   "keywords": [
     "lint"
   ],
-  "version": "0.6.5",
+  "version": "0.6.6",
   "author": "Reid Burke <me@reidburke.com>",
   "contributors": [
     "Douglas Crockford <douglas@crockford.com>",
@@ -55,7 +55,7 @@
     "man": "./man",
     "doc": "./doc"
   },
-  "man": "./man/jslint.1",
+  "man": "man/jslint.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/reid/node-jslint.git"
