@@ -8,6 +8,9 @@ Easily use [JSLint][] from the command line.
 
 Added latest jslint, 2014-07-08.
 
+Version 0.7.0 creates a new programmatic interface which is used by
+https://github.com/hapijs/lab
+
 Version 0.5.1 fixes a regression which crashes jslint when more than
 maxerr errors are in a single file.  Thanks to Vasil Velichkov
 (@velichkov) for pointing this out.

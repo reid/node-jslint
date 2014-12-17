@@ -1,3 +1,7 @@
+2014-12-16  Sam Mikes  <smikes@cubane.com>
+	* lib/collector.js: new programmatic interface for collecting lint
+	* lib/main.js, lib/nodelint.js: add callback to `runMain`, publicize
+
 2014-10-22  Sam Mikes  <smikes@cubane.com>
 	* test/regression.js: add file for misc github issues tests
 	* package.json: avoid using prepublish
