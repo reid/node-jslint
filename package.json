@@ -3,9 +3,14 @@
   "description": "The JavaScript Code Quality Tool",
   "homepage": "https://github.com/reid/node-jslint",
   "keywords": [
-    "lint", "jslint", "code-quality", "static-analysis", "jshint", "eslint"
+    "lint",
+    "jslint",
+    "code-quality",
+    "static-analysis",
+    "jshint",
+    "eslint"
   ],
-  "version": "0.6.7",
+  "version": "0.6.8",
   "author": "Reid Burke <me@reidburke.com>",
   "contributors": [
     "Douglas Crockford <douglas@crockford.com>",
