@@ -264,4 +264,16 @@ suite('jslint main', function () {
         rep.end();
     });
 
+    test('quasi-programmatic interface', function (done) {
+        var parsed = mockParsed();
+
+        parsed.argv.remain.push('test/fixtures/bad.js');
+        parsed.collector = true;
+
+        main.runMain(parsed, function (err, report) {
+            assert(report);
+            done();
+        });
+
+    });
 });

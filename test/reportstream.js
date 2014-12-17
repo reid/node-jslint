@@ -1,7 +1,8 @@
 var assert = require('assert'),
     stream = require('../lib/stream'),
     ReportStream = require('../lib/reportstream.js'),
-    JSONReportStream = require('../lib/jsonreportstream.js');
+    JSONReportStream = require('../lib/jsonreportstream.js'),
+    CollectorStream = require('../lib/collectorstream.js');
 
 suite('reportstream', function () {
     test('can create object', function () {
@@ -85,7 +86,25 @@ suite('reportstream', function () {
 
     test('incorrectly construct a JSONReportStream', function (done) {
         var r = JSONReportStream();
+
+        assert.ok(r instanceof JSONReportStream);
+        assert.ok(r instanceof stream.Transform);
         done();
     });
+});
 
+suite('collectorstream', function () {
+    test('can create object', function () {
+        var r = new CollectorStream();
+
+        assert.ok(r instanceof CollectorStream);
+        assert.ok(r instanceof stream.Transform);
+    });
+
+    test('can create object incorrectly', function () {
+        var r = CollectorStream();
+
+        assert.ok(r instanceof CollectorStream);
+        assert.ok(r instanceof stream.Transform);
+    });
 });
