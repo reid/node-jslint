@@ -3,5 +3,6 @@
     "indent":2,
     "vars":true,
     "passfail":false,
-    "plusplus":false
+    "plusplus":false,
+    "predef": "dnsDomainIs,dnsResolve,isInNet,isPlainHostName"
 }
