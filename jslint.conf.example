@@ -4,5 +4,5 @@
     "vars":true,
     "passfail":false,
     "plusplus":false,
-    "predef": "dnsDomainIs,dnsResolve,isInNet,isPlainHostName"
+    "predef": "module,require"
 }
