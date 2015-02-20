@@ -134,6 +134,25 @@ suite('jslint main', function () {
         parsed.argv.remain.push('./lib/main.js');
         parsed.argv.remain.push('./node_modules/glob/*');
 
+        parsed.filter = true;
+
+        pro.on('exit', done);
+
+        parsed.terse = true;
+
+        main.runMain(parsed);
+
+        assert.ok(main);
+    });
+
+    test('main - glob --no-filter includes node_modules', function (done) {
+        var parsed = mockParsed();
+
+        parsed.argv.remain.push('./lib/main.js');
+        parsed.argv.remain.push('./node_modules/glob/*.js');
+
+        parsed.filter = false;
+
         pro.on('exit', done);
 
         parsed.terse = true;
@@ -239,6 +258,12 @@ suite('jslint main', function () {
         assert.equal('latest', options.edition);
     });
 
+    test('argument parsing: can disable filter', function () {
+        var options = main.parseArgs(['node', 'jslint', '--no-filter']);
+
+        assert.equal(false, options.filter);
+    });
+    
     test('main -- report version', function (done) {
         main.runMain({version: true});
 
