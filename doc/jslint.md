@@ -17,6 +17,8 @@ JSLint is a static analysis tool to locate and correct style problems in Javascr
 
   `--edition`   specify which edition of jslint to use
 
+  `--no-filter` allow linting files containing pattern `node_modules`
+
 ## LINTING OPTIONS
   `--ass`       Tolerate assignment expressions
 
