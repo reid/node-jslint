@@ -142,10 +142,10 @@ use `true` to enable and `false` to disable boolean options.  An example of a
 valid option file is:
 
  {
-   vars: true,
-   white: true,
-   maxlen: 100,
-   predef: "foo,bar,baz"
+   "vars": true,
+   "white": true,
+   "maxlen": 100,
+   "predef": "foo,bar,baz"
  }
 
 Comments are not allowed in option files.
