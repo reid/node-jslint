@@ -10,7 +10,7 @@
     "jshint",
     "eslint"
   ],
-  "version": "0.9.0-pre002",
+  "version": "0.9.0-pre003",
   "author": "Reid Burke <me@reidburke.com>",
   "contributors": [
     "Douglas Crockford <douglas@crockford.com>",
