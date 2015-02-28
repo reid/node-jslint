@@ -8,7 +8,7 @@ install:
 prepublish: lint doc no-dos-endings check-coverage
 
 lint:	$(SOURCES)
-	node ./bin/jslint.js --edition=latest --terse $(SOURCES); echo
+	node ./bin/jslint.js --edition=es6 --this --terse $(SOURCES); echo
 
 test:
 	./node_modules/.bin/mocha -u tdd
