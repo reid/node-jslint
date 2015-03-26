@@ -58,7 +58,7 @@ Pull it into your code with require:
 Create and configure the stream linter:
 
     var options = {
-        "edition": latest,
+        "edition": "latest",
         "length": 100
     },
         l = new LintStream(options);
