@@ -24,4 +24,14 @@ suite('case #101', function () {
         assert.ok(result.ok);
     });
 
+    test('use es6 linter', function () {
+
+        var options = {edition: 'es6', node: true},
+            JSLINT = nodelint.load(options.edition),
+            script = "console.log('a');\n",
+            result = linter.doLint(JSLINT, script, options);
+
+        assert.ok(result);
+    });
+
 });

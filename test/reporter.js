@@ -10,7 +10,17 @@ suite('reporter', function () {
                 err(1, 1, "Fake error 1."),
                 err(2, 3, "Fake error 2.", "Fake evidence")
             ]
+        },
+        es6ErrorLint = {
+            ok: false,
+            errors: [ { line: 0,
+                        column: 3,
+                        message: "foo" } ],
+            lines: [ "this is an evidence line" ]
         };
+
+
+
 
     function err(l, c, r, e) {
         var err = {
@@ -98,6 +108,10 @@ suite('reporter', function () {
         assert.equal(-1, log.outLines[0].search(/OK/));
 
         // no assertion re content: just force exercise of color branch
+    });
+
+    test('lint bad, es6 format', function () {
+        reporter.report('example.js', es6ErrorLint, true, false);
     });
 
 });

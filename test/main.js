@@ -165,7 +165,7 @@ suite('jslint main', function () {
     test('main - one file, not tty, json output', function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('lib/reporter.js');
+        parsed.argv.remain.push('test/fixtures/good.js');
 
         parsed.json = true;
 

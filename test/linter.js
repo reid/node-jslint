@@ -69,8 +69,8 @@ suite('lint', function () {
 
         result = linter.doLint(JSLINT, script, options);
 
-        assert.ok(result.ok);
         assert.deepEqual(result.errors, []);
+        assert.ok(result.ok);
     });
 
     test('lint finds error', function () {
