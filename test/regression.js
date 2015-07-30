@@ -34,4 +34,15 @@ suite('case #101', function () {
         assert.ok(result);
     });
 
+    test('post-es6 versions report edition', function (done) {
+         var options = {edition: '2015-05-08'},
+             JSLINT = nodelint.load(options.edition),
+             main = require('../lib/main');
+
+         main.reportVersion(function (version) {
+            assert.ok(/^node-jslint version:/.test(version));
+            assert.ok(/  JSLint edition 2015-05-08/.test(version));
+            done();
+         }, {} );
+    });
 });
