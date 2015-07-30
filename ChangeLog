@@ -1,3 +1,8 @@
+2015-07-29  Sam Mikes  <smikes@cubane.com>
+        * lib/jslint-es6.js: latest jslint from upstream
+        * lib/nodelint.js, test/regression.js: correctly report edition for post-es6 jslints, 
+        thanks to @bryanjhv for the bug report and fix
+
 2015-02-19  Sam Mikes  <smikes@cubane.com>
 	* lib/main.js, test/main.js: new option --no-filter to allow linting paths containing 'node_modules'
 

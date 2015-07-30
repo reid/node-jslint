@@ -26,7 +26,8 @@
     "Bnaya",
     "Maximilian Antoni <mail@maxantoni.de>",
     "Vasil Velichkov",
-    "Rasmus Paetau"
+    "Rasmus Paetau",
+    "Bryan Horna"
   ],
   "bin": {
     "jslint": "./bin/jslint.js"
