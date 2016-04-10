@@ -81,9 +81,9 @@ suite('reporter', function () {
         assert.deepEqual([
             '\nexample.js',
             ' #1 Fake error 1.',
-            '     // Line 1, Pos 1',
+            '     // Line 2, Pos 2',
             ' #2 Fake error 2.',
-            '    Fake evidence // Line 2, Pos 3'
+            '    Fake evidence // Line 3, Pos 4'
             ], log.outLines);
 
     });
@@ -95,8 +95,8 @@ suite('reporter', function () {
         assert.equal(-1, log.outLines[0].search(/OK/));
 
         assert.deepEqual([
-            'example.js:1:1: Fake error 1.',
-            'example.js:2:3: Fake error 2.'
+            'example.js:2:2: Fake error 1.',
+            'example.js:3:4: Fake error 2.'
             ], log.outLines);
 
     });
