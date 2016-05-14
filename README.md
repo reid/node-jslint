@@ -6,6 +6,8 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
+Added latest jslint, 2016-05-10.
+
 Added latest jslint, 2015-07-10.
 
 Version 0.9.2 contains the latest jslint-es6, and a bug fix from @bryanjhv
@@ -14,7 +16,7 @@ I plan to release node-jslint 1.0.0 with `es6` linting by default.
 
 Version 0.9.0 contains the new BETA version of jslint for EcmaScript 6,
 which is a ground-up rewrite by Douglas Crockford.  The `latest` alias
-still points to the last `es5` version of jslint; you can also use 
+still points to the last `es5` version of jslint; you can also use
 `--edition=es5` to get the (old) es5 version.  To get the `es6` version
 you must use `--edition=es6`.
 
