@@ -75,8 +75,7 @@ suite('current dir config file', function () {
 
         assert.deepEqual(undefined, options.loadAndParseConfig('jslintrc'));
 
-        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
-                           con.warnings[0]);
+        assert(/Error reading config file "jslintrc": SyntaxError: Unexpected end of /.test(con.warnings[0]));
     });
 
     test('no crash when malformed jslintrc', function () {
@@ -84,8 +83,7 @@ suite('current dir config file', function () {
 
         assert.deepEqual(undefined, options.loadAndParseConfig('jslintrc'));
 
-        assert.strictEqual('Error reading config file "jslintrc": SyntaxError: Unexpected end of input',
-                           con.warnings[0]);
+        assert(/Error reading config file "jslintrc": SyntaxError: Unexpected end of /.test(con.warnings[0]));
     });
 
     test('nonexistent .jslintrc => undefined', function () {
