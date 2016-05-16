@@ -17,6 +17,14 @@ suite('reporter', function () {
                         column: 3,
                         message: "foo" } ],
             lines: [ "this is an evidence line" ]
+        },
+        es6Fudged = {
+            ok: false,
+            errors: [ { line: 0,
+                        column: 3,
+                        message: "foo" } ],
+            option: { fudge: 1 },
+            lines: [ "this is an evidence line" ]
         };
 
 
@@ -112,6 +120,16 @@ suite('reporter', function () {
 
     test('lint bad, es6 format', function () {
         reporter.report('example.js', es6ErrorLint, true, false);
+    });
+
+    test('fudge fudges output', function (done) {
+         var reporter = require('../lib/reporter.js');
+
+         reporter.report('example.js', es6Fudged, false, true);
+
+        assert.deepEqual(1, log.outLines.length);
+        assert.equal(log.outLines[0], 'example.js:1:4: foo');
+        done();
     });
 
 });
