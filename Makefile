@@ -17,10 +17,10 @@ doc:	man/jslint.1 doc/jslint.html
 
 man/jslint.1: doc/jslint.md
 	mkdir -p man
-	./node_modules/.bin/ronn -r $< > $@
+	./node_modules/.bin/marked-man $< > $@
 
 doc/jslint.html: doc/jslint.md
-	./node_modules/.bin/ronn -5 $< > $@
+	./node_modules/.bin/marked-man --html $< > $@
 
 no-dos-endings:
 	file $(SOURCES) | grep -v CRLF >/dev/null
