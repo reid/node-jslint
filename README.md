@@ -6,34 +6,11 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
-Added latest jslint, 2015-07-10.
+Added latest jslint, 2016-07-13.
 
-Version 0.9.2 contains the latest jslint-es6, and a bug fix from @bryanjhv
-jslint-es6 is no longer marked BETA by upstream.  In about a month (August, 2015)
-I plan to release node-jslint 1.0.0 with `es6` linting by default.
+Version 0.10.3 contains the latest jslint-es6
 
-Version 0.9.0 contains the new BETA version of jslint for EcmaScript 6,
-which is a ground-up rewrite by Douglas Crockford.  The `latest` alias
-still points to the last `es5` version of jslint; you can also use 
-`--edition=es5` to get the (old) es5 version.  To get the `es6` version
-you must use `--edition=es6`.
-
-Version 0.7.0 creates a new programmatic interface which is used by
-https://github.com/hapijs/lab
-
-Version 0.5.1 fixes a regression which crashes jslint when more than
-maxerr errors are in a single file.  Thanks to Vasil Velichkov
-(@velichkov) for pointing this out.
-
-Version 0.5.0 reorganizes the loading interface, making it easier for
-other projects to use node-jslint to load a specific jslint edition.
-
-Version 0.4.0 exposes a stream interface to jslint.
-
-Version 0.3.4 supports globbing with * and ** expressions.
-
-Versions 0.2+ provide multiple editions of jslint to
-address backwards and forwards compatibility.
+See CHANGELOG.md for detailed change history
 
 ## Use the command-line client
 
