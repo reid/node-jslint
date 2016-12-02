@@ -105,5 +105,20 @@ suite('lint', function () {
 
     });
 
+    test('top level unused var causes error', function () {
+        var script = "'use strict';\nvar unused = null;\n",
+            options = {edition: 'latest', node: true},
+            JSLINT = nodelint.load(options.edition),
+            result;
+
+        // don't let user's config interfere with our test
+        process.env.HOME = '';
+
+        result = linter.doLint(JSLINT, script, options);
+
+        assert.strictEqual(1, result.errors.length);
+        assert.deepEqual("Unused '{a}'.", result.errors[0].raw);
+    });
+
 
 });
