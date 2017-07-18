@@ -86,4 +86,3 @@ Version 0.3.4 supports globbing with * and ** expressions.
 
 Versions 0.2+ provide multiple editions of jslint to
 address backwards and forwards compatibility.
-
