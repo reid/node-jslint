@@ -2,7 +2,7 @@
 
 Easily use [JSLint][] from the command line.
 
-    jslint bin/jslint.js
+      jslint bin/jslint.js
 
 ## What's New
 
@@ -13,6 +13,10 @@ Version 0.12.0 contains the latest jslint-es6
 See CHANGELOG.md for detailed change history
 
 ## Use the command-line client
+
+### Install (both local and global are supported)
+
+   npm i jslint
 
 ### Use the default jslint
 
