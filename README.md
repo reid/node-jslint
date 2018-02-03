@@ -6,9 +6,9 @@ Easily use [JSLint][] from the command line.
 
 ## What's New
 
-Added latest jslint, 2016-07-13.
+Added latest jslint, 2018-01-27.
 
-Version 0.10.3 contains the latest jslint-es6
+Version 0.12.0 contains the latest jslint-es6
 
 See CHANGELOG.md for detailed change history
 
