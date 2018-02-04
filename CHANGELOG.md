@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.12.0"</a>
+<a name="0.12.0"></a>
 ## [0.12.0](https://github.com/reid/node-jslint/compare/v0.10.3...v0.12.0) (2018-02-03)
 
 ### Update to es6 latest (2018-01-27)
