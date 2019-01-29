@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.12.1"></a>
+## [0.12.1](https://github.com/reid/node-jslint/compare/v0.12.0...v0.12.1) (2019-01-28)
+
+### Update to es6 latest (2018-11-28)
+ Node doesn't like the 'export default' syntax, so I hacked it to use 'var'.
+
+### Update dependencies
+ * mocha => 5.2.0
+ * glob => 7.1.3
+ * nopt => 4.0.1
+ * marked-man => 0.2.1
+
 <a name="0.12.0"></a>
 ## [0.12.0](https://github.com/reid/node-jslint/compare/v0.10.3...v0.12.0) (2018-02-03)
 
