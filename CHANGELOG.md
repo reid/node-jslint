@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### Update to JSLint 2019-01-31
+* **lib/jslint-latest.js**: update to JSLint 2019-01-31.
+* **lib/jslint-2019-01-31.js**: add JSLint 2019-01-31.
+* **README.md**: add note about upgrading to JSLint 2019-01-31.
+* **CHANGELOG.md**: add notes about upgrading to JSLint 2019-01-31.
+
 <a name="0.12.1"></a>
 ## [0.12.1](https://github.com/reid/node-jslint/compare/v0.12.0...v0.12.1) (2019-01-28)
 
@@ -48,7 +54,7 @@ you must use `--edition=es6`.
 
 2015-07-29  Sam Mikes  <smikes@cubane.com>
         * lib/jslint-es6.js: latest jslint from upstream
-        * lib/nodelint.js, test/regression.js: correctly report edition for post-es6 jslints, 
+        * lib/nodelint.js, test/regression.js: correctly report edition for post-es6 jslints,
         thanks to @bryanjhv for the bug report and fix
 
 2015-02-19  Sam Mikes  <smikes@cubane.com>
@@ -68,7 +74,7 @@ you must use `--edition=es6`.
 2104-04-13  Sam Mikes  <smikes@cubane.com>
 
 	* lib/linter.js: Fix issue #88 - support user-specified config file, support
- 	jslint.conf and .jslint.conf in addition to jslintrc, .jslintrc 
+ 	jslint.conf and .jslint.conf in addition to jslintrc, .jslintrc
 
 2014-01-30  Sam Mikes  <smikes@cubane.com>
 
