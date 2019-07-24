@@ -1,5 +1,5 @@
-var assert = require('assert'),
-    main;
+var assert = require("assert");
+var main;
 
 function mockConsole() {
     var c ={
@@ -18,7 +18,7 @@ function mockConsole() {
 
 function mockProcess() {
     var p = {
-        argv: ['jslint'],
+        argv: ["jslint"],
         exit: function (c) {
             this.exitCode = c;
             this.events.exit.forEach(function (f) {
@@ -70,11 +70,12 @@ function mockParsed() {
     };
 }
 
-suite('jslint main', function () {
-    var pro, con;
+suite("jslint main", function () {
+    var pro;
+    var con;
 
     setup(function () {
-        main = require('../lib/main');
+        main = require("../lib/main");
 
         con = mockConsole();
         pro = mockProcess();
@@ -83,7 +84,7 @@ suite('jslint main', function () {
         main.setProcess(pro);
     });
 
-    test('main - no args', function () {
+    test("main - no args", function () {
         var parsed = mockParsed();
 
         main.runMain(parsed);
@@ -93,21 +94,21 @@ suite('jslint main', function () {
         assert.strictEqual(2, con.warnings.length);
     });
 
-    test('main - bad lint', function (done) {
+    test("main - bad lint", function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('test/fixtures/bad.js');
+        parsed.argv.remain.push("test/fixtures/bad.js");
 
         main.runMain(parsed);
 
-        pro.on('exit', function () {
+        pro.on("exit", function () {
             assert.equal(1, pro.exitCode);
             done();
         });
     });
 
 
-    test('main - glob files', function (done) {
+    test("main - glob files", function (done) {
         // bail if glob not installed
         if (!main.glob) {
             assert.ok(true);
@@ -117,9 +118,9 @@ suite('jslint main', function () {
 
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('lib/mai*.js');
+        parsed.argv.remain.push("lib/mai*.js");
 
-        pro.on('exit', done);
+        pro.on("exit", done);
 
         parsed.terse = true;
 
@@ -128,15 +129,15 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
-    test('main - glob ignore node_modules', function (done) {
+    test("main - glob ignore node_modules", function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('./lib/main.js');
-        parsed.argv.remain.push('./node_modules/glob/*');
+        parsed.argv.remain.push("./lib/main.js");
+        parsed.argv.remain.push("./node_modules/glob/*");
 
         parsed.filter = true;
 
-        pro.on('exit', done);
+        pro.on("exit", done);
 
         parsed.terse = true;
 
@@ -145,15 +146,15 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
-    test('main - glob --no-filter includes node_modules', function (done) {
+    test("main - glob --no-filter includes node_modules", function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('./lib/main.js');
-        parsed.argv.remain.push('./node_modules/glob/*.js');
+        parsed.argv.remain.push("./lib/main.js");
+        parsed.argv.remain.push("./node_modules/glob/*.js");
 
         parsed.filter = false;
 
-        pro.on('exit', done);
+        pro.on("exit", done);
 
         parsed.terse = true;
 
@@ -162,16 +163,16 @@ suite('jslint main', function () {
         assert.ok(main);
     });
 
-    test('main - one file, not tty, json output', function (done) {
+    test("main - one file, not tty, json output", function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('test/fixtures/good.js');
+        parsed.argv.remain.push("test/fixtures/good.js");
 
         parsed.json = true;
 
         pro.stdout.isTTY = false;
 
-        pro.on('exit', function () {
+        pro.on("exit", function () {
             assert.strictEqual(0, pro.exitCode);
             done();
         });
@@ -184,7 +185,7 @@ suite('jslint main', function () {
         assert.strictEqual(undefined, pro.exitCode);
     });
 
-    test('todo in command-line options', function () {
+    test("todo in command-line options", function () {
         var o = main.commandOptions();
 
         assert.strictEqual(Boolean, o.todo);
@@ -194,7 +195,7 @@ suite('jslint main', function () {
         return type(value).valueOf() === value;
     }
 
-    test('isBasicType works', function () {
+    test("isBasicType works", function () {
 
         assert.ok(isBasicType(Boolean, true));
         assert.ok(isBasicType(Boolean, false));
@@ -204,30 +205,30 @@ suite('jslint main', function () {
         assert.ok(!isBasicType(Boolean, 1));
         assert.ok(!isBasicType(Number, false));
         assert.ok(!isBasicType(String, 1));
-        assert.ok(!isBasicType(Number, '1'));
+        assert.ok(!isBasicType(Number, "1"));
     });
 
-    test('example jslint.conf contains only valid options', function (done) {
+    test("example jslint.conf contains only valid options", function (done) {
 
-        var options = main.commandOptions(),
-            fs = require('fs');
+        var options = main.commandOptions();
+        var fs = require("fs");
 
         fs.readFile("jslint.conf.example", function (err, file) {
             if (err) {
                 throw err;
             }
 
-            var example = JSON.parse(file),
-                keys = Object.keys(example);
+            var example = JSON.parse(file);
+            var keys = Object.keys(example);
 
             keys.forEach(function(opt) {
                 assert.ok(options.hasOwnProperty(opt));
 
-                var type = options[opt],
-                    value = example[opt];
+                var type = options[opt];
+                var value = example[opt];
 
-		// skip predef because arrays are hard
-		if (opt !== "predef") {
+    // skip predef because arrays are hard
+    if (opt !== "predef") {
                     assert.ok(isBasicType(type, value));
                 }
             });
@@ -236,13 +237,13 @@ suite('jslint main', function () {
         });
     });
 
-    test('edition is a string (not Boolean) option', function () {
+    test("edition is a string (not Boolean) option", function () {
         var options = main.commandOptions();
 
         assert.equal(String, options.edition);
     });
 
-    test('returns a version', function (done) {
+    test("returns a version", function (done) {
 
         main.reportVersion(function (version) {
 
@@ -252,50 +253,50 @@ suite('jslint main', function () {
         }, {} );
     });
 
-    test('argument parsing: edition is a string', function () {
-        var options = main.parseArgs(['node', 'jslint', '--edition=latest']);
+    test("argument parsing: edition is a string", function () {
+        var options = main.parseArgs(["node", "jslint", "--edition=latest"]);
 
-        assert.equal('latest', options.edition);
+        assert.equal("latest", options.edition);
     });
 
-    test('argument parsing: can disable filter', function () {
-        var options = main.parseArgs(['node', 'jslint', '--no-filter']);
+    test("argument parsing: can disable filter", function () {
+        var options = main.parseArgs(["node", "jslint", "--no-filter"]);
 
         assert.equal(false, options.filter);
     });
-    
-    test('main -- report version', function (done) {
+
+    test("main -- report version", function (done) {
         main.runMain({version: true});
 
         done();
     });
 
-    test('most data goes to console.log', function (done) {
+    test("most data goes to console.log", function (done) {
         var rep = main.makeReporter({});
-        rep.on('finish', function () {
+        rep.on("finish", function () {
             assert.equal(con.loggings.length, 1);
-            assert.equal(con.loggings[0], 'log message');
+            assert.equal(con.loggings[0], "log message");
             done();
         });
-        rep.emit('data', 'log message');
+        rep.emit("data", "log message");
         rep.end();
     });
 
-    test('dots go to process.stderr', function (done) {
+    test("dots go to process.stderr", function (done) {
         var rep = main.makeReporter({});
-        rep.on('finish', function () {
+        rep.on("finish", function () {
             assert.equal(pro.stderrWritings.length, 1);
-            assert.equal(pro.stderrWritings[0], '.');
+            assert.equal(pro.stderrWritings[0], ".");
             done();
         });
-        rep.emit('data', '.');
+        rep.emit("data", ".");
         rep.end();
     });
 
-    test('quasi-programmatic interface', function (done) {
+    test("quasi-programmatic interface", function (done) {
         var parsed = mockParsed();
 
-        parsed.argv.remain.push('test/fixtures/bad.js');
+        parsed.argv.remain.push("test/fixtures/bad.js");
         parsed.collector = true;
 
         main.runMain(parsed, function (err, report) {
