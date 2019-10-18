@@ -86,7 +86,7 @@ suite("lint", function () {
         result = linter.doLint(JSLINT, script, options);
 
         assert.strictEqual(1, result.errors.length);
-        assert.strictEqual("Unexpected TODO comment.";
+        assert.strictEqual("Unexpected TODO comment.",
                            result.errors[0].raw);
 
     });
